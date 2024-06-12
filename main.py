@@ -10,6 +10,7 @@ from services.llm.baichuan_service import MyBaichuanService
 from services.llm.baidu_qianfan_service import BaiduQianfanService
 from services.llm.kimi_service import MyKimiService
 from services.llm.openai_service import MyOpenAIService
+from services.llm.tongyi_service import MyTongyiService
 from services.resource.pexels_service import PexelsService
 from services.video.video_service import get_audio_duration, VideoService
 from tools.tr_utils import tr
@@ -49,6 +50,8 @@ def get_llm_provider(llm_provider):
         return BaiduQianfanService()
     if llm_provider == "Baichuan":
         return MyBaichuanService()
+    if llm_provider == "Tongyi":
+        return MyTongyiService()
 
 
 def main_generate_video_content():

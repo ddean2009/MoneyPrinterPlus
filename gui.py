@@ -151,7 +151,7 @@ with audio_container:
 llm_container = st.container(border=True)
 with (llm_container):
     # llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'DeepSeek', 'Gemini', 'Ollama']
-    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan']
+    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan','Tongyi']
     saved_llm_provider = my_config['llm']['provider']
     saved_llm_provider_index = 0
     for i, provider in enumerate(llm_providers):

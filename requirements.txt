@@ -7,3 +7,4 @@ streamlit
 wxPython
 pillow
 qianfan
+dashscope

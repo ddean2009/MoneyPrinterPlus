@@ -18,10 +18,9 @@ llm:
   Moonshot:
     api_key: YOUR_API_KEY
     model_name: moonshot-v1-8k
-  Ollama:
+  Tongyi:
     api_key: YOUR_API_KEY
-    base_url: null
-    model_name: null
+    model_name: qwen-turbo
   OpenAI:
     api_key: YOUR_API_KEY
     model_name: gpt-3.5-turbo
