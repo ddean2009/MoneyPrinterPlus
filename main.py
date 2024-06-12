@@ -8,6 +8,7 @@ from services.captioning.captioning_service import generate_caption, add_subtitl
 from services.llm.azure_service import MyAzureService
 from services.llm.baichuan_service import MyBaichuanService
 from services.llm.baidu_qianfan_service import BaiduQianfanService
+from services.llm.deepseek_service import MyDeepSeekService
 from services.llm.kimi_service import MyKimiService
 from services.llm.openai_service import MyOpenAIService
 from services.llm.tongyi_service import MyTongyiService
@@ -52,6 +53,8 @@ def get_llm_provider(llm_provider):
         return MyBaichuanService()
     if llm_provider == "Tongyi":
         return MyTongyiService()
+    if llm_provider == "DeepSeek":
+        return MyDeepSeekService()
 
 
 def main_generate_video_content():

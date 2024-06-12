@@ -10,8 +10,8 @@ captioning:
 llm:
   DeepSeek:
     api_key: YOUR_API_KEY
-    base_url: null
-    model_name: null
+    base_url: https://api.deepseek.com/
+    model_name: deepseek-chat
   Baichuan:
     api_key: YOUR_API_KEY
     model_name: Baichuan3-Turbo

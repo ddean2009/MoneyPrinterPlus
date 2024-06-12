@@ -36,7 +36,7 @@
 
 # 已实现功能
 
-- [x] 大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen
+- [x] 大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek,
 - [x] 支持Azure语音功能
 - [x] 支持30+种视频转场特效
 - [x] 支持不同分辨率，不同尺寸和比例的视频生成
@@ -44,10 +44,10 @@
 - [x] 支持背景音乐
 - [x] 支持背景音乐音量调节
 - [x] 支持自定义字幕
+- [x] 覆盖市面上主流的AI大模型工具
 
 # 待实现功能
 
-- [] 覆盖市面上主流的AI大模型工具
 - [] 支持更多的Azure语音种类
 - [] 支持语音试听
 - [] 支持本地语音字幕识别模型
@@ -146,7 +146,7 @@ Azure对新用户是1年免费的。费用也是比较便宜。
 
 #### 3. LLM大模型
 
-大模型区目前支持Moonshot,openAI,Azure openAI,Baidu Qianfan, Baichuan,Tongyi Qwen这些。 
+大模型区目前支持Moonshot,openAI,Azure openAI,Baidu Qianfan, Baichuan,Tongyi Qwen, DeepSeek这些。 
 
 > 推荐使用Moonshot。 
 >
@@ -164,7 +164,7 @@ baichuan API获取地址： https://platform.baichuan-ai.com/
 
 阿里tongyi qwen API获取地址： https://help.aliyun.com/document_detail/611472.html?spm=a2c4g.2399481.0.0
 
-
+DeepSeek API获取地址: https://www.deepseek.com/
 
 ## AI视频
 

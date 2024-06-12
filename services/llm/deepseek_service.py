@@ -1,0 +1,43 @@
+from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from openai import OpenAI
+
+from config.config import my_config
+from services.llm.llm_service import MyLLMService
+from tools.utils import must_have_value
+
+# 设置DeepSeek API密钥
+DEEPSEEK_API_KEY = my_config['llm']['DeepSeek']['api_key']
+DEEPSEEK_API_URL = my_config['llm']['DeepSeek']['base_url']
+DEEPSEEK_MODEL_NAME = my_config['llm']['DeepSeek']['model_name']  # 替换为 DeepSeek API 的model
+
+must_have_value(DEEPSEEK_API_KEY, "请设置DeepSeek 密钥")
+must_have_value(DEEPSEEK_API_URL, "请设置DeepSeek Base Url")
+must_have_value(DEEPSEEK_MODEL_NAME, "请设置DeepSeek model")
+
+
+class MyDeepSeekService(MyLLMService):
+    def __init__(self):
+        super().__init__()  # 调用父类的构造函数来初始化父类的属性
+
+    def generate_content(self, topic: str, prompt_template: PromptTemplate, language: str = None, length: str = None):
+        # 创建 DeepSeek 的 LLM 实例
+        llm = OpenAI(
+            api_key=DEEPSEEK_API_KEY,
+            base_url=DEEPSEEK_API_URL
+        )
+
+        response = llm.chat.completions.create(
+            model=DEEPSEEK_MODEL_NAME,
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant"},
+                {"role": "user", "content": prompt_template.format(topic=topic, language=language, length=length)},
+            ],
+            stream=False
+        )
+
+        # 生成视频内容描述
+        description = response.choices[0].message.content
+
+        return description.strip()
+
