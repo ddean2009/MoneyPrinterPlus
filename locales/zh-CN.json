@@ -15,6 +15,7 @@
   "Audio Provider Info": "配置音频库信息",
   "Audio Provider": "音频库",
   "Generate Video dubbing": "生成视频配音",
+  "Testing Audio": "试听声音",
 
   "LLM Video Subject generator": "LLM大模型视频文案生成器",
   "Video Subject": "视频主题(以逗号分割)",

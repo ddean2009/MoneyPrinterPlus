@@ -3,7 +3,7 @@ import streamlit as st
 from config.config import my_config, save_config, languages, audio_languages, audio_voices, transition_types, \
     fade_list
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
-    main_get_video_resource, main_generate_subtitle
+    main_get_video_resource, main_generate_subtitle, main_try_test_audio
 from pages.common import common_ui
 from tools.tr_utils import tr
 
@@ -62,6 +62,10 @@ def generate_video_dubbing():
     main_generate_video_dubbing()
 
 
+def try_test_audio():
+    main_try_test_audio()
+
+
 def generate_video(video_generator):
     main_generate_ai_video(video_generator)
 
@@ -88,7 +92,7 @@ with llm_container:
                      format_func=lambda x: video_length_options.get(x), key="video_length")
         # print(st.session_state.get("video_length"))
     with llm_columns[2]:
-        st.button(label=tr("Generate Video Content"),type="primary", on_click=generate_video_content)
+        st.button(label=tr("Generate Video Content"), type="primary", on_click=generate_video_content)
     # print(st.session_state.get("video_content"))
     st.text_area(label=tr("Video content"), key="video_content", height=200)
     st.text_input(label=tr("Video content keyword"), key="video_keyword")
@@ -98,7 +102,7 @@ captioning_container = st.container(border=True)
 with captioning_container:
     # 配音
     st.subheader(tr("Video Captioning"))
-    llm_columns = st.columns(3)
+    llm_columns = st.columns(4)
     with llm_columns[0]:
         st.selectbox(label=tr("Audio language"), options=audio_languages,
                      format_func=lambda x: audio_languages.get(x), key="audio_language")
@@ -113,6 +117,8 @@ with captioning_container:
         st.selectbox(label=tr("Audio speed"),
                      options=["normal", "fast", "faster", "fastest", "slow", "slower", "slowest"],
                      key="audio_speed")
+    with llm_columns[3]:
+        st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_audio)
     if test_mode:
         st.button(label=tr("Generate Video dubbing"), on_click=generate_video_dubbing)
 
@@ -242,7 +248,7 @@ with subtitle_container:
         st.selectbox(label=tr("subtitle position"), key="subtitle_position", index=7,
                      options=subtitle_position_options, format_func=lambda x: subtitle_position_options[x])
     with llm_columns[1]:
-        st.color_picker(label=tr("subtitle color"), key="subtitle_color",value="#FFFFFF" )
+        st.color_picker(label=tr("subtitle color"), key="subtitle_color", value="#FFFFFF")
     with llm_columns[2]:
         st.color_picker(label=tr("subtitle border color"), key="subtitle_border_color", value="#000000")
     with llm_columns[3]:
@@ -255,7 +261,7 @@ with subtitle_container:
 video_generator = st.container(border=True)
 with video_generator:
     # st_status = st.status(tr("Generate Video in process..."), expanded=True)
-    st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video, args=(video_generator, ))
+    st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video, args=(video_generator,))
 result_video_file = st.session_state.get("result_video_file")
 if result_video_file:
     st.video(result_video_file)

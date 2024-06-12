@@ -76,12 +76,39 @@ def main_generate_video_content():
     print("main_generate_video_content end")
 
 
+def main_try_test_audio():
+    print("main_try_test_audio begin")
+    audio_service = AudioService()
+    audio_rate = get_audio_rate()
+    audio_language = st.session_state.get("audio_language")
+    if audio_language == "en-US":
+        video_content = "hello,this is flydean"
+    else:
+        video_content = "你好，我是程序那些事"
+    audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
+    audio_service.read_with_ssml(video_content,
+                                 audio_voice,
+                                 audio_rate)
+
+
 def main_generate_video_dubbing():
     print("main_generate_video_dubbing begin")
     audio_service = AudioService()
     temp_file_name = random_with_system_time()
     audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".mp3")
     st.session_state["audio_output_file"] = audio_output_file
+    audio_rate = get_audio_rate()
+
+    video_content = get_must_session_option("video_content", "请先设置视频主题")
+    audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
+    audio_service.save_with_ssml(video_content,
+                                 audio_output_file,
+                                 audio_voice,
+                                 audio_rate)
+    print("main_generate_video_dubbing end")
+
+
+def get_audio_rate():
     audio_speed = st.session_state.get("audio_speed")
     if audio_speed == "normal":
         audio_rate = "0.00"
@@ -97,14 +124,7 @@ def main_generate_video_dubbing():
         audio_rate = "30.00"
     if audio_speed == "slowest":
         audio_rate = "-30.00"
-
-    video_content = get_must_session_option("video_content", "请先设置视频主题")
-    audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
-    audio_service.save_with_ssml(video_content,
-                                 audio_output_file,
-                                 audio_voice,
-                                 audio_rate)
-    print("main_generate_video_dubbing end")
+    return audio_rate
 
 
 def main_get_video_resource():

@@ -25,7 +25,6 @@ must_have_value(speech_key, "请设置Azure speech_key")
 must_have_value(service_region, "请设置Azure speech_key")
 
 
-
 class AudioService:
 
     def my_speech_synthesis_to_wave_file(self, text, file_name, voice="zh-CN-XiaoyiNeural"):
@@ -127,7 +126,7 @@ class AudioService:
             os.remove(file_name)
             self.my_speech_synthesis_to_wave_file_ssml(ssml, file_name)
 
-    def read_with_ssml(self, text, file_name, voice, rate="0.00"):
+    def read_with_ssml(self, text, voice, rate="0.00"):
         ssml = f"""
         <speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="en-US">
         <voice name="{voice}">
