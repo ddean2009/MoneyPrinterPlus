@@ -214,7 +214,13 @@ with subtitle_container:
                               "Songti SC Black",
                               "Songti SC Light",
                               "STSong",
-                              "Songti SC Regular"], )
+                              "Songti SC Regular",
+                              "PingFang SC Regular",
+                              "PingFang SC Medium",
+                              "PingFang SC Semibold",
+                              "PingFang SC Light",
+                              "PingFang SC Thin",
+                              "PingFang SC Ultralight"], )
     with llm_columns[2]:
         st.selectbox(label=tr("subtitle font size"), key="subtitle_font_size", index=1,
                      options=[4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24])

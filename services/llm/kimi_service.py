@@ -16,9 +16,11 @@ from tools.utils import must_have_value
 
 # 设置 Kimi API 的基础 URL 和 API 密钥
 KIMI_API_KEY = my_config['llm']['Moonshot']['api_key']  # 替换为您的 Kimi API 密钥
-KIMI_API_BASE_URL = my_config['llm']['Moonshot']['base_url']  # 替换为 Kimi API 的基础 URL
+# KIMI_API_BASE_URL = my_config['llm']['Moonshot']['base_url']  # 替换为 Kimi API 的基础 URL
+KIMI_MODEL_NAME = my_config['llm']['Moonshot']['model_name']  # 替换为 Kimi API 的model
 
 must_have_value(KIMI_API_KEY, "请设置Kimi API 密钥")
+must_have_value(KIMI_MODEL_NAME, "请设置Kimi API model")
 # must_have_value(KIMI_API_BASE_URL, "请设置Kimi API base URL")
 
 

@@ -18,16 +18,16 @@ llm:
     model_name: null
   Moonshot:
     api_key: YOUR_API_KEY
-    base_url: null
-    model_name: null
+    base_url: https://platform.moonshot.cn/
+    model_name: moonshot-v1-8k
   Ollama:
     api_key: YOUR_API_KEY
     base_url: null
     model_name: null
   OpenAI:
     api_key: YOUR_API_KEY
-    base_url: http://base.url.openai
-    model_name: null
+    base_url: https://api.openai.com/v1/
+    model_name: gpt-3.5-turbo
   Azure:
     api_key: YOUR_API_KEY
     base_url: http://base.url.openai

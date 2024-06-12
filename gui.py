@@ -86,7 +86,8 @@ selected_language = st.selectbox(tr("Language"), options=display_languages,
 # 设置资源
 resource_container = st.container(border=True)
 with resource_container:
-    resource_providers = ['pexels', 'pixabay']
+    # resource_providers = ['pexels', 'pixabay']
+    resource_providers = ['pexels']
     selected_resource_provider = my_config['resource']['provider']
     selected_resource_provider_index = 0
     for i, provider in enumerate(resource_providers):
@@ -105,16 +106,17 @@ with resource_container:
         pexels_api_key = st.text_input(tr("Pexels API Key"), value=pexels_api_key, type="password",
                                        key='pexels_api_key',
                                        on_change=save_pexels_api_key)
-    with key_panels[1]:
-        pixabay_api_key = my_config['resource']['pixabay']['api_key']
-        pixabay_api_key = st.text_input(tr("Pixabay API Key"), value=pixabay_api_key, type="password",
-                                        key='pixabay_api_key', on_change=save_pixabay_api_key)
+    # with key_panels[1]:
+    #     pixabay_api_key = my_config['resource']['pixabay']['api_key']
+    #     pixabay_api_key = st.text_input(tr("Pixabay API Key"), value=pixabay_api_key, type="password",
+    #                                     key='pixabay_api_key', on_change=save_pixabay_api_key)
 
 # 设置语音
 audio_container = st.container(border=True)
 with audio_container:
     st.info(tr("Audio Provider Info"))
-    audio_providers = ['Azure', 'Google', 'Mozilla', 'Polly', 'Tencent', 'Voicerss', 'Xunfei']
+    # audio_providers = ['Azure', 'Google', 'Mozilla', 'Polly', 'Tencent', 'Voicerss', 'Xunfei']
+    audio_providers = ['Azure']
     selected_audio_provider = my_config['audio']['provider']
     selected_audio_provider_index = 0
     for i, provider in enumerate(audio_providers):
@@ -127,17 +129,18 @@ with audio_container:
     with st.expander(audio_provider, expanded=True):
         audio_columns = st.columns(2)
         with audio_columns[0]:
-            st.text_input(label=tr("Speech Key"), value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''), on_change=set_audio_key, key=audio_provider + "_speech_key",
+            st.text_input(label=tr("Speech Key"),type="password", value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''), on_change=set_audio_key, key=audio_provider + "_speech_key",
                           args=(audio_provider, audio_provider + '_speech_key'))
         with audio_columns[1]:
-            st.text_input(label=tr("Service Region"), value=my_config['audio'].get(audio_provider, {}).get('service_region', ''), on_change=set_audio_region,
+            st.text_input(label=tr("Service Region"),type="password", value=my_config['audio'].get(audio_provider, {}).get('service_region', ''), on_change=set_audio_region,
                           key=audio_provider + "_service_region",
                           args=(audio_provider, audio_provider + '_service_region'))
 
 # 设置默认的LLM
 llm_container = st.container(border=True)
 with llm_container:
-    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'DeepSeek', 'Gemini', 'Ollama']
+    # llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'DeepSeek', 'Gemini', 'Ollama']
+    llm_providers = ['OpenAI', 'Moonshot', 'Azure']
     saved_llm_provider = my_config['llm']['provider']
     saved_llm_provider_index = 0
     for i, provider in enumerate(llm_providers):

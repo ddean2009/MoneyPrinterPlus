@@ -11,8 +11,10 @@ from tools.utils import must_have_value
 
 # 设置OpenAI API密钥
 OPENAI_API_KEY = my_config['llm']['OpenAI']['api_key']
+OPENAI_MODEL_NAME = my_config['llm']['OpenAI']['model_name']  # 替换为 open API 的model
 
 must_have_value(OPENAI_API_KEY, "请设置openAI 密钥")
+must_have_value(OPENAI_MODEL_NAME, "请设置openAI model")
 
 
 class MyOpenAIService(MyLLMService):
@@ -23,7 +25,7 @@ class MyOpenAIService(MyLLMService):
         # 创建 OpenAI 的 LLM 实例
         llm = ChatOpenAI(
             openai_api_key=OPENAI_API_KEY,
-            model_name="gpt-3.5-turbo",
+            model_name=OPENAI_MODEL_NAME,
         )
 
         # 创建 LLMChain
