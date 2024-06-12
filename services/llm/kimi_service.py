@@ -29,15 +29,17 @@ class MyKimiService(MyLLMService):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性
         os.environ["MOONSHOT_API_KEY"] = KIMI_API_KEY
 
-    def generate_content(self, topic: str, language: str, length: str, prompt_template: PromptTemplate):
+    def generate_content(self, topic: str, prompt_template: PromptTemplate, language: str = None, length: str = None):
         # 创建 Kimi 的 LLM 实例
         llm = Moonshot(model=KIMI_MODEL_NAME)
 
         # 创建 LLMChain
-        chain = prompt_template | llm | StrOutputParser()
+        # chain = prompt_template | llm | StrOutputParser()
+
+        description = llm.invoke(prompt_template.format(topic=topic, language=language, length=length))
 
         # 生成视频内容描述
-        description = chain.invoke({"topic": topic, "language": language, "length": length})
+        # description = chain.invoke({"topic": topic, "language": language, "length": length})
 
         return description.strip()
 

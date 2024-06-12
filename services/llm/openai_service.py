@@ -1,7 +1,4 @@
-import openai
-from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
-from langchain.llms import OpenAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 
@@ -21,7 +18,7 @@ class MyOpenAIService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性
 
-    def generate_content(self, topic: str, language: str, length: str, prompt_template: PromptTemplate):
+    def generate_content(self, topic: str, prompt_template: PromptTemplate, language: str = None, length: str = None):
         # 创建 OpenAI 的 LLM 实例
         llm = ChatOpenAI(
             openai_api_key=OPENAI_API_KEY,

@@ -6,6 +6,8 @@ from config.config import my_config
 from services.audio.audio_service import AudioService
 from services.captioning.captioning_service import generate_caption, add_subtitles
 from services.llm.azure_service import MyAzureService
+from services.llm.kimi_service import MyKimiService
+from services.llm.openai_service import MyOpenAIService
 from services.resource.pexels_service import PexelsService
 from services.video.video_service import get_audio_duration, VideoService
 from tools.tr_utils import tr
@@ -34,13 +36,24 @@ default_subtitle_file = '/Users/wayne/data/git/projects/hunjian/work/17180758490
 test_mode = my_config["test_mode"]
 
 
+def get_llm_provider(llm_provider):
+    if llm_provider == "Azure":
+        return MyAzureService()
+    if llm_provider == "OpenAI":
+        return MyOpenAIService()
+    if llm_provider == "Moonshot":
+        return MyKimiService()
+
+
 def main_generate_video_content():
     print("main_generate_video_content begin")
-    topic = get_must_session_option('video_subject',"请输入要生成的主题")
+    topic = get_must_session_option('video_subject', "请输入要生成的主题")
     video_language = st.session_state.get('video_language')
     video_length = st.session_state.get('video_length')
 
-    llm_service = MyAzureService()
+    llm_provider = my_config['llm']['provider']
+    print("llm_provider:", llm_provider)
+    llm_service = get_llm_provider(llm_provider)
     st.session_state["video_content"] = llm_service.generate_content(topic,
                                                                      llm_service.topic_prompt_template,
                                                                      video_language,
