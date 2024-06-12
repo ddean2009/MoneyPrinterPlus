@@ -41,7 +41,7 @@ resource:
   pexels:
     api_key: API_KEY
   pixabay:
-    api_key: 456
+    api_key: API_KEY
   provider: pexels
 ui:
   language: zh-CN

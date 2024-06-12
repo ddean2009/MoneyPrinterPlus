@@ -120,7 +120,7 @@ streamlit run gui.py
 
 ### 基本配置
 
-1. 资源库
+#### 1. 资源库
 
 目前所有的资源都来自于pexels,  [www.**pexels**.com](http://www.baidu.com/link?url=p6mTwVNLZuz6L4Xs2P3ziLBLp7hMjXgFGOP-ERxyPmxmbUhGoYt0FLwUGmCqnmA4)  **Pexels** 是世界上著名的免费图片，视频素材网站。
 
@@ -128,9 +128,11 @@ streamlit run gui.py
 
 
 
->  后续会陆续添加其他资源库。
+>  后续会陆续添加其他资源库。如（**[pixabay.com](https://link.zhihu.com/?target=https%3A//pixabay.com)**，**[videvo.net](https://link.zhihu.com/?target=https%3A//www.videvo.net)**，**[videezy.com](https://link.zhihu.com/?target=https%3A//www.videezy.com)** 等）
+>
+>  
 
-2. 音频库
+#### 2. 音频库
 
 目前文字转语音和语音识别功能使用的是Azure的cognitive-services服务。
 
@@ -142,17 +144,19 @@ Azure对新用户是1年免费的。费用也是比较便宜。
 
 ![image-20240612135624840](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406121356171.png)
 
-2. LLM大模型
+#### 3. LLM大模型
 
-   大模型区目前支持Moonshot,openAI和Azure openAI三种。 
+大模型区目前支持Moonshot,openAI和Azure openAI三种。 
 
-   > 推荐使用Moonshot。 
-   >
-   > 会陆续添加市面上其他流行的大模型。
+> 推荐使用Moonshot。 
+>
+> 会陆续添加市面上其他流行的大模型。
 
 ![image-20240612140227679](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406121402690.png)
 
 
+
+Moonshot API获取地址： https://platform.moonshot.cn/ 
 
 
 
@@ -228,5 +232,5 @@ Azure对新用户是1年免费的。费用也是比较便宜。
 
 如果大家有什么问题或者想法，欢迎入群讨论。
 
-![MoneyPrinterPlus讨论组](group.jpg)
+<img src="group.jpg" alt="MoneyPrinterPlus讨论组" style="zoom:50%;" />
 
