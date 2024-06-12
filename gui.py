@@ -74,6 +74,8 @@ def set_llm_base_url(provider, key):
 
 
 def set_llm_model_name(provider, key):
+    if provider not in my_config['llm']:
+        my_config['llm'][provider] = {}
     my_config['llm'][provider]['model_name'] = st.session_state[key]
     save_config()
 
@@ -147,9 +149,9 @@ with audio_container:
 
 # 设置默认的LLM
 llm_container = st.container(border=True)
-with llm_container:
+with (llm_container):
     # llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'DeepSeek', 'Gemini', 'Ollama']
-    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan']
+    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan']
     saved_llm_provider = my_config['llm']['provider']
     saved_llm_provider_index = 0
     for i, provider in enumerate(llm_providers):
@@ -178,10 +180,11 @@ with llm_container:
                                             type="password", key=llm_provider + '_secret_key', on_change=set_llm_sk,
                                             args=(llm_provider, llm_provider + '_secret_key'))
         else:
-            st_llm_base_url = st.text_input(tr("Base Url"),
-                                            value=my_config['llm'].get(llm_provider, {}).get('base_url', ''),
-                                            type="password", key=llm_provider + '_base_url', on_change=set_llm_base_url,
-                                            args=(llm_provider, llm_provider + '_base_url'))
+            if llm_provider == 'Azure':
+                st_llm_base_url = st.text_input(tr("Base Url"),
+                                                value=my_config['llm'].get(llm_provider, {}).get('base_url', ''),
+                                                type="password", key=llm_provider + '_base_url', on_change=set_llm_base_url,
+                                                args=(llm_provider, llm_provider + '_base_url'))
 
         st_llm_model_name = st.text_input(tr("Model Name"),
                                           value=my_config['llm'].get(llm_provider, {}).get('model_name', ''),
