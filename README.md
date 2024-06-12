@@ -83,6 +83,8 @@
 - LLM api key
 - Azure语音api key
 
+> 切记！！！！！ 一定要安装好ffmpeg,并把ffmpeg路径添加到环境变量中。
+
 ## 安装
 
 1. 确保你有Python 3.10+的运行环境。如果是windows, 请确保安装了python路径已经添加到了PATH中。
