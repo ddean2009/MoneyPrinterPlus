@@ -1,0 +1,11 @@
+__pycache__/
+.idea/
+config/sceneconfig.yml
+config/sceneconfig_linux.yml
+config/config.yml
+*.db
+temp/*
+hunjian_main.py
+.DS_Store
+*/.DS_Store
+

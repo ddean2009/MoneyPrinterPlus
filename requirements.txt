@@ -1,0 +1,8 @@
+langchain_openai
+langchain
+langchain-community
+openai
+azure-cognitiveservices-speech
+streamlit
+wxPython
+pillow
