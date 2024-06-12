@@ -58,6 +58,11 @@ def set_audio_region(provider, key):
     save_config()
 
 
+def set_llm_sk(provider, key):
+    my_config['llm'][provider]['secret_key'] = st.session_state[key]
+    save_config()
+
+
 def set_llm_key(provider, key):
     my_config['llm'][provider]['api_key'] = st.session_state[key]
     save_config()
@@ -129,10 +134,14 @@ with audio_container:
     with st.expander(audio_provider, expanded=True):
         audio_columns = st.columns(2)
         with audio_columns[0]:
-            st.text_input(label=tr("Speech Key"),type="password", value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''), on_change=set_audio_key, key=audio_provider + "_speech_key",
+            st.text_input(label=tr("Speech Key"), type="password",
+                          value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''),
+                          on_change=set_audio_key, key=audio_provider + "_speech_key",
                           args=(audio_provider, audio_provider + '_speech_key'))
         with audio_columns[1]:
-            st.text_input(label=tr("Service Region"),type="password", value=my_config['audio'].get(audio_provider, {}).get('service_region', ''), on_change=set_audio_region,
+            st.text_input(label=tr("Service Region"), type="password",
+                          value=my_config['audio'].get(audio_provider, {}).get('service_region', ''),
+                          on_change=set_audio_region,
                           key=audio_provider + "_service_region",
                           args=(audio_provider, audio_provider + '_service_region'))
 
@@ -140,7 +149,7 @@ with audio_container:
 llm_container = st.container(border=True)
 with llm_container:
     # llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'DeepSeek', 'Gemini', 'Ollama']
-    llm_providers = ['OpenAI', 'Moonshot', 'Azure']
+    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan']
     saved_llm_provider = my_config['llm']['provider']
     saved_llm_provider_index = 0
     for i, provider in enumerate(llm_providers):
@@ -158,12 +167,22 @@ with llm_container:
                ##### {llm_provider} 配置信息
                """
         st.info(tips)
-        st_llm_api_key = st.text_input(tr("API Key"), value=my_config['llm'].get(llm_provider, {}).get('api_key', ''),
+        st_llm_api_key = st.text_input(tr("API Key"),
+                                       value=my_config['llm'].get(llm_provider, {}).get('api_key', ''),
                                        type="password", key=llm_provider + '_api_key', on_change=set_llm_key,
                                        args=(llm_provider, llm_provider + '_api_key'))
-        st_llm_base_url = st.text_input(tr("Base Url"), value=my_config['llm'].get(llm_provider, {}).get('base_url', ''),
-                                        type="password",key=llm_provider + '_base_url', on_change=set_llm_base_url,
-                                        args=(llm_provider, llm_provider + '_base_url'))
+
+        if llm_provider == 'Qianfan':
+            st_llm_base_url = st.text_input(tr("Secret Key"),
+                                            value=my_config['llm'].get(llm_provider, {}).get('secret_key', ''),
+                                            type="password", key=llm_provider + '_secret_key', on_change=set_llm_sk,
+                                            args=(llm_provider, llm_provider + '_secret_key'))
+        else:
+            st_llm_base_url = st.text_input(tr("Base Url"),
+                                            value=my_config['llm'].get(llm_provider, {}).get('base_url', ''),
+                                            type="password", key=llm_provider + '_base_url', on_change=set_llm_base_url,
+                                            args=(llm_provider, llm_provider + '_base_url'))
+
         st_llm_model_name = st.text_input(tr("Model Name"),
                                           value=my_config['llm'].get(llm_provider, {}).get('model_name', ''),
                                           key=llm_provider + '_model_name', on_change=set_llm_model_name,

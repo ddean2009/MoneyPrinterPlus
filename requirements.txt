@@ -6,3 +6,4 @@ azure-cognitiveservices-speech
 streamlit
 wxPython
 pillow
+qianfan

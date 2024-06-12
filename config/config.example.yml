@@ -33,10 +33,10 @@ llm:
     base_url: http://base.url.openai
     model_name: null
   Qianfan:
-    ak: YOUR_AK_KEY
-    sk: YOUR_SK_KEY
+    api_key: YOUR_API_KEY
+    secret_key: YOUR_SK_KEY
     model_name: ERNIE-Bot-turbo
-  provider: OpenAI
+  provider: Moonshot
 resource:
   pexels:
     api_key: API_KEY

@@ -6,6 +6,7 @@ from config.config import my_config
 from services.audio.audio_service import AudioService
 from services.captioning.captioning_service import generate_caption, add_subtitles
 from services.llm.azure_service import MyAzureService
+from services.llm.baidu_qianfan_service import BaiduQianfanService
 from services.llm.kimi_service import MyKimiService
 from services.llm.openai_service import MyOpenAIService
 from services.resource.pexels_service import PexelsService
@@ -43,6 +44,8 @@ def get_llm_provider(llm_provider):
         return MyOpenAIService()
     if llm_provider == "Moonshot":
         return MyKimiService()
+    if llm_provider == "Qianfan":
+        return BaiduQianfanService()
 
 
 def main_generate_video_content():

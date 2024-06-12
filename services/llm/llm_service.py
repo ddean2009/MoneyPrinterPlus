@@ -11,7 +11,8 @@ class MyLLMService(ABC):
             template=self.topic_template
         )
 
-        self.keyword_template = "请分析下面内容,然后提取出1-5个简短的关键词,关键词用英文表示,用逗号分割：\n\n内容: {topic}\n\n英文关键词:"
+        # self.keyword_template = "请分析下面内容,然后提取出1-5个简短的英文关键词,关键词用英文表示,用逗号分割,不需要序号：\n\n内容: {topic}\n\n"
+        self.keyword_template = "Please analyze the following content in english, and then extract 1-5 short English keywords,keywords separated by commas, do not need serial number,return the keyword only：\n\ncontent: {topic}\n\n"
         self.keyword_prompt_template = PromptTemplate(
             input_variables=["topic"],
             template=self.keyword_template
