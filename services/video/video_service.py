@@ -228,9 +228,9 @@ class VideoService:
                 # 当前文件是视频文件
                 video_duration = get_video_duration(media_file)
                 video_width, video_height = get_video_info(media_file)
-                video_fps = get_video_fps(media_file)
+                # video_fps = get_video_fps(media_file)
                 # 转换之后的duration
-                video_duration = video_duration * float(self.fps) / float(video_fps)
+                # video_duration = video_duration * float(self.fps) / float(video_fps)
                 output_name = generate_temp_filename(media_file)
                 if self.seg_min_duration > video_duration:
                     # 需要扩展视频

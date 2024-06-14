@@ -119,8 +119,8 @@ with captioning_container:
                      key="audio_speed")
     with llm_columns[3]:
         st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_audio)
-    if test_mode:
-        st.button(label=tr("Generate Video dubbing"), on_click=generate_video_dubbing)
+    # if test_mode:
+    #     st.button(label=tr("Generate Video dubbing"), on_click=generate_video_dubbing)
 
 # 背景音乐
 bg_music_container = st.container(border=True)
@@ -204,8 +204,8 @@ with video_container:
     with llm_columns[3]:
         st.selectbox(label=tr("video Transition effect duration"), key="video_transition_effect_duration",
                      options=["1", "2"])
-    if test_mode:
-        st.button(label=tr("Get Video Resource"), on_click=get_video_resource)
+    # if test_mode:
+    #     st.button(label=tr("Get Video Resource"), on_click=get_video_resource)
 
 # 字幕
 subtitle_container = st.container(border=True)
@@ -254,8 +254,8 @@ with subtitle_container:
     with llm_columns[3]:
         st.slider(label=tr("subtitle border width"), min_value=0.0, value=0.0, max_value=4.0, step=1.0,
                   key="subtitle_border_width")
-    if test_mode:
-        st.button(label=tr("Generate subtitle"), on_click=generate_subtitle)
+    # if test_mode:
+    #     st.button(label=tr("Generate subtitle"), on_click=generate_subtitle)
 
 # 生成视频
 video_generator = st.container(border=True)

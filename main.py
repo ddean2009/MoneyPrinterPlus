@@ -13,6 +13,7 @@ from services.llm.kimi_service import MyKimiService
 from services.llm.openai_service import MyOpenAIService
 from services.llm.tongyi_service import MyTongyiService
 from services.resource.pexels_service import PexelsService
+from services.resource.pixabay_service import PixabayService
 from services.video.video_service import get_audio_duration, VideoService
 from tools.tr_utils import tr
 from tools.utils import random_with_system_time, get_must_session_option
@@ -28,16 +29,13 @@ script_dir = os.path.dirname(script_path)
 audio_output_dir = os.path.join(script_dir, "./work")
 audio_output_dir = os.path.abspath(audio_output_dir)
 
-default_video_keyword = "AI"
-default_audio_file = '/Users/wayne/data/git/projects/hunjian/work/1718075778714.mp3'
-default_video_file = ["/Users/wayne/data/git/projects/hunjian/work/pexels-9373204-hd_1920_1080_25fps.mp4",
-                      "/Users/wayne/data/git/projects/hunjian/work/pexels-18069166-uhd_3840_2160_24fps.mp4",
-                      "/Users/wayne/data/git/projects/hunjian/work/pexels-18069232-hd_1920_1080_24fps.mp4",
-                      "/Users/wayne/data/git/projects/hunjian/work/pexels-18069235-hd_1920_1080_24fps.mp4",
-                      "/Users/wayne/data/git/projects/hunjian/work/pexels-18069403-uhd_3840_2160_24fps.mp4"]
-default_subtitle_file = '/Users/wayne/data/git/projects/hunjian/work/1718075849055.srt'
-
-test_mode = my_config["test_mode"]
+def get_resource_provider():
+    resource_provider = my_config['resource']['provider']
+    print("resource_provider:", resource_provider)
+    if resource_provider == "pexels":
+        return PexelsService()
+    if resource_provider == "pixabay":
+        return PixabayService()
 
 
 def get_llm_provider(llm_provider):
@@ -129,20 +127,9 @@ def get_audio_rate():
 
 def main_get_video_resource():
     print("main_get_video_resource begin")
-    resource_service = PexelsService()
-    if test_mode:
-        if not st.session_state.get("video_keyword"):
-            print("video_keyword not exist")
-            query = default_video_keyword
-    else:
-        query = get_must_session_option("video_keyword", "请先设置视频关键字")
-
-    if test_mode:
-        if not st.session_state.get("audio_output_file"):
-            print("no audio file")
-            audio_file = default_audio_file
-    else:
-        audio_file = get_must_session_option("audio_output_file", "请先生成配音文件")
+    resource_service = get_resource_provider()
+    query = get_must_session_option("video_keyword", "请先设置视频关键字")
+    audio_file = get_must_session_option("audio_output_file", "请先生成配音文件")
     audio_length = get_audio_duration(audio_file)
     print("audio_length:", audio_length)
     return_videos, total_length = resource_service.handle_video_resource(query, audio_length, 50, False)
@@ -158,12 +145,7 @@ def main_generate_subtitle():
         random_name = random_with_system_time()
         captioning_output = os.path.join(audio_output_dir, f"{random_name}.srt")
         st.session_state["captioning_output"] = captioning_output
-        if test_mode:
-            if not st.session_state.get("audio_output_file"):
-                print("no audio file")
-                st.session_state["audio_output_file"] = default_audio_file
-        else:
-            audio_output_file = get_must_session_option("audio_output_file", "请先生成配音文件")
+        audio_output_file = get_must_session_option("audio_output_file", "请先生成配音文件")
         generate_caption()
 
 
@@ -172,29 +154,15 @@ def main_generate_ai_video(video_generator):
     with video_generator:
         st_area = st.status(tr("Generate Video in process..."), expanded=True)
         with st_area as status:
-            if not test_mode:
-                st.write(tr("Generate Video Dubbing..."))
-                main_generate_video_dubbing()
-                st.write(tr("Get Video Resource..."))
-                main_get_video_resource()
-                st.write(tr("Generate Video subtitles..."))
-                main_generate_subtitle()
+            st.write(tr("Generate Video Dubbing..."))
+            main_generate_video_dubbing()
+            st.write(tr("Get Video Resource..."))
+            main_get_video_resource()
+            st.write(tr("Generate Video subtitles..."))
+            main_generate_subtitle()
             st.write(tr("Video normalize..."))
-            if test_mode:
-                if not st.session_state.get("audio_output_file"):
-                    print("no audio file")
-                    st.session_state["audio_output_file"] = default_audio_file
-                audio_file = st.session_state.get("audio_output_file")
-            else:
-                audio_file = get_must_session_option("audio_output_file", "请先生成配音文件")
-
-            if test_mode:
-                if not st.session_state.get("return_videos"):
-                    print("no video file")
-                    video_list = default_video_file
-                video_list = st.session_state.get("return_videos")
-            else:
-                video_list = get_must_session_option("return_videos", "请先生成视频资源文件")
+            audio_file = get_must_session_option("audio_output_file", "请先生成配音文件")
+            video_list = get_must_session_option("return_videos", "请先生成视频资源文件")
 
             video_service = VideoService(video_list, audio_file)
             print("normalize video")
@@ -206,11 +174,7 @@ def main_generate_ai_video(video_generator):
             enable_subtitles = st.session_state.get("enable_subtitles")
             if enable_subtitles:
                 st.write(tr("Add Subtitles..."))
-                if test_mode:
-                    if not st.session_state.get('captioning_output'):
-                        subtitle_file = default_subtitle_file
-                else:
-                    subtitle_file = get_must_session_option('captioning_output', "请先生成字幕文件")
+                subtitle_file = get_must_session_option('captioning_output', "请先生成字幕文件")
 
                 font_name = st.session_state.get('subtitle_font')
                 font_size = st.session_state.get('subtitle_font_size')

@@ -5,7 +5,7 @@ from langchain_core.prompts import PromptTemplate
 
 class MyLLMService(ABC):
     def __init__(self):
-        self.topic_template = "请为以下视频主题生成一个详细的适合生成视频字幕的视频内容文案,内容在{length}字以内：\n\n视频主题: {topic}\n\n返回内容用{language}表示"
+        self.topic_template = "请为以下主题扩展为详细的一篇文章,内容在{length}字以内,\n\n主题: {topic}\n\n返回内容用{language}表示"
         self.topic_prompt_template = PromptTemplate(
             input_variables=["topic", "language", "length"],
             template=self.topic_template

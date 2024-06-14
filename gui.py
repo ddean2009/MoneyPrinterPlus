@@ -93,8 +93,7 @@ selected_language = st.selectbox(tr("Language"), options=display_languages,
 # 设置资源
 resource_container = st.container(border=True)
 with resource_container:
-    # resource_providers = ['pexels', 'pixabay']
-    resource_providers = ['pexels']
+    resource_providers = ['pexels', 'pixabay']
     selected_resource_provider = my_config['resource']['provider']
     selected_resource_provider_index = 0
     for i, provider in enumerate(resource_providers):
@@ -113,10 +112,10 @@ with resource_container:
         pexels_api_key = st.text_input(tr("Pexels API Key"), value=pexels_api_key, type="password",
                                        key='pexels_api_key',
                                        on_change=save_pexels_api_key)
-    # with key_panels[1]:
-    #     pixabay_api_key = my_config['resource']['pixabay']['api_key']
-    #     pixabay_api_key = st.text_input(tr("Pixabay API Key"), value=pixabay_api_key, type="password",
-    #                                     key='pixabay_api_key', on_change=save_pixabay_api_key)
+    with key_panels[1]:
+        pixabay_api_key = my_config['resource']['pixabay']['api_key']
+        pixabay_api_key = st.text_input(tr("Pixabay API Key"), value=pixabay_api_key, type="password",
+                                        key='pixabay_api_key', on_change=save_pixabay_api_key)
 
 # 设置语音
 audio_container = st.container(border=True)

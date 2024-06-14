@@ -34,6 +34,10 @@
 
 觉得有用的朋友，请给个star! ![Github stars](https://img.shields.io/github/stars/ddean2009/MoneyPrinterPlus.svg)
 
+# 更新列表
+
+- 20240614 资源库支持pixabay,修复一些bug
+
 # 已实现功能
 
 - [x] 大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek,
@@ -51,6 +55,7 @@
 # 待实现功能
 
 - [] 支持本地语音字幕识别模型
+- [] 支持国内云厂商的语音识别
 - [] 支持更多的视频资源获取方式
 - [] 支持更多的视频转场特效
 - [] 支持更多的字幕特效
