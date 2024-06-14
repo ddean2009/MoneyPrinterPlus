@@ -127,13 +127,14 @@ streamlit run gui.py
 
 #### 1. 资源库
 
-目前所有的资源都来自于pexels,  [www.pexels.com](https://www.pexels.com/)  **Pexels** 是世界上著名的免费图片，视频素材网站。
+目前资源支持：
 
-大家需要到pexels上注册一个key来实现API调用。
+* pexels:  [www.pexels.com](https://www.pexels.com/)  **Pexels** 是世界上著名的免费图片，视频素材网站。
+* pixabay: [pixabay.com](https://pixabay.com/) 
 
+大家需要到对应的网站上注册一个key来实现API调用。
 
-
->  后续会陆续添加其他资源库。如（[pixabay.com](https://pixabay.com/)，[videvo.net](https://www.videvo.net)，[videezy.com](https://www.videezy.com) 等）
+>  后续会陆续添加其他资源库。如（[videvo.net](https://www.videvo.net)，[videezy.com](https://www.videezy.com) 等）
 >
 >  
 
