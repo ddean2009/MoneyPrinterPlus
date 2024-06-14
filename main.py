@@ -93,7 +93,7 @@ def main_generate_video_dubbing():
     print("main_generate_video_dubbing begin")
     audio_service = AudioService()
     temp_file_name = random_with_system_time()
-    audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".mp3")
+    audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".wav")
     st.session_state["audio_output_file"] = audio_output_file
     audio_rate = get_audio_rate()
 

@@ -37,6 +37,8 @@
 # 更新预告
 
 * 有很多小伙伴反应微软云注册起来很麻烦，为了解决小伙伴的问题，下一步决定实现国内云厂商的语音合成和语音识别功能，让每个人都能用上这个服务。
+  阿里云3个月免费试用。 
+
 * 后面会支持本地模型的语音合成和识别功能(效果可能不如用云厂商的服务)
 
 # 更新列表
@@ -249,5 +251,9 @@ DeepSeek API获取地址: https://www.deepseek.com/
 
 如果大家有什么问题或者想法，欢迎入群讨论。
 
-<img src="group.jpg" alt="MoneyPrinterPlus讨论组" style="zoom:50%;" />
+
+
+![image-20240614210314775](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406142103431.png)
+
+
 
