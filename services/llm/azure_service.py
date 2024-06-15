@@ -11,14 +11,15 @@ AZURE_OPENAI_API_KEY = my_config['llm']['Azure']['api_key']  # 替换为您的 A
 AZURE_OPENAI_API_BASE = my_config['llm']['Azure']['base_url']  # 替换为您的 Azure OpenAI API 基础 URL
 AZURE_OPENAI_MODEL_NAME = my_config['llm']['Azure']['model_name']  # 替换为您的 Azure OpenAI 部署名称
 
-must_have_value(AZURE_OPENAI_API_KEY, "请设置Azure OpenAI API 密钥")
-must_have_value(AZURE_OPENAI_API_BASE, "请设置Azure OpenAI API base URL")
-must_have_value(AZURE_OPENAI_MODEL_NAME, "请设置Azure OpenAI API deploy name")
 
 
 class MyAzureService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性
+        must_have_value(AZURE_OPENAI_API_KEY, "请设置Azure OpenAI API 密钥")
+        must_have_value(AZURE_OPENAI_API_BASE, "请设置Azure OpenAI API base URL")
+        must_have_value(AZURE_OPENAI_MODEL_NAME, "请设置Azure OpenAI API deploy name")
+
         print("")
 
     def generate_content(self, topic: str, prompt_template: PromptTemplate, language: str = None, length: str = None):

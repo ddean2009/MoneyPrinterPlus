@@ -43,13 +43,15 @@
 
 # 更新列表
 
+- 20240615 语音识别和语音合成支持阿里云。 需要开通阿里云智能语音交互功能--必须开通语音合成和录音文件识别（极速版）这两个功能
 - 20240614 资源库支持pixabay,支持语音试听功能,修复一些bug
 
 # 已实现功能
 
 - [x] 大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek,
 - [x] 支持Azure语音功能
-- [x] 支持60+不同的语音种类
+- [x] 支持阿里云语音功能
+- [x] 支持100+不同的语音种类
 - [x] 支持语音试听功能
 - [x] 支持30+种视频转场特效
 - [x] 支持不同分辨率，不同尺寸和比例的视频生成
@@ -96,7 +98,7 @@
 - Python 3.10+
 - ffmpeg 6.0+
 - LLM api key
-- Azure语音api key
+- Azure语音服务(https://speech.microsoft.com/portal) 或者阿里云智能语音功能(https://nls-portal.console.aliyun.com/overview)
 
 > 切记！！！！！ 一定要安装好ffmpeg,并把ffmpeg路径添加到环境变量中。
 
@@ -147,11 +149,22 @@ streamlit run gui.py
 
 #### 2. 音频库
 
-目前文字转语音和语音识别功能使用的是Azure的cognitive-services服务。
+目前文字转语音和语音识别功能支持：
+1. Azure的cognitive-services服务。
+2. 阿里云的智能语音交互
+
+Azure：
 
 大家需要到  https://speech.microsoft.com/portal  这里注册一个key。
 
 Azure对新用户是1年免费的。费用也是比较便宜。
+
+阿里云：
+
+大家需要到 https://nls-portal.console.aliyun.com/overview 这里开通服务，并添加一个项目。
+
+需要开通阿里云智能语音交互功能--必须开通语音合成和录音文件识别（极速版）这两个功能.
+
 
 >  后续会添加本地语音识别大模型。但是文字转语音还是微软的服务最为优秀。
 

@@ -1,7 +1,9 @@
 import os
 from typing import Optional
 
-from services.captioning.azure_captioning_service import run_captioning
+from config.config import my_config
+from services.alinls.speech_process import AliRecognitionService
+from services.captioning.azure_captioning_service import run_captioning, Captioning
 import subprocess
 
 from tools.file_utils import generate_temp_filename
@@ -23,10 +25,22 @@ font_dir = os.path.abspath(font_dir)
 
 # 生成字幕
 def generate_caption():
-    run_captioning()
-    # video_file = get_session_option('video_file')
-    # subtitle_file = get_session_option('captioning_output')
-    # add_subtitles(video_file, subtitle_file)
+    captioning = Captioning()
+    captioning.initialize()
+    speech_recognizer_data = captioning.speech_recognizer_from_user_config()
+    # print(speech_recognizer_data)
+    selected_audio_provider = my_config['audio']['provider']
+    if selected_audio_provider == 'Azure':
+        captioning.recognize_continuous(speech_recognizer=speech_recognizer_data["speech_recognizer"],
+                                        format=speech_recognizer_data["audio_stream_format"],
+                                        callback=speech_recognizer_data["pull_input_audio_stream_callback"],
+                                        stream=speech_recognizer_data["pull_input_audio_stream"])
+    if selected_audio_provider == 'Ali':
+        ali_service = AliRecognitionService()
+        result_list = ali_service.process(get_session_option("audio_output_file"))
+        # print("result_list:", result_list)
+        captioning._offline_results = result_list
+    captioning.finish()
 
 
 # 添加字幕

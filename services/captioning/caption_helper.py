@@ -5,7 +5,9 @@
 
 from datetime import time
 from typing import List, Optional, Tuple
-import azure.cognitiveservices.speech as speechsdk  # type: ignore
+
+from services.alinls.speech_process import AliRecognitionResult
+import azure.cognitiveservices.speech as speechsdk
 
 from services.captioning import helper
 
@@ -26,7 +28,7 @@ def get_captions(language: Optional[str], max_width: int, max_height: int, resul
 
 class CaptionHelper(object):
     def __init__(self, language: Optional[str], max_width: int, max_height: int,
-                 results: List[speechsdk.RecognitionResult]):
+                 results: List[object]):
         self._language = language
         self._max_width = max_width
         self._max_height = max_height
@@ -56,26 +58,17 @@ class CaptionHelper(object):
 
     def add_captions_for_all_results(self) -> None:
         for result in self._results:
-            if result.offset <= 0 or not self.is_final_result(result):
+            if (hasattr(result, 'offset') and result.offset <= 0) or not self.is_final_result(result):
                 continue
             text = self.get_text_or_translation(result)
             if not text:
                 continue
             self.add_captions_for_final_result(result, text)
 
-    def get_text_or_translation(self, result: speechsdk.RecognitionResult) -> Optional[str]:
+    def get_text_or_translation(self, result: object) -> Optional[str]:
         return result.text
 
-        # 20220921 We do not use this for now because this sample
-        # does not handle TranslationRecognitionResults.
-        # if not self._language :
-        #    return result.text
-        # if type(result) is speechsdk.TranslationRecognitionResult and self._language in result.Translations :
-        #    return result.Translations[self._language]
-        # else :
-        #    return None
-
-    def add_captions_for_final_result(self, result: speechsdk.RecognitionResult, text: str) -> None:
+    def add_captions_for_final_result(self, result: object, text: str) -> None:
         caption_starts_at = 0
         caption_lines: List[str] = []
         index = 0
@@ -139,23 +132,31 @@ class CaptionHelper(object):
             index += 1
         return index
 
-    def get_full_caption_result_timing(self, result: speechsdk.RecognitionResult) -> Tuple[time, time]:
-        begin = helper.time_from_ticks(result.offset)
-        end = helper.time_from_ticks(result.offset + result.duration)
-        return begin, end
+    def get_full_caption_result_timing(self, result: object) -> Tuple[time, time]:
+        if isinstance(result, speechsdk.RecognitionResult):
+            begin = helper.time_from_ticks(result.offset)
+            end = helper.time_from_ticks(result.offset + result.duration)
+            return begin, end
+        if isinstance(result, AliRecognitionResult):
+            begin = helper.time_from_milliseconds(result.begin_time)
+            end = helper.time_from_milliseconds(result.end_time)
+            return begin, end
 
-    def get_partial_result_caption_timing(self, result: speechsdk.RecognitionResult, text: str, caption_text: str,
+    def get_partial_result_caption_timing(self, result: object, text: str, caption_text: str,
                                           caption_starts_at: int, caption_length: int) -> Tuple[time, time]:
         (result_begin, result_end) = self.get_full_caption_result_timing(result)
         result_duration = helper.subtract_times(result_end, result_begin)
         text_length = len(text)
         partial_begin = helper.add_time_and_timedelta(result_begin, result_duration * caption_starts_at / text_length)
         partial_end = helper.add_time_and_timedelta(result_begin, result_duration * (
-                    caption_starts_at + caption_length) / text_length)
+                caption_starts_at + caption_length) / text_length)
         return partial_begin, partial_end
 
-    def is_final_result(self, result: speechsdk.RecognitionResult) -> bool:
-        return speechsdk.ResultReason.RecognizedSpeech == result.reason or speechsdk.ResultReason.RecognizedIntent == result.reason or speechsdk.ResultReason.TranslatedSpeech == result.reason
+    def is_final_result(self, result: object) -> bool:
+        if isinstance(result, speechsdk.RecognitionResult):
+            return speechsdk.ResultReason.RecognizedSpeech == result.reason or speechsdk.ResultReason.RecognizedIntent == result.reason or speechsdk.ResultReason.TranslatedSpeech == result.reason
+        if isinstance(result, AliRecognitionResult):
+            return True
 
     def lines_from_text(self, text: str) -> List[str]:
         retval: List[str] = []

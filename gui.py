@@ -49,11 +49,36 @@ def set_audio_provider():
 
 
 def set_audio_key(provider, key):
+    if provider not in my_config['audio']:
+        my_config['audio'][provider] = {}
     my_config['audio'][provider]['speech_key'] = st.session_state[key]
     save_config()
 
 
+def set_audio_access_key_id(provider, key):
+    if provider not in my_config['audio']:
+        my_config['audio'][provider] = {}
+    my_config['audio'][provider]['access_key_id'] = st.session_state[key]
+    save_config()
+
+
+def set_audio_access_key_secret(provider, key):
+    if provider not in my_config['audio']:
+        my_config['audio'][provider] = {}
+    my_config['audio'][provider]['access_key_secret'] = st.session_state[key]
+    save_config()
+
+
+def set_audio_app_key(provider, key):
+    if provider not in my_config['audio']:
+        my_config['audio'][provider] = {}
+    my_config['audio'][provider]['app_key'] = st.session_state[key]
+    save_config()
+
+
 def set_audio_region(provider, key):
+    if provider not in my_config['audio']:
+        my_config['audio'][provider] = {}
     my_config['audio'][provider]['service_region'] = st.session_state[key]
     save_config()
 
@@ -121,8 +146,8 @@ with resource_container:
 audio_container = st.container(border=True)
 with audio_container:
     st.info(tr("Audio Provider Info"))
-    # audio_providers = ['Azure', 'Google', 'Mozilla', 'Polly', 'Tencent', 'Voicerss', 'Xunfei']
-    audio_providers = ['Azure']
+    audio_providers = ['Azure', 'Ali']
+    # audio_providers = ['Azure']
     selected_audio_provider = my_config['audio']['provider']
     selected_audio_provider_index = 0
     for i, provider in enumerate(audio_providers):
@@ -133,23 +158,43 @@ with audio_container:
     audio_provider = st.selectbox(tr("Audio Provider"), options=audio_providers, index=selected_audio_provider_index,
                                   key='audio_provider', on_change=set_audio_provider)
     with st.expander(audio_provider, expanded=True):
-        audio_columns = st.columns(2)
-        with audio_columns[0]:
-            st.text_input(label=tr("Speech Key"), type="password",
-                          value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''),
-                          on_change=set_audio_key, key=audio_provider + "_speech_key",
-                          args=(audio_provider, audio_provider + '_speech_key'))
-        with audio_columns[1]:
-            st.text_input(label=tr("Service Region"), type="password",
-                          value=my_config['audio'].get(audio_provider, {}).get('service_region', ''),
-                          on_change=set_audio_region,
-                          key=audio_provider + "_service_region",
-                          args=(audio_provider, audio_provider + '_service_region'))
+        if audio_provider == 'Azure':
+            st.info(tr("Audio Azure config"))
+            audio_columns = st.columns(2)
+            with audio_columns[0]:
+                st.text_input(label=tr("Speech Key"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''),
+                              on_change=set_audio_key, key=audio_provider + "_speech_key",
+                              args=(audio_provider, audio_provider + '_speech_key'))
+            with audio_columns[1]:
+                st.text_input(label=tr("Service Region"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('service_region', ''),
+                              on_change=set_audio_region,
+                              key=audio_provider + "_service_region",
+                              args=(audio_provider, audio_provider + '_service_region'))
+        if audio_provider == 'Ali':
+            st.info(tr("Audio Ali config"))
+            audio_columns = st.columns(3)
+            with audio_columns[0]:
+                st.text_input(label=tr("Access Key ID"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('access_key_id', ''),
+                              on_change=set_audio_access_key_id, key=audio_provider + "_access_key_id",
+                              args=(audio_provider, audio_provider + '_access_key_id'))
+            with audio_columns[1]:
+                st.text_input(label=tr("Access Key Secret"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('access_key_secret', ''),
+                              on_change=set_audio_access_key_secret, key=audio_provider + "_access_key_secret",
+                              args=(audio_provider, audio_provider + '_access_key_secret'))
+            with audio_columns[2]:
+                st.text_input(label=tr("App Key"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('app_key', ''),
+                              on_change=set_audio_app_key, key=audio_provider + "_app_key",
+                              args=(audio_provider, audio_provider + '_app_key'))
 
 # 设置默认的LLM
 llm_container = st.container(border=True)
 with (llm_container):
-    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan','Tongyi','DeepSeek']
+    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan', 'Tongyi', 'DeepSeek']
     saved_llm_provider = my_config['llm']['provider']
     saved_llm_provider_index = 0
     for i, provider in enumerate(llm_providers):
@@ -181,7 +226,8 @@ with (llm_container):
             if llm_provider == 'Azure' or llm_provider == 'DeepSeek':
                 st_llm_base_url = st.text_input(tr("Base Url"),
                                                 value=my_config['llm'].get(llm_provider, {}).get('base_url', ''),
-                                                type="password", key=llm_provider + '_base_url', on_change=set_llm_base_url,
+                                                type="password", key=llm_provider + '_base_url',
+                                                on_change=set_llm_base_url,
                                                 args=(llm_provider, llm_provider + '_base_url'))
 
         st_llm_model_name = st.text_input(tr("Model Name"),

@@ -5,7 +5,7 @@ from tools.file_utils import read_yaml, save_yaml
 
 languages = {'zh-CN': "简体中文", 'en': "english", 'zh-TW': "繁體中文"}
 audio_languages = {'zh-CN': "中文", 'en-US': "english"}
-audio_voices = {
+audio_voices_azure = {
     "zh-CN": {
         "zh-CN-XiaoxiaoNeural": "晓晓(女)",
         "zh-CN-YunxiNeural": "云希(男)",
@@ -74,6 +74,83 @@ audio_voices = {
         "en-US-OnyxMultilingualNeural": "Onyx(male),multilingual",
         "en-US-NovaMultilingualNeural": "Nova(female),multilingual",
         "en-US-ShimmerMultilingualNeural": "Shimmer(female),multilingual",
+    }
+}
+
+
+audio_voices_ali = {
+    "zh-CN": {
+        "zhixiaobai": "知小白(普通话女声)",
+        "zhixiaoxia": "知小夏(普通话女声)",
+        "zhixiaomei": "知小妹(普通话女声)",
+        "zhigui": "知柜(普通话女声)",
+        "zhishuo": "知硕(普通话男声)",
+        "aixia": "艾夏(普通话女声)",
+        "xiaoyun": "小云(标准女声)",
+        "xiaogang": "小刚(标准男声)",
+        "ruoxi": "若兮(温柔女声)",
+        "siqi": "思琪(温柔女声)",
+        "sijia": "思佳(标准女声)",
+        "sicheng": "思诚(标准男声)",
+        "aiqi": "艾琪(温柔女声)",
+        "aijia": "艾佳(标准女声)",
+        "aicheng": "艾诚(标准男声)",
+        "aida": "艾达(标准男声)",
+        "ninger": "宁儿(标准女声)",
+        "ruilin": "瑞琳(标准女声)",
+        "siyue": "思悦(温柔女声)",
+        "aiya": "艾雅(严厉女声)",
+        "aimei": "艾美(甜美女声)",
+        "aiyu": "艾雨(自然女声)",
+        "aiyue": "艾悦(温柔女声)",
+        "aijing": "艾静(严厉女声)",
+        "xiaomei": "小美(甜美女声)",
+        "aina": "艾娜(浙普女声)",
+        "yina": "依娜(浙普女声)",
+        "sijing": "思婧(严厉女声)",
+        "sitong": "思彤(儿童音)",
+        "xiaobei": "小北(萝莉女声)",
+        "aitong": "艾彤(儿童音)",
+        "aiwei": "艾薇(萝莉女声)",
+        "aibao": "艾宝(萝莉女声)"
+
+
+    },
+    "en-US": {
+        "zhixiaobai": "知小白(普通话女声)",
+        "zhixiaoxia": "知小夏(普通话女声)",
+        "zhixiaomei": "知小妹(普通话女声)",
+        "zhigui": "知柜(普通话女声)",
+        "zhishuo": "知硕(普通话男声)",
+        "aixia": "艾夏(普通话女声)",
+        "cally": "Cally(美式英文女声)",
+        "xiaoyun": "小云(标准女声)",
+        "xiaogang": "小刚(标准男声)",
+        "ruoxi": "若兮(温柔女声)",
+        "siqi": "思琪(温柔女声)",
+        "sijia": "思佳(标准女声)",
+        "sicheng": "思诚(标准男声)",
+        "aiqi": "艾琪(温柔女声)",
+        "aijia": "艾佳(标准女声)",
+        "aicheng": "艾诚(标准男声)",
+        "aida": "艾达(标准男声)",
+        "siyue": "思悦(温柔女声)",
+        "aiya": "艾雅(严厉女声)",
+        "aimei": "艾美(甜美女声)",
+        "aiyu": "艾雨(自然女声)",
+        "aiyue": "艾悦(温柔女声)",
+        "aijing": "艾静(严厉女声)",
+        "xiaomei": "小美(甜美女声)",
+        "harry": "Harry(英音男声)",
+        "abby": "Abby(美音女声)",
+        "andy": "Andy(美音男声)",
+        "eric": "Eric(英音男声)",
+        "emily": "Emily(英音女声)",
+        "luna": "Luna(英音女声)",
+        "luca": "Luca(英音男声)",
+        "wendy": "Wendy(英音女声)",
+        "william": "William(英音男声)",
+        "olivia": "Olivia(英音女声)"
     }
 }
 

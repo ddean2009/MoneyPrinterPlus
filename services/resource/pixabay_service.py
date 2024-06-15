@@ -11,7 +11,7 @@ from tools.utils import must_have_value
 # Pixabay API密钥
 API_KEY = my_config['resource']['pixabay']['api_key']
 
-must_have_value(API_KEY, "请设置pixabay密钥")
+
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -50,6 +50,7 @@ def download_video(video_url, save_path):
 class PixabayService(ResourceService):
     def __init__(self):
         super().__init__()
+        must_have_value(API_KEY, "请设置pixabay密钥")
 
     def match_videos(self, video_data, audio_length,
                      exact_match=False) -> tuple[list[Any], int | Any]:

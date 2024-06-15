@@ -1,7 +1,7 @@
 import streamlit as st
 
-from config.config import my_config, save_config, languages, audio_languages, audio_voices, transition_types, \
-    fade_list
+from config.config import my_config, save_config, languages, audio_languages, audio_voices_azure, transition_types, \
+    fade_list, audio_voices_ali
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
     main_get_video_resource, main_generate_subtitle, main_try_test_audio
 from pages.common import common_ui
@@ -70,6 +70,13 @@ def generate_video(video_generator):
     main_generate_ai_video(video_generator)
 
 
+def get_audio_voices():
+    selected_audio_provider = my_config['audio']['provider']
+    if selected_audio_provider == 'Azure':
+        return audio_voices_azure
+    if selected_audio_provider == 'Ali':
+        return audio_voices_ali
+
 test_mode = my_config["test_mode"]
 
 st.markdown("<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
@@ -84,6 +91,7 @@ with llm_container:
     st.text_input(label=tr("Video Subject"), placeholder=tr("Please input video subject"), key="video_subject")
     llm_columns = st.columns(3)
     video_length_options = {"60": "60字以内", "120": "120字以内", "300": "300字以内", "600": "600字以内"}
+    # video_length_options = {"60": "60字以内", "120": "120字以内", "300": "300字以内"}
     with llm_columns[0]:
         st.selectbox(label=tr("Video content language"), options=languages, format_func=lambda x: languages.get(x),
                      key="video_language")
@@ -103,14 +111,15 @@ with captioning_container:
     # 配音
     st.subheader(tr("Video Captioning"))
     llm_columns = st.columns(4)
+    audio_voice = get_audio_voices()
     with llm_columns[0]:
         st.selectbox(label=tr("Audio language"), options=audio_languages,
                      format_func=lambda x: audio_languages.get(x), key="audio_language")
     with llm_columns[1]:
         # with st.container(st.session_state.get("captioning_language")):
         st.selectbox(label=tr("Audio voice"),
-                     options=audio_voices.get(st.session_state.get("audio_language")),
-                     format_func=lambda x: audio_voices.get(st.session_state.get("audio_language")).get(x),
+                     options=audio_voice.get(st.session_state.get("audio_language")),
+                     format_func=lambda x: audio_voice.get(st.session_state.get("audio_language")).get(x),
                      key="audio_voice")
         # print(st.session_state.get("captioning_voice"))
     with llm_columns[2]:

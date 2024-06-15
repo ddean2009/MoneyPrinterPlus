@@ -10,6 +10,7 @@ from sys import argv
 from typing import Optional
 from pathlib import Path
 import azure.cognitiveservices.speech as speechsdk  # type: ignore
+
 # 英文
 DEFAULT_MAX_LINE_LENGTH_SBCS = 37
 # 中文
@@ -72,6 +73,19 @@ def time_from_ticks(ticks) -> time:
     microseconds_1 = ticks / 10
     microseconds_2 = microseconds_1 % 1000000
     seconds_1 = microseconds_1 / 1000000
+    seconds_2 = seconds_1 % 60
+    minutes_1 = seconds_1 / 60
+    minutes_2 = minutes_1 % 60
+    hours = minutes_1 / 60
+    return time(int(hours), int(minutes_2), int(seconds_2), int(microseconds_2))
+
+
+def time_from_milliseconds(milliseconds) -> time:
+    # 假设我们有毫秒数
+    # 将毫秒转换为微秒（timedelta 以微秒为单位）
+    microseconds = milliseconds * 1000
+    microseconds_2 = microseconds % 1000000
+    seconds_1 = microseconds / 1000000
     seconds_2 = seconds_1 % 60
     minutes_1 = seconds_1 / 60
     minutes_2 = minutes_1 % 60

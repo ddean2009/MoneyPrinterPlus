@@ -10,13 +10,11 @@ from tools.utils import must_have_value
 OPENAI_API_KEY = my_config['llm']['OpenAI']['api_key']
 OPENAI_MODEL_NAME = my_config['llm']['OpenAI']['model_name']  # 替换为 open API 的model
 
-must_have_value(OPENAI_API_KEY, "请设置openAI 密钥")
-must_have_value(OPENAI_MODEL_NAME, "请设置openAI model")
-
-
 class MyOpenAIService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性
+        must_have_value(OPENAI_API_KEY, "请设置openAI 密钥")
+        must_have_value(OPENAI_MODEL_NAME, "请设置openAI model")
 
     def generate_content(self, topic: str, prompt_template: PromptTemplate, language: str = None, length: str = None):
         # 创建 OpenAI 的 LLM 实例

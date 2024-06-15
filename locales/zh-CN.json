@@ -16,6 +16,8 @@
   "Audio Provider": "音频库",
   "Generate Video dubbing": "生成视频配音",
   "Testing Audio": "试听声音",
+  "Audio Azure config": "需要开通微软speech服务",
+  "Audio Ali config": "需要开通阿里云智能语音交互功能--必须开通语音合成和录音文件识别（极速版）这两个功能",
 
   "LLM Video Subject generator": "LLM大模型视频文案生成器",
   "Video Subject": "视频主题(以逗号分割)",

@@ -8,3 +8,5 @@ wxPython
 pillow
 qianfan
 dashscope
+aliyun-python-sdk-core>=2.13.3
+pydub

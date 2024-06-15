@@ -3,7 +3,8 @@ import os
 import streamlit as st
 
 from config.config import my_config
-from services.audio.audio_service import AudioService
+from services.audio.alitts_service import AliAudioService
+from services.audio.azure_service import AzureAudioService
 from services.captioning.captioning_service import generate_caption, add_subtitles
 from services.llm.azure_service import MyAzureService
 from services.llm.baichuan_service import MyBaichuanService
@@ -28,6 +29,7 @@ script_dir = os.path.dirname(script_path)
 # 音频输出目录
 audio_output_dir = os.path.join(script_dir, "./work")
 audio_output_dir = os.path.abspath(audio_output_dir)
+
 
 def get_resource_provider():
     resource_provider = my_config['resource']['provider']
@@ -55,6 +57,14 @@ def get_llm_provider(llm_provider):
         return MyDeepSeekService()
 
 
+def get_audio_service():
+    selected_audio_provider = my_config['audio']['provider']
+    if selected_audio_provider == "Azure":
+        return AzureAudioService()
+    if selected_audio_provider == "Ali":
+        return AliAudioService()
+
+
 def main_generate_video_content():
     print("main_generate_video_content begin")
     topic = get_must_session_option('video_subject', "请输入要生成的主题")
@@ -76,7 +86,7 @@ def main_generate_video_content():
 
 def main_try_test_audio():
     print("main_try_test_audio begin")
-    audio_service = AudioService()
+    audio_service = get_audio_service()
     audio_rate = get_audio_rate()
     audio_language = st.session_state.get("audio_language")
     if audio_language == "en-US":
@@ -91,7 +101,7 @@ def main_try_test_audio():
 
 def main_generate_video_dubbing():
     print("main_generate_video_dubbing begin")
-    audio_service = AudioService()
+    audio_service = get_audio_service()
     temp_file_name = random_with_system_time()
     audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".wav")
     st.session_state["audio_output_file"] = audio_output_file
@@ -107,22 +117,41 @@ def main_generate_video_dubbing():
 
 
 def get_audio_rate():
-    audio_speed = st.session_state.get("audio_speed")
-    if audio_speed == "normal":
-        audio_rate = "0.00"
-    if audio_speed == "fast":
-        audio_rate = "10.00"
-    if audio_speed == "slow":
-        audio_rate = "-10.00"
-    if audio_speed == "faster":
-        audio_rate = "20.00"
-    if audio_speed == "slower":
-        audio_rate = "-20.00"
-    if audio_speed == "fastest":
-        audio_rate = "30.00"
-    if audio_speed == "slowest":
-        audio_rate = "-30.00"
-    return audio_rate
+    audio_provider = my_config['audio']['provider']
+    if audio_provider == "Azure":
+        audio_speed = st.session_state.get("audio_speed")
+        if audio_speed == "normal":
+            audio_rate = "0.00"
+        if audio_speed == "fast":
+            audio_rate = "10.00"
+        if audio_speed == "slow":
+            audio_rate = "-10.00"
+        if audio_speed == "faster":
+            audio_rate = "20.00"
+        if audio_speed == "slower":
+            audio_rate = "-20.00"
+        if audio_speed == "fastest":
+            audio_rate = "30.00"
+        if audio_speed == "slowest":
+            audio_rate = "-30.00"
+        return audio_rate
+    if audio_provider == "Ali":
+        audio_speed = st.session_state.get("audio_speed")
+        if audio_speed == "normal":
+            audio_rate = "0"
+        if audio_speed == "fast":
+            audio_rate = "150"
+        if audio_speed == "slow":
+            audio_rate = "-150"
+        if audio_speed == "faster":
+            audio_rate = "250"
+        if audio_speed == "slower":
+            audio_rate = "-250"
+        if audio_speed == "fastest":
+            audio_rate = "400"
+        if audio_speed == "slowest":
+            audio_rate = "-400"
+        return audio_rate
 
 
 def main_get_video_resource():
@@ -156,10 +185,10 @@ def main_generate_ai_video(video_generator):
         with st_area as status:
             st.write(tr("Generate Video Dubbing..."))
             main_generate_video_dubbing()
-            st.write(tr("Get Video Resource..."))
-            main_get_video_resource()
             st.write(tr("Generate Video subtitles..."))
             main_generate_subtitle()
+            st.write(tr("Get Video Resource..."))
+            main_get_video_resource()
             st.write(tr("Video normalize..."))
             audio_file = get_must_session_option("audio_output_file", "请先生成配音文件")
             video_list = get_must_session_option("return_videos", "请先生成视频资源文件")

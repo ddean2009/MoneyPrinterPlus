@@ -18,8 +18,8 @@ from tools.utils import get_session_option, must_have_value
 key = my_config['audio']['Azure']['speech_key']
 region = my_config['audio']['Azure']['service_region']
 
-must_have_value(key, "请设置Azure speech_key")
-must_have_value(region, "请设置Azure service_region")
+# must_have_value(key, "请设置Azure speech_key")
+# must_have_value(region, "请设置Azure service_region")
 
 
 class CaptioningMode(Enum):

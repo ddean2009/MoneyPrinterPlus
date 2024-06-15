@@ -13,14 +13,12 @@ QIANFAN_AK = my_config['llm']['Qianfan']['api_key']
 QIANFAN_SK = my_config['llm']['Qianfan']['secret_key']
 QIANFAN_MODEL_NAME = my_config['llm']['Qianfan']['model_name']
 
-must_have_value(QIANFAN_AK, "请设置qianfan AK")
-must_have_value(QIANFAN_SK, "请设置qianfan SK")
-must_have_value(QIANFAN_MODEL_NAME, "请设置qianfan model")
-
-
 class BaiduQianfanService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性
+        must_have_value(QIANFAN_AK, "请设置qianfan AK")
+        must_have_value(QIANFAN_SK, "请设置qianfan SK")
+        must_have_value(QIANFAN_MODEL_NAME, "请设置qianfan model")
         os.environ["QIANFAN_AK"] = QIANFAN_AK
         os.environ["QIANFAN_SK"] = QIANFAN_SK
 
