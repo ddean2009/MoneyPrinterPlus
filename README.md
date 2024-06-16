@@ -264,9 +264,13 @@ DeepSeek API获取地址: https://www.deepseek.com/
 
 如果大家有什么问题或者想法，欢迎入群讨论。
 
-
-
 ![image-20240614210314775](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406142103431.png)
+
+# 系列教程
+
+[moneyPrinterPlus简介](https://www.flydean.com/blog/projects/moneyPrinterPlus/001-money-printer-plus-overview/)
+
+[moneyPrinterPlus详细使用教程](https://www.flydean.com/blog/projects/moneyPrinterPlus/002-money-printer-plus-how-to-use-one)
 
 
 
