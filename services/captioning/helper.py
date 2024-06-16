@@ -14,7 +14,7 @@ import azure.cognitiveservices.speech as speechsdk  # type: ignore
 # 英文
 DEFAULT_MAX_LINE_LENGTH_SBCS = 37
 # 中文
-DEFAULT_MAX_LINE_LENGTH_MBCS = 30
+DEFAULT_MAX_LINE_LENGTH_MBCS = 28
 
 
 # See speech_recognize_once_compressed_input() in:

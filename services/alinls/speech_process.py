@@ -6,10 +6,6 @@ from config.config import my_config
 from services.alinls.token import getToken
 from tools.utils import must_have_value
 
-ALI_ACCESS_AKID = my_config['audio']['Ali']['access_key_id']
-ALI_ACCESS_AKKEY = my_config['audio']['Ali']['access_key_secret']
-ALI_APP_KEY = my_config['audio']['Ali']['app_key']
-
 
 class AliRecognitionResult:
     def __init__(self, text, begin_time, end_time):
@@ -20,10 +16,13 @@ class AliRecognitionResult:
 
 class AliRecognitionService:
     def __init__(self):
-        must_have_value(ALI_ACCESS_AKID, "请设置Ali access key id")
-        must_have_value(ALI_ACCESS_AKKEY, "请设置Ali access key secret")
-        must_have_value(ALI_APP_KEY, "请设置Ali app key")
-        self.token = getToken(ALI_ACCESS_AKID, ALI_ACCESS_AKKEY)
+        self.ALI_ACCESS_AKID = my_config['audio']['Ali']['access_key_id']
+        self.ALI_ACCESS_AKKEY = my_config['audio']['Ali']['access_key_secret']
+        self.ALI_APP_KEY = my_config['audio']['Ali']['app_key']
+        must_have_value(self.ALI_ACCESS_AKID, "请设置Ali access key id")
+        must_have_value(self.ALI_ACCESS_AKKEY, "请设置Ali access key secret")
+        must_have_value(self.ALI_APP_KEY, "请设置Ali app key")
+        self.token = getToken(self.ALI_ACCESS_AKID, self.ALI_ACCESS_AKKEY)
         self.format = "wav"
         self.sampleRate = 16000
         self.url = 'https://nls-gateway-cn-shanghai.aliyuncs.com/stream/v1/FlashRecognizer'
@@ -31,7 +30,7 @@ class AliRecognitionService:
     def process(self, audioFile) -> List[AliRecognitionResult]:
         result_list = []
         # 设置RESTful请求参数
-        request = self.url + '?appkey=' + ALI_APP_KEY
+        request = self.url + '?appkey=' + self.ALI_APP_KEY
         request = request + '&token=' + self.token
         request = request + '&format=' + self.format
         request = request + '&sample_rate=' + str(self.sampleRate)

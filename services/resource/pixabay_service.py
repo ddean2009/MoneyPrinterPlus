@@ -8,11 +8,6 @@ from config.config import my_config
 from services.resource.resource_service import ResourceService
 from tools.utils import must_have_value
 
-# Pixabay API密钥
-API_KEY = my_config['resource']['pixabay']['api_key']
-
-
-
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
 
@@ -24,16 +19,6 @@ script_dir = os.path.dirname(script_path)
 # workdir
 workdir = os.path.join(script_dir, "../../work")
 workdir = os.path.abspath(workdir)
-
-
-def search_videos(query, width, height, per_page=1):
-    url = f'https://pixabay.com/api/videos/?key={API_KEY}&q={query}&min_width={width}&min_height={height}&per_page={per_page}'
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Error: {response.status_code}")
-        return None
 
 
 def download_video(video_url, save_path):
@@ -50,7 +35,8 @@ def download_video(video_url, save_path):
 class PixabayService(ResourceService):
     def __init__(self):
         super().__init__()
-        must_have_value(API_KEY, "请设置pixabay密钥")
+        self.API_KEY = my_config['resource']['pixabay']['api_key']
+        must_have_value(self.API_KEY, "请设置pixabay密钥")
 
     def match_videos(self, video_data, audio_length,
                      exact_match=False) -> tuple[list[Any], int | Any]:
@@ -108,12 +94,21 @@ class PixabayService(ResourceService):
                     break
         return matching_videos, total_length
 
+    def search_videos(self, query, width, height, per_page=1):
+        url = f'https://pixabay.com/api/videos/?key={self.API_KEY}&q={query}&min_width={width}&min_height={height}&per_page={per_page}'
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Error: {response.status_code}")
+            return None
+
     def handle_video_resource(self, query, audio_length, per_page=10, exact_match=False):
         # query不超过100个字符
         if len(query) > 100:
             query = query[:80]
         query = quote_plus(query)
-        video_data = search_videos(query, self.width, self.height, per_page)
+        video_data = self.search_videos(query, self.width, self.height, per_page)
         print(video_data)
 
         matching_videos, total_length = self.match_videos(video_data, audio_length, exact_match)

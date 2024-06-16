@@ -8,10 +8,6 @@ from const.video_const import Orientation
 from services.resource.resource_service import ResourceService
 from tools.utils import must_have_value
 
-# Pexels API密钥
-API_KEY = my_config['resource']['pexels']['api_key']
-
-
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -25,11 +21,6 @@ script_dir = os.path.dirname(script_path)
 workdir = os.path.join(script_dir, "../../work")
 workdir = os.path.abspath(workdir)
 
-# 设置请求头
-headers = {
-    'Authorization': API_KEY
-}
-
 
 def download_video(video_url, save_path):
     response = requests.get(video_url, stream=True)
@@ -42,20 +33,14 @@ def download_video(video_url, save_path):
         print(f"Failed to download video: {response.status_code}")
 
 
-def search_videos(query, orientation: Orientation, per_page=10):
-    url = f'https://api.pexels.com/videos/search?query={query}&orientation={orientation.value}&per_page={per_page}'
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Error: {response.status_code}")
-        return None
-
-
 class PexelsService(ResourceService):
     def __init__(self):
         super().__init__()
-        must_have_value(API_KEY, "请设置pexels密钥")
+        self.API_KEY = my_config['resource']['pexels']['api_key']
+        must_have_value(self.API_KEY, "请设置pexels密钥")
+        self.headers = {
+            'Authorization': self.API_KEY
+            }
 
     def match_videos(self, video_data, audio_length,
                      exact_match=False) -> tuple[list[Any], int | Any]:
@@ -111,8 +96,17 @@ class PexelsService(ResourceService):
                     break
         return matching_videos, total_length
 
+    def search_videos(self, query, orientation: Orientation, per_page=10):
+        url = f'https://api.pexels.com/videos/search?query={query}&orientation={orientation.value}&per_page={per_page}'
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Error: {response.status_code}")
+            return None
+
     def handle_video_resource(self, query, audio_length, per_page=10, exact_match=False):
-        video_data = search_videos(query, self.orientation, per_page)
+        video_data = self.search_videos(query, self.orientation, per_page)
         # print(video_data)
 
         matching_videos, total_length = self.match_videos(video_data, audio_length, exact_match)

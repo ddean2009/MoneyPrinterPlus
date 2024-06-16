@@ -178,6 +178,7 @@ config_file = os.path.join(script_dir, config_file_name)
 
 
 def load_config():
+    print("load_config")
     # 加载配置文件
     if not os.path.exists(config_file):
         shutil.copy(config_example_file, config_file)

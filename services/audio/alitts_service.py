@@ -9,9 +9,9 @@ from services.alinls.token import getToken
 from services.audio.audio_service import AudioService
 from tools.utils import must_have_value
 
-ALI_ACCESS_AKID = my_config['audio']['Ali']['access_key_id']
-ALI_ACCESS_AKKEY = my_config['audio']['Ali']['access_key_secret']
-ALI_APP_KEY = my_config['audio']['Ali']['app_key']
+# ALI_ACCESS_AKID = my_config['audio']['Ali']['access_key_id']
+# ALI_ACCESS_AKKEY = my_config['audio']['Ali']['access_key_secret']
+# ALI_APP_KEY = my_config['audio']['Ali']['app_key']
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -29,10 +29,13 @@ class AliAudioService(AudioService):
 
     def __init__(self):
         super().__init__()
-        must_have_value(ALI_ACCESS_AKID, "请设置Ali access key id")
-        must_have_value(ALI_ACCESS_AKKEY, "请设置Ali access key secret")
-        must_have_value(ALI_APP_KEY, "请设置Ali app key")
-        self.token = getToken(ALI_ACCESS_AKID, ALI_ACCESS_AKKEY)
+        self.ALI_ACCESS_AKID = my_config['audio']['Ali']['access_key_id']
+        self.ALI_ACCESS_AKKEY = my_config['audio']['Ali']['access_key_secret']
+        self.ALI_APP_KEY = my_config['audio']['Ali']['app_key']
+        must_have_value(self.ALI_ACCESS_AKID, "请设置Ali access key id")
+        must_have_value(self.ALI_ACCESS_AKKEY, "请设置Ali access key secret")
+        must_have_value(self.ALI_APP_KEY, "请设置Ali app key")
+        self.token = getToken(self.ALI_ACCESS_AKID, self.ALI_ACCESS_AKKEY)
 
     def on_metainfo(self, message, *args):
         print("on_metainfo message=>{}".format(message))
@@ -64,7 +67,7 @@ class AliAudioService(AudioService):
             long_tts = True
         nls_speech_synthesizer = NlsSpeechSynthesizer(
             token=self.token,
-            appkey=ALI_APP_KEY,
+            appkey=self.ALI_APP_KEY,
             long_tts=long_tts,
             on_metainfo=self.on_metainfo,
             on_data=self.on_data,

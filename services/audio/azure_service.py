@@ -17,9 +17,9 @@ except ImportError:
 
     sys.exit(1)
 
-audio_provider = my_config['audio']['provider']
-speech_key = my_config['audio']['Azure']['speech_key']
-service_region = my_config['audio']['Azure']['service_region']
+# audio_provider = my_config['audio']['provider']
+# speech_key = my_config['audio']['Azure']['speech_key']
+# service_region = my_config['audio']['Azure']['service_region']
 
 
 
@@ -27,12 +27,15 @@ class AzureAudioService(AudioService):
 
     def __init__(self):
         super().__init__()
-        must_have_value(audio_provider, "请设置audio provider")
-        must_have_value(speech_key, "请设置Azure speech_key")
-        must_have_value(service_region, "请设置Azure speech_key")
+        self.audio_provider = my_config['audio']['provider']
+        self.speech_key = my_config['audio']['Azure']['speech_key']
+        self.service_region = my_config['audio']['Azure']['service_region']
+        must_have_value(self.audio_provider, "请设置audio provider")
+        must_have_value(self.speech_key, "请设置Azure speech_key")
+        must_have_value(self.service_region, "请设置Azure speech_key")
 
     def my_speech_synthesis_to_wave_file(self, text, file_name, voice="zh-CN-XiaoyiNeural"):
-        speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
+        speech_config = speechsdk.SpeechConfig(subscription=self.speech_key, region=self.service_region)
         print(file_name)
         file_config = speechsdk.audio.AudioOutputConfig(filename=file_name)
         speech_config.speech_synthesis_voice_name = voice
@@ -49,7 +52,7 @@ class AzureAudioService(AudioService):
                 print("Error details: {}".format(cancellation_details.error_details))
 
     def my_speech_synthesis_to_wave_file_ssml(self, text, file_name):
-        speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
+        speech_config = speechsdk.SpeechConfig(subscription=self.speech_key, region=self.service_region)
         print(file_name)
         file_config = speechsdk.audio.AudioOutputConfig(filename=file_name)
         # speech_config.speech_synthesis_voice_name = voice
@@ -73,7 +76,7 @@ class AzureAudioService(AudioService):
     def speech_synthesis_with_voice(self, text, voice):
         """performs speech synthesis to the default speaker with specified voice"""
         # Creates an instance of a speech config with specified subscription key and service region.
-        speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
+        speech_config = speechsdk.SpeechConfig(subscription=self.speech_key, region=self.service_region)
         # Sets the synthesis voice name.
         # e.g. "en-US-AndrewMultilingualNeural".
         # The full list of supported voices can be found here:
@@ -98,7 +101,7 @@ class AzureAudioService(AudioService):
                 print("Error details: {}".format(cancellation_details.error_details))
 
     def speech_synthesis_with_voice_ssml(self, ssml):
-        speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
+        speech_config = speechsdk.SpeechConfig(subscription=self.speech_key, region=self.service_region)
         # voice = "zh-CN-XiaoyiNeural"
         # speech_config.speech_synthesis_voice_name = voice
         speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
