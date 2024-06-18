@@ -25,8 +25,9 @@ font_dir = os.path.abspath(font_dir)
 
 # windows路径需要特殊处理
 if platform.system() == "Windows":
-    font_dir = font_dir.replace(":", "\\:")
     font_dir = font_dir.replace("\\", "\\\\")
+    font_dir = font_dir.replace(":", "\\:")
+
 
 # 生成字幕
 def generate_caption():
@@ -57,6 +58,7 @@ def add_subtitles(video_file, subtitle_file, font_name='Songti TC Bold', font_si
     outline_colour = f"&H{outline_colour[1:]}&"
     # windows路径需要特殊处理
     if platform.system() == "Windows":
+        subtitle_file = subtitle_file.replace("\\", "\\\\")
         subtitle_file = subtitle_file.replace(":", "\\:")
         vf_text = f"subtitles={subtitle_file}:fontsdir={font_dir}:force_style='Fontname={font_name},Fontsize={font_size},Alignment={alignment},MarginV={margin_v},MarginL={margin_l},MarginR={margin_r},BorderStyle={border_style},Outline={outline},Shadow={shadow},PrimaryColour={primary_colour},OutlineColour={outline_colour},Spacing={spacing}'"
     # 构建FFmpeg命令
