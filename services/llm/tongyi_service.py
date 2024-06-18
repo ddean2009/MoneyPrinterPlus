@@ -17,7 +17,7 @@ class MyTongyiService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性
         # DASHSCOPE_API_KEY = getpass()
-        self.ONGYI_API_KEY = my_config['llm']['Tongyi']['api_key']  # 替换为您的 tongyi API 密钥
+        self.TONGYI_API_KEY = my_config['llm']['Tongyi']['api_key']  # 替换为您的 tongyi API 密钥
         self.TONGYI_MODEL_NAME = my_config['llm']['Tongyi']['model_name']  # 替换为 tongyi API 的model
         must_have_value(self.TONGYI_API_KEY, "请设置tongyi API 密钥")
         must_have_value(self.TONGYI_MODEL_NAME, "请设置tongyi API model")
