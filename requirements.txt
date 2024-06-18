@@ -1,7 +1,7 @@
 langchain_openai
 langchain
 langchain-community
-tenacity
+tenacity==8.3.0
 openai
 azure-cognitiveservices-speech
 streamlit
