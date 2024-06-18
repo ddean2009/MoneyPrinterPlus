@@ -4,7 +4,7 @@ langchain-community
 tenacity==8.3.0
 openai
 azure-cognitiveservices-speech
-streamlit
+streamlit==1.34.0
 wxPython
 pillow
 qianfan
