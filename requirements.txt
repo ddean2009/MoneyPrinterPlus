@@ -1,6 +1,7 @@
 langchain_openai
 langchain
 langchain-community
+tenacity
 openai
 azure-cognitiveservices-speech
 streamlit
@@ -9,4 +10,5 @@ pillow
 qianfan
 dashscope
 aliyun-python-sdk-core>=2.13.3
+tencentcloud-sdk-python-tts
 pydub
