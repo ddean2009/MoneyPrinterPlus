@@ -1,4 +1,5 @@
 import os
+import platform
 from typing import Optional
 
 from config.config import my_config
@@ -22,6 +23,10 @@ script_dir = os.path.dirname(script_path)
 font_dir = os.path.join(script_dir, '../../fonts')
 font_dir = os.path.abspath(font_dir)
 
+# windows路径需要特殊处理
+if platform.system() == "Windows":
+    font_dir = font_dir.replace(":", "\\:")
+    font_dir = font_dir.replace("\\", "\\\\")
 
 # 生成字幕
 def generate_caption():
@@ -45,11 +50,15 @@ def generate_caption():
 
 # 添加字幕
 def add_subtitles(video_file, subtitle_file, font_name='Songti TC Bold', font_size=12, primary_colour='#FFFFFF',
-                  outline_colour='#FFFFFF', margin_v=16, margin_l=4, margin_r=4, border_style=1, outline=0, alignment=2, shadow=0, spacing=2):
+                  outline_colour='#FFFFFF', margin_v=16, margin_l=4, margin_r=4, border_style=1, outline=0, alignment=2,
+                  shadow=0, spacing=2):
     output_file = generate_temp_filename(video_file)
     primary_colour = f"&H{primary_colour[1:]}&"
     outline_colour = f"&H{outline_colour[1:]}&"
-    vf_text = f"subtitles={subtitle_file}:fontsdir={font_dir}:force_style='Fontname={font_name},Fontsize={font_size},Alignment={alignment},MarginV={margin_v},MarginL={margin_l},MarginR={margin_r},BorderStyle={border_style},Outline={outline},Shadow={shadow},PrimaryColour={primary_colour},OutlineColour={outline_colour},Spacing={spacing}'"
+    # windows路径需要特殊处理
+    if platform.system() == "Windows":
+        subtitle_file = subtitle_file.replace(":", "\\:")
+        vf_text = f"subtitles={subtitle_file}:fontsdir={font_dir}:force_style='Fontname={font_name},Fontsize={font_size},Alignment={alignment},MarginV={margin_v},MarginL={margin_l},MarginR={margin_r},BorderStyle={border_style},Outline={outline},Shadow={shadow},PrimaryColour={primary_colour},OutlineColour={outline_colour},Spacing={spacing}'"
     # 构建FFmpeg命令
     ffmpeg_cmd = [
         'ffmpeg',
@@ -65,5 +74,3 @@ def add_subtitles(video_file, subtitle_file, font_name='Songti TC Bold', font_si
     if os.path.exists(output_file):
         os.remove(video_file)
         os.renames(output_file, video_file)
-
-
