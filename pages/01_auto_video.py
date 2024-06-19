@@ -1,7 +1,7 @@
 import streamlit as st
 
 from config.config import my_config, save_config, languages, audio_languages, audio_voices_azure, transition_types, \
-    fade_list, audio_voices_ali
+    fade_list, audio_voices_ali, audio_voices_tencent
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
     main_get_video_resource, main_generate_subtitle, main_try_test_audio
 from pages.common import common_ui
@@ -76,6 +76,8 @@ def get_audio_voices():
         return audio_voices_azure
     if selected_audio_provider == 'Ali':
         return audio_voices_ali
+    if selected_audio_provider == 'Tencent':
+        return audio_voices_tencent
 
 test_mode = my_config["test_mode"]
 

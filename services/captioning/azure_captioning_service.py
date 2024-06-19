@@ -81,7 +81,7 @@ class Captioning(object):
         self._previous_end_time: Optional[time] = None
         self._previous_result_is_recognized = False
         self._recognized_lines: List[str] = []
-        self._offline_results: List[speechsdk.SpeechRecognitionResult] = []
+        self._offline_results: List[object] = []
 
     def get_timestamp(self, start: time, end: time) -> str:
         time_format = ""
@@ -376,7 +376,3 @@ def run_captioning():
                                     stream=speech_recognizer_data["pull_input_audio_stream"])
     captioning.finish()
 
-
-
-if __name__ == "__main__":
-    run_captioning()

@@ -44,6 +44,7 @@
 
 # 更新列表
 
+- 20240619 语音识别和语音合成**支持腾讯云**。 需要开通阿里云智能语音交互功能--必须开通语音合成和语音识别这两个功能
 - 20240615 语音识别和语音合成**支持阿里云**。 需要开通阿里云智能语音交互功能--必须开通语音合成和录音文件识别（极速版）这两个功能
 - 20240614 资源库支持pixabay,支持语音试听功能,修复一些bug
 
@@ -52,6 +53,7 @@
 - [x] 大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek,
 - [x] 支持**Azure**语音功能
 - [x] 支持**阿里云**语音功能
+- [x] 支持**腾讯云**语音功能
 - [x] 支持100+不同的语音种类
 - [x] 支持语音试听功能
 - [x] 支持30+种视频转场特效
@@ -65,7 +67,6 @@
 # 待实现功能
 
 - [] 支持本地语音字幕识别模型
-- [] 支持国内云厂商的语音识别
 - [] 支持更多的视频资源获取方式
 - [] 支持更多的视频转场特效
 - [] 支持更多的字幕特效
@@ -99,7 +100,9 @@
 - Python 3.10+
 - ffmpeg 6.0+
 - LLM api key
-- Azure语音服务(https://speech.microsoft.com/portal) 或者阿里云智能语音功能(https://nls-portal.console.aliyun.com/overview)
+- Azure语音服务(https://speech.microsoft.com/portal) 
+- 或者阿里云智能语音功能(https://nls-portal.console.aliyun.com/overview)
+- 或者腾讯云语音技术功能(https://console.cloud.tencent.com/asr)
 
 > 切记！！！！！ 一定要安装好ffmpeg,并把ffmpeg路径添加到环境变量中。
 
@@ -153,18 +156,23 @@ streamlit run gui.py
 目前文字转语音和语音识别功能支持：
 1. Azure的cognitive-services服务。
 2. 阿里云的智能语音交互
+3. 腾讯云语音技术功能(https://console.cloud.tencent.com/asr)
 
-Azure：
+* Azure：
 
 大家需要到  https://speech.microsoft.com/portal  这里注册一个key。
 
 Azure对新用户是1年免费的。费用也是比较便宜。
 
-阿里云：
+* 阿里云：
 
 大家需要到 https://nls-portal.console.aliyun.com/overview 这里开通服务，并添加一个项目。
 
 需要开通阿里云智能语音交互功能--必须开通语音合成和录音文件识别（极速版）这两个功能.
+
+* 腾讯云：
+
+腾讯云语音技术功能(https://console.cloud.tencent.com/asr) 开通语音识别和语音合成功能。
 
 
 >  后续会添加本地语音识别大模型。但是文字转语音还是微软的服务最为优秀。

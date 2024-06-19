@@ -146,7 +146,7 @@ with resource_container:
 audio_container = st.container(border=True)
 with audio_container:
     st.info(tr("Audio Provider Info"))
-    audio_providers = ['Azure', 'Ali']
+    audio_providers = ['Azure', 'Ali', 'Tencent']
     # audio_providers = ['Azure']
     selected_audio_provider = my_config['audio']['provider']
     selected_audio_provider_index = 0
@@ -187,6 +187,24 @@ with audio_container:
                               args=(audio_provider, audio_provider + '_access_key_secret'))
             with audio_columns[2]:
                 st.text_input(label=tr("App Key"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('app_key', ''),
+                              on_change=set_audio_app_key, key=audio_provider + "_app_key",
+                              args=(audio_provider, audio_provider + '_app_key'))
+        if audio_provider == 'Tencent':
+            st.info(tr("Audio Tencent config"))
+            audio_columns = st.columns(3)
+            with audio_columns[0]:
+                st.text_input(label=tr("Access Key ID"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('access_key_id', ''),
+                              on_change=set_audio_access_key_id, key=audio_provider + "_access_key_id",
+                              args=(audio_provider, audio_provider + '_access_key_id'))
+            with audio_columns[1]:
+                st.text_input(label=tr("Access Key Secret"), type="password",
+                              value=my_config['audio'].get(audio_provider, {}).get('access_key_secret', ''),
+                              on_change=set_audio_access_key_secret, key=audio_provider + "_access_key_secret",
+                              args=(audio_provider, audio_provider + '_access_key_secret'))
+            with audio_columns[2]:
+                st.text_input(label=tr("App ID"), type="password",
                               value=my_config['audio'].get(audio_provider, {}).get('app_key', ''),
                               on_change=set_audio_app_key, key=audio_provider + "_app_key",
                               args=(audio_provider, audio_provider + '_app_key'))

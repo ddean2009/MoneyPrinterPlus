@@ -9,6 +9,7 @@ from typing import List, Optional, Tuple
 from services.alinls.speech_process import AliRecognitionResult
 import azure.cognitiveservices.speech as speechsdk
 
+from services.audio.tencent_recognition_service import TencentRecognitionResult
 from services.captioning import helper
 
 
@@ -106,6 +107,7 @@ class CaptionHelper(object):
                 caption_starts_at = index
 
     def get_best_width(self, text: str, start_index: int) -> int:
+        # print("get_best_width:",text)
         remaining = len(text) - start_index
         best_width = remaining if remaining < self._max_width else self.find_best_width(self._first_pass_terminators,
                                                                                         text, start_index)
@@ -113,6 +115,7 @@ class CaptionHelper(object):
             best_width = self.find_best_width(self._second_pass_terminators, text, start_index)
         if best_width < 0:
             best_width = self._max_width
+        # print("best_width",best_width)
         return best_width
 
     def find_best_width(self, terminators: List[str], text: str, start_at: int) -> int:
@@ -137,7 +140,7 @@ class CaptionHelper(object):
             begin = helper.time_from_ticks(result.offset)
             end = helper.time_from_ticks(result.offset + result.duration)
             return begin, end
-        if isinstance(result, AliRecognitionResult):
+        if isinstance(result, AliRecognitionResult) or isinstance(result, TencentRecognitionResult):
             begin = helper.time_from_milliseconds(result.begin_time)
             end = helper.time_from_milliseconds(result.end_time)
             return begin, end
@@ -155,7 +158,7 @@ class CaptionHelper(object):
     def is_final_result(self, result: object) -> bool:
         if isinstance(result, speechsdk.RecognitionResult):
             return speechsdk.ResultReason.RecognizedSpeech == result.reason or speechsdk.ResultReason.RecognizedIntent == result.reason or speechsdk.ResultReason.TranslatedSpeech == result.reason
-        if isinstance(result, AliRecognitionResult):
+        if isinstance(result, AliRecognitionResult) or isinstance(result, TencentRecognitionResult):
             return True
 
     def lines_from_text(self, text: str) -> List[str]:

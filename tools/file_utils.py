@@ -70,3 +70,37 @@ def get_file_extension(filename):
     _, ext = os.path.splitext(filename)
     # return ext[1:]  # 去掉前面的点（.）
     return ext
+
+
+import requests
+
+
+def download_file_from_url(url, output_path):
+    """
+    从给定的URL下载文件并保存到指定的输出路径。
+
+    参数:
+    url (str): 要下载的文件的URL。
+    output_path (str): 保存文件的本地路径。
+
+    返回:
+    None
+    """
+    try:
+        # 发送GET请求到URL
+        response = requests.get(url, stream=True)
+
+        # 检查请求是否成功
+        if response.status_code == 200:
+            # 打开一个文件以二进制写模式
+            with open(output_path, 'wb') as file:
+                # 使用chunk迭代数据
+                for chunk in response.iter_content(chunk_size=8192):
+                    # 写入文件
+                    file.write(chunk)
+            print(f"文件已成功下载到 {output_path}")
+        else:
+            print(f"请求失败，状态码: {response.status_code}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"发生了一个错误: {e}")

@@ -9,10 +9,6 @@ from services.alinls.token import getToken
 from services.audio.audio_service import AudioService
 from tools.utils import must_have_value
 
-# ALI_ACCESS_AKID = my_config['audio']['Ali']['access_key_id']
-# ALI_ACCESS_AKKEY = my_config['audio']['Ali']['access_key_secret']
-# ALI_APP_KEY = my_config['audio']['Ali']['app_key']
-
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
 

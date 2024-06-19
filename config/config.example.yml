@@ -6,6 +6,10 @@ audio:
     access_key_id: ACCESS_KEY_ID
     access_key_secret: ACCESS_KEY_SECRET
     app_key: APP_KEY
+  Tencent:
+    access_key_id: ACCESS_KEY_ID
+    access_key_secret: ACCESS_KEY_SECRET
+    app_key: APP_KEY
   provider: Azure
 
 captioning:

@@ -1,10 +1,12 @@
+import json
 import os
 import platform
 from typing import Optional
 
 from config.config import my_config
 from services.alinls.speech_process import AliRecognitionService
-from services.captioning.azure_captioning_service import run_captioning, Captioning
+from services.audio.tencent_recognition_service import TencentRecognitionService
+from services.captioning.azure_captioning_service import Captioning
 import subprocess
 
 from tools.file_utils import generate_temp_filename
@@ -37,14 +39,22 @@ def generate_caption():
     # print(speech_recognizer_data)
     selected_audio_provider = my_config['audio']['provider']
     if selected_audio_provider == 'Azure':
+        print("selected_audio_provider: Azure")
         captioning.recognize_continuous(speech_recognizer=speech_recognizer_data["speech_recognizer"],
                                         format=speech_recognizer_data["audio_stream_format"],
                                         callback=speech_recognizer_data["pull_input_audio_stream_callback"],
                                         stream=speech_recognizer_data["pull_input_audio_stream"])
     if selected_audio_provider == 'Ali':
+        print("selected_audio_provider: Ali")
         ali_service = AliRecognitionService()
         result_list = ali_service.process(get_session_option("audio_output_file"))
-        # print("result_list:", result_list)
+        captioning._offline_results = result_list
+    if selected_audio_provider == 'Tencent':
+        print("selected_audio_provider: Tencent")
+        tencent_service = TencentRecognitionService()
+        result_list = tencent_service.process(get_session_option("audio_output_file"),
+                                              get_session_option("video_language"))
+        # print("result list:", result_list)
         captioning._offline_results = result_list
     captioning.finish()
 

@@ -107,14 +107,14 @@ def get_session_option(option: str) -> Optional[str]:
 def get_must_session_option(option: str, msg: str) -> Optional[str]:
     result = st.session_state.get(option)
     if not result:
-        st.warning(msg, icon="⚠️")
+        st.toast(msg, icon="⚠️")
         st.stop()
     return result
 
 
 def must_have_value(option: str, msg: str) -> Optional[str]:
     if not option:
-        st.warning(msg, icon="⚠️")
+        st.toast(msg, icon="⚠️")
         st.stop()
     return option
 

@@ -5,6 +5,7 @@ import streamlit as st
 from config.config import my_config
 from services.audio.alitts_service import AliAudioService
 from services.audio.azure_service import AzureAudioService
+from services.audio.tencent_tts_service import TencentAudioService
 from services.captioning.captioning_service import generate_caption, add_subtitles
 from services.llm.azure_service import MyAzureService
 from services.llm.baichuan_service import MyBaichuanService
@@ -63,6 +64,8 @@ def get_audio_service():
         return AzureAudioService()
     if selected_audio_provider == "Ali":
         return AliAudioService()
+    if selected_audio_provider == "Tencent":
+        return TencentAudioService()
 
 
 def main_generate_video_content():
@@ -135,22 +138,22 @@ def get_audio_rate():
         if audio_speed == "slowest":
             audio_rate = "-30.00"
         return audio_rate
-    if audio_provider == "Ali":
+    if audio_provider == "Tencent":
         audio_speed = st.session_state.get("audio_speed")
         if audio_speed == "normal":
             audio_rate = "0"
         if audio_speed == "fast":
-            audio_rate = "150"
+            audio_rate = "1"
         if audio_speed == "slow":
-            audio_rate = "-150"
+            audio_rate = "-1"
         if audio_speed == "faster":
-            audio_rate = "250"
+            audio_rate = "1.5"
         if audio_speed == "slower":
-            audio_rate = "-250"
+            audio_rate = "-1.5"
         if audio_speed == "fastest":
-            audio_rate = "400"
+            audio_rate = "2"
         if audio_speed == "slowest":
-            audio_rate = "-400"
+            audio_rate = "-2"
         return audio_rate
 
 
