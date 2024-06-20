@@ -18,7 +18,7 @@ from services.resource.pexels_service import PexelsService
 from services.resource.pixabay_service import PixabayService
 from services.video.video_service import get_audio_duration, VideoService
 from tools.tr_utils import tr
-from tools.utils import random_with_system_time, get_must_session_option
+from tools.utils import random_with_system_time, get_must_session_option, extent_audio
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -117,7 +117,7 @@ def main_generate_video_dubbing():
                                  audio_voice,
                                  audio_rate)
     # 语音扩展2秒钟,防止突然结束很突兀
-    # extent_audio(audio_output_file, 2)
+    extent_audio(audio_output_file, 2)
     print("main_generate_video_dubbing end")
 
 

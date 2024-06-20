@@ -17,11 +17,6 @@ except ImportError:
 
     sys.exit(1)
 
-# audio_provider = my_config['audio']['provider']
-# speech_key = my_config['audio']['Azure']['speech_key']
-# service_region = my_config['audio']['Azure']['service_region']
-
-
 
 class AzureAudioService(AudioService):
 
@@ -102,10 +97,7 @@ class AzureAudioService(AudioService):
 
     def speech_synthesis_with_voice_ssml(self, ssml):
         speech_config = speechsdk.SpeechConfig(subscription=self.speech_key, region=self.service_region)
-        # voice = "zh-CN-XiaoyiNeural"
-        # speech_config.speech_synthesis_voice_name = voice
         speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
-
         result = speech_synthesizer.speak_ssml_async(ssml).get()
         # Check result
         if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:

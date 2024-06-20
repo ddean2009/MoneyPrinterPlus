@@ -1,19 +1,5 @@
 import streamlit as st
 
-# fade_duration = 1
-# transition_type = 'fade'
-# fade_list = ['fade', 'smoothleft', 'smoothright', 'smoothup', 'smoothdown', 'circlecrop', 'rectcrop', 'circleclose',
-#              'circleopen', 'horzclose', 'horzopen', 'vertclose',
-#              'vertopen', 'diagbl', 'diagbr', 'diagtl', 'diagtr', 'hlslice', 'hrslice', 'vuslice', 'vdslice', 'dissolve',
-#              'pixelize', 'radial', 'hblur',
-#              'wipetl', 'wipetr', 'wipebl', 'wipebr', 'zoomin', 'hlwind', 'hrwind', 'vuwind', 'vdwind', 'coverleft',
-#              'coverright', 'covertop', 'coverbottom', 'revealleft', 'revealright', 'revealup', 'revealdown']
-
-# transition_type = st.session_state["video_transition_effect_type"]
-# transition_value = st.session_state["video_transition_effect_value"]
-# transition_duration = st.session_state["video_transition_effect_duration"]
-
-
 def gen_filter(segments, target_width, target_height,transition_type, transition_value, transition_duration ,with_audio=False):
     video_fades = ""
     audio_fades = ""
