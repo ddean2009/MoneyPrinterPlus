@@ -18,7 +18,7 @@ from services.resource.pexels_service import PexelsService
 from services.resource.pixabay_service import PixabayService
 from services.video.video_service import get_audio_duration, VideoService
 from tools.tr_utils import tr
-from tools.utils import random_with_system_time, get_must_session_option, extent_audio
+from tools.utils import random_with_system_time, get_must_session_option
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
