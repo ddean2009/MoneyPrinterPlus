@@ -18,7 +18,7 @@ from services.resource.pexels_service import PexelsService
 from services.resource.pixabay_service import PixabayService
 from services.video.video_service import get_audio_duration, VideoService
 from tools.tr_utils import tr
-from tools.utils import random_with_system_time, get_must_session_option
+from tools.utils import random_with_system_time, get_must_session_option, extent_audio
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -116,6 +116,8 @@ def main_generate_video_dubbing():
                                  audio_output_file,
                                  audio_voice,
                                  audio_rate)
+    # 语音扩展2秒钟,防止突然结束很突兀
+    # extent_audio(audio_output_file, 2)
     print("main_generate_video_dubbing end")
 
 
@@ -137,6 +139,23 @@ def get_audio_rate():
             audio_rate = "30.00"
         if audio_speed == "slowest":
             audio_rate = "-30.00"
+        return audio_rate
+    if audio_provider == "Ali":
+        audio_speed = st.session_state.get("audio_speed")
+        if audio_speed == "normal":
+            audio_rate = "0"
+        if audio_speed == "fast":
+            audio_rate = "150"
+        if audio_speed == "slow":
+            audio_rate = "-150"
+        if audio_speed == "faster":
+            audio_rate = "250"
+        if audio_speed == "slower":
+            audio_rate = "-250"
+        if audio_speed == "fastest":
+            audio_rate = "400"
+        if audio_speed == "slowest":
+            audio_rate = "-400"
         return audio_rate
     if audio_provider == "Tencent":
         audio_speed = st.session_state.get("audio_speed")
