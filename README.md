@@ -273,7 +273,7 @@ DeepSeek API获取地址: https://www.deepseek.com/
 
 如果大家有什么问题或者想法，欢迎入群讨论。
 
-![image-20240614210314775](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406142103431.png)
+![](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406200901346.png)
 
 # 系列教程
 
