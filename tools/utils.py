@@ -5,6 +5,7 @@ import time
 import streamlit as st
 from typing import Optional
 
+from tools.file_utils import generate_temp_filename
 from tools.tr_utils import tr
 
 
@@ -128,3 +129,20 @@ def run_ffmpeg_command(command):
             print("Command executed successfully.")
     except Exception as e:
         print(f"An error occurred while execute ffmpeg command {e}")
+
+
+def extent_audio(audio_file, pad_dur=2):
+    temp_file = generate_temp_filename(audio_file)
+    # 构造ffmpeg命令
+    command = [
+        'ffmpeg',
+        '-i', audio_file,
+        '-af', f'apad=pad_dur={pad_dur}',
+        temp_file
+    ]
+    # 执行命令
+    subprocess.run(command, capture_output=True, check=True)
+    # 重命名最终的文件
+    if os.path.exists(temp_file):
+        os.remove(audio_file)
+        os.renames(temp_file, audio_file)
