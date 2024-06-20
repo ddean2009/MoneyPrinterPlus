@@ -35,6 +35,10 @@
 
 觉得有用的朋友，请给个star! ![Github stars](https://img.shields.io/github/stars/ddean2009/MoneyPrinterPlus.svg)
 
+# 视频介绍
+
+<video  src="https://www.bilibili.com/video/BV16VVGefEp1/?spm_id_from=333.999.0.0&vd_source=a563b6c970df6e7665845c15089bd618"></video>
+
 # 更新预告
 
 * 有很多小伙伴反应微软云注册起来很麻烦，为了解决小伙伴的问题，已经实现了国产的腾讯云和阿里云语音功能，欢迎大家体验。
