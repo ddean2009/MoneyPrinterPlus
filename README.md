@@ -35,7 +35,7 @@
 
 觉得有用的朋友，请给个star! ![Github stars](https://img.shields.io/github/stars/ddean2009/MoneyPrinterPlus.svg)
 
-# 视频介绍
+# 视频教程
 
 ## 简单介绍
 
@@ -288,11 +288,14 @@ DeepSeek API获取地址: https://www.deepseek.com/
 
 ![](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406200901346.png)
 
-# 系列教程
+# 图文系列教程
 
 [moneyPrinterPlus简介](https://mp.weixin.qq.com/s/0p9T_WFJ_yXcj74TgI7iMw)
 
 [moneyPrinterPlus详细使用教程](https://mp.weixin.qq.com/s/fAdws2grcZknG8VLQfjMjg)
+
+
+[moneyPrinterPlus阿里云详细配置使用教程](https://mp.weixin.qq.com/s?__biz=MzIxMTI0NzcyMQ==&mid=2650935498&idx=1&sn=7d29a350f36e14686252e9a22d8fce23&chksm=8cae87ccbbd90edaea45b595ec4028b91e464061c0a2f37f1f15e97f593fd7b51edba765ed6e&cur_album_id=1821975747683532806&scene=189#wechat_redirect)
 
 
 
