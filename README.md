@@ -37,7 +37,15 @@
 
 # 视频介绍
 
+## 简单介绍
+
 https://www.bilibili.com/video/BV16VVGefEp1/?spm_id_from=333.999.0.0&vd_source=a563b6c970df6e7665845c15089bd618
+
+## 详细介绍
+
+https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6e7665845c15089bd618
+
+
 
 
 # 更新预告
