@@ -1,4 +1,6 @@
 - [MoneyPrinterPlus](#moneyprinterplus)
+- [视频教程](#视频教程)
+- [界面概览](#界面概览)
 - [已实现功能](#已实现功能)
 - [待实现功能](#待实现功能)
 - [实例展示](#实例展示)
@@ -44,6 +46,18 @@ https://www.bilibili.com/video/BV16VVGefEp1/?spm_id_from=333.999.0.0&vd_source=a
 ## 详细介绍
 
 https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6e7665845c15089bd618
+
+
+
+# 界面概览
+
+## AI视频生成器
+
+![image-20240625143613914](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436983.png)
+
+## AI视频批量混剪工具
+
+![image-20240625143642364](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436426.png)
 
 
 
@@ -294,8 +308,9 @@ DeepSeek API获取地址: https://www.deepseek.com/
 
 [moneyPrinterPlus详细使用教程](https://mp.weixin.qq.com/s/fAdws2grcZknG8VLQfjMjg)
 
-
 [moneyPrinterPlus阿里云详细配置使用教程](https://mp.weixin.qq.com/s?__biz=MzIxMTI0NzcyMQ==&mid=2650935498&idx=1&sn=7d29a350f36e14686252e9a22d8fce23&chksm=8cae87ccbbd90edaea45b595ec4028b91e464061c0a2f37f1f15e97f593fd7b51edba765ed6e&cur_album_id=1821975747683532806&scene=189#wechat_redirect)
+
+
 
 
 
