@@ -51,11 +51,11 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 
 # 界面概览
 
-## AI视频生成器
+## 1. AI视频生成器
 
 ![image-20240625143613914](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436983.png)
 
-## AI视频批量混剪工具
+## 2. AI视频批量混剪工具
 
 ![image-20240625143642364](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436426.png)
 
@@ -64,9 +64,7 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 
 # 更新预告
 
-* 有很多小伙伴反应微软云注册起来很麻烦，为了解决小伙伴的问题，已经实现了国产的腾讯云和阿里云语音功能，欢迎大家体验。
-
-* 后面会支持本地模型的语音合成和识别功能(效果可能不如用云厂商的服务)
+* 马上上线批量视频混剪功能，wowo，大家坐好了，马上起飞！
 
 # 更新列表
 
