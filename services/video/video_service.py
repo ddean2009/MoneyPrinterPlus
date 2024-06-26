@@ -1,5 +1,7 @@
 import itertools
+import math
 import os
+import random
 import re
 import subprocess
 from typing import List
@@ -9,7 +11,8 @@ from PIL import Image
 
 from services.video.texiao_service import gen_filter
 from tools.file_utils import generate_temp_filename
-from tools.utils import random_with_system_time, run_ffmpeg_command
+from tools.tr_utils import tr
+from tools.utils import random_with_system_time, run_ffmpeg_command, extent_audio
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -19,8 +22,14 @@ script_path = os.path.abspath(__file__)
 # 脚本所在的目录
 script_dir = os.path.dirname(script_path)
 # 视频出目录
-video_output_dir = os.path.join(script_dir, "../../work")
+video_output_dir = os.path.join(script_dir, "../../final")
 video_output_dir = os.path.abspath(video_output_dir)
+
+# work目录
+work_output_dir = os.path.join(script_dir, "../../work")
+work_output_dir = os.path.abspath(work_output_dir)
+
+DEFAULT_DURATION = 5
 
 
 def get_audio_duration(audio_file):
@@ -31,6 +40,7 @@ def get_audio_duration(audio_file):
     """
     # 使用ffmpeg命令获取音频信息
     cmd = ['ffmpeg', '-i', audio_file]
+    print(" ".join(cmd))
     result = subprocess.run(cmd, capture_output=True)
 
     # 解析输出，找到时长信息
@@ -186,6 +196,88 @@ def add_background_music(video_file, audio_file, bgm_volume=0.5):
         os.renames(output_file, video_file)
 
 
+class VideoMixService:
+    def __init__(self):
+        self.fps = st.session_state["video_fps"]
+        self.segment_min_length = st.session_state["video_segment_min_length"]
+        self.segment_max_length = st.session_state["video_segment_max_length"]
+        self.target_width, self.target_height = st.session_state["video_size"].split('x')
+        self.target_width = int(self.target_width)
+        self.target_height = int(self.target_height)
+
+        self.enable_background_music = st.session_state["enable_background_music"]
+        self.background_music = st.session_state["background_music"]
+        self.background_music_volume = st.session_state["background_music_volume"]
+
+        self.enable_video_transition_effect = st.session_state["enable_video_transition_effect"]
+        self.video_transition_effect_duration = st.session_state["video_transition_effect_duration"]
+        self.video_transition_effect_type = st.session_state["video_transition_effect_type"]
+        self.video_transition_effect_value = st.session_state["video_transition_effect_value"]
+        self.default_duration = DEFAULT_DURATION
+        if DEFAULT_DURATION < self.segment_min_length:
+            self.default_duration = self.segment_min_length
+
+    def match_videos_from_dir(self, video_dir, audio_file, is_head=False):
+        matching_videos = []
+        # 获取音频时长
+        audio_duration = get_audio_duration(audio_file)
+        print("音频时长:" + str(audio_duration))
+
+        # 获取媒体文件夹中的所有图片和视频文件
+        media_files = [os.path.join(video_dir, f) for f in os.listdir(video_dir) if
+                       f.lower().endswith(('.jpg', '.jpeg', '.png', '.mp4', '.mov'))]
+
+        # 随机排序媒体文件
+        random.shuffle(media_files)
+
+        # 确保有视频文件在列表中
+        video_files = [os.path.join(video_dir, f) for f in media_files if f.lower().endswith(('.mp4', '.mov'))]
+        if video_files:
+            # 从视频文件中随机选择一个
+            random_video = random.choice(video_files)
+            # 将随机选择的视频文件从列表中移除
+            media_files.remove(random_video)
+            # 将随机选择的视频文件添加到列表的开头
+            media_files.insert(0, random_video)
+
+        total_length = 0
+        i = 0
+        for video_file in media_files:
+            if video_file.lower().endswith(('.jpg', '.jpeg', '.png')):
+                video_duration = self.default_duration
+            else:
+                video_duration = get_video_duration(video_file)
+            # 短的视频拉长到最小值
+            if video_duration < self.segment_min_length:
+                video_duration = self.segment_min_length
+            if video_duration > self.segment_max_length:
+                video_duration = self.segment_max_length
+
+            print("total length:", total_length, "audio length:", audio_duration)
+            if total_length < audio_duration:
+                if self.enable_video_transition_effect:
+                    if i == 0 and is_head:
+                        total_length = total_length + video_duration
+                    else:
+                        total_length = total_length + video_duration - float(
+                            self.video_transition_effect_duration)
+                else:
+                    total_length = total_length + video_duration
+                matching_videos.append(video_file)
+                i = i + 1
+            else:
+                extend_length = audio_duration - total_length
+                extend_length = int(math.ceil(extend_length))
+                if extend_length > 0:
+                    extent_audio(audio_file, extend_length)
+                break
+        print("total length:", total_length, "audio length:", audio_duration)
+        if total_length < audio_duration:
+            st.toast(tr("You Need More Resource"), icon="⚠️")
+            st.stop()
+        return matching_videos, total_length
+
+
 class VideoService:
     def __init__(self, video_list, audio_file):
         self.video_list = video_list
@@ -205,33 +297,51 @@ class VideoService:
         self.video_transition_effect_duration = st.session_state["video_transition_effect_duration"]
         self.video_transition_effect_type = st.session_state["video_transition_effect_type"]
         self.video_transition_effect_value = st.session_state["video_transition_effect_value"]
+        self.default_duration = DEFAULT_DURATION
+        if DEFAULT_DURATION < self.seg_min_duration:
+            self.default_duration = self.seg_min_duration
 
-    def normalize_video(self, default_duration=5):
+    def normalize_video(self):
         return_video_list = []
         for media_file in self.video_list:
             # 如果当前文件是图片，添加转换为视频的命令
             if media_file.lower().endswith(('.jpg', '.jpeg', '.png')):
-                output_name = generate_temp_filename(media_file, ".mp4")
+                output_name = generate_temp_filename(media_file, ".mp4", work_output_dir)
                 # 判断图片的纵横比和
                 img_width, img_height = get_image_info(media_file)
                 if img_width / img_height > self.target_width / self.target_height:
                     # 转换图片为视频片段 图片的视频帧率必须要跟视频的帧率一样，否则可能在最后的合并过程中导致 合并过后的视频过长
-                    ffmpeg_cmd = f"ffmpeg -loop 1 -i {media_file} -c:v h264 -t {default_duration} -r {self.fps} -vf 'scale=-1:{self.target_height}:force_original_aspect_ratio=1,crop={self.target_width}:{self.target_height}:(ow-iw)/2:(oh-ih)/2' -y {output_name}"
+                    # ffmpeg_cmd = f"ffmpeg -loop 1 -i '{media_file}' -c:v h264 -t {self.default_duration} -r {self.fps} -vf 'scale=-1:{self.target_height}:force_original_aspect_ratio=1,crop={self.target_width}:{self.target_height}:(ow-iw)/2:(oh-ih)/2' -y {output_name}"
+                    ffmpeg_cmd = [
+                        'ffmpeg',
+                        '-loop', '1',
+                        '-i', media_file,
+                        '-c:v', 'h264',
+                        '-t', str(self.default_duration),
+                        '-r', str(self.fps),
+                        '-vf', f'scale=-1:{self.target_height}:force_original_aspect_ratio=1,crop={self.target_width}:{self.target_height}:(ow-iw)/2:(oh-ih)/2'
+                        '-y', output_name]
                 else:
-                    ffmpeg_cmd = f"ffmpeg -loop 1 -i {media_file} -c:v h264 -t {default_duration} -r {self.fps} -vf 'scale={self.target_width}:-1:force_original_aspect_ratio=1,crop={self.target_width}:{self.target_height}:(ow-iw)/2:(oh-ih)/2' -y {output_name}"
-                print(ffmpeg_cmd)
-                run_ffmpeg_command(ffmpeg_cmd)
-                # os.remove(media_file)
+                    # ffmpeg_cmd = f"ffmpeg -loop 1 -i '{media_file}' -c:v h264 -t {self.default_duration} -r {self.fps} -vf 'scale={self.target_width}:-1:force_original_aspect_ratio=1,crop={self.target_width}:{self.target_height}:(ow-iw)/2:(oh-ih)/2' -y {output_name}"
+                    ffmpeg_cmd = [
+                        'ffmpeg',
+                        '-loop', '1',
+                        '-i', media_file,
+                        '-c:v', 'h264',
+                        '-t', str(self.default_duration),
+                        '-r', str(self.fps),
+                        '-vf',
+                        f'scale={self.target_width}:-1:force_original_aspect_ratio=1,crop={self.target_width}:{self.target_height}:(ow-iw)/2:(oh-ih)/2'
+                        '-y', output_name]
+                print(" ".join(ffmpeg_cmd))
+                subprocess.run(ffmpeg_cmd, check=True, capture_output=True)
                 return_video_list.append(output_name)
 
             else:
                 # 当前文件是视频文件
                 video_duration = get_video_duration(media_file)
                 video_width, video_height = get_video_info(media_file)
-                # video_fps = get_video_fps(media_file)
-                # 转换之后的duration
-                # video_duration = video_duration * float(self.fps) / float(video_fps)
-                output_name = generate_temp_filename(media_file)
+                output_name = generate_temp_filename(media_file, new_directory=work_output_dir)
                 if self.seg_min_duration > video_duration:
                     # 需要扩展视频
                     stretch_factor = float(self.seg_min_duration) / float(video_duration)  # 拉长比例
@@ -341,10 +451,10 @@ class VideoService:
                     print(" ".join(command))
                     run_ffmpeg_command(command)
                 # 重命名最终的文件
-                if os.path.exists(output_name):
-                    os.remove(media_file)
-                    os.renames(output_name, media_file)
-                return_video_list.append(media_file)
+                # if os.path.exists(output_name):
+                #     os.remove(media_file)
+                #     os.renames(output_name, media_file)
+                return_video_list.append(output_name)
         self.video_list = return_video_list
         return return_video_list
 

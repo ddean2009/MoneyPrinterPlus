@@ -17,7 +17,7 @@ script_path = os.path.abspath(__file__)
 script_dir = os.path.dirname(script_path)
 
 # workdir
-workdir = os.path.join(script_dir, "../../work")
+workdir = os.path.join(script_dir, "../../resource")
 workdir = os.path.abspath(workdir)
 
 

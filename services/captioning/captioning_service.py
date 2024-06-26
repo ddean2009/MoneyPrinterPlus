@@ -6,7 +6,7 @@ from typing import Optional
 from config.config import my_config
 from services.alinls.speech_process import AliRecognitionService
 from services.audio.tencent_recognition_service import TencentRecognitionService
-from services.captioning.azure_captioning_service import Captioning
+from services.captioning.common_captioning_service import Captioning
 import subprocess
 
 from tools.file_utils import generate_temp_filename
@@ -53,8 +53,9 @@ def generate_caption():
         print("selected_audio_provider: Tencent")
         tencent_service = TencentRecognitionService()
         result_list = tencent_service.process(get_session_option("audio_output_file"),
-                                              get_session_option("video_language"))
-        # print("result list:", result_list)
+                                              get_session_option("audio_language"))
+        if result_list is None:
+            return
         captioning._offline_results = result_list
     captioning.finish()
 

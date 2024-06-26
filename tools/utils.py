@@ -6,18 +6,11 @@ import streamlit as st
 from typing import Optional
 
 from tools.file_utils import generate_temp_filename
-from tools.tr_utils import tr
 
 
 def generate_operator():
     operators = ['+', '-']
     return random.choice(operators)
-
-
-def random_line(afile):
-    lines = afile.readlines()
-    return random.choice(lines)
-
 
 def random_with_system_time():
     system_time = int(time.time() * 1000)
@@ -122,7 +115,7 @@ def must_have_value(option: str, msg: str) -> Optional[str]:
 
 def run_ffmpeg_command(command):
     try:
-        result = subprocess.run(command, capture_output=True, text=True)
+        result = subprocess.run(command, capture_output=True, check=True, text=True)
         if result.returncode != 0:
             print(f"FFmpeg returned an error: {result.stderr}")
         else:

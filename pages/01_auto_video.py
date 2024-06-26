@@ -3,7 +3,7 @@ import streamlit as st
 from config.config import my_config, save_config, languages, audio_languages, audio_voices_azure, transition_types, \
     fade_list, audio_voices_ali, audio_voices_tencent
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
-    main_get_video_resource, main_generate_subtitle, main_try_test_audio
+    main_get_video_resource, main_generate_subtitle, main_try_test_audio, get_audio_voices
 from pages.common import common_ui
 from tools.tr_utils import tr
 
@@ -69,17 +69,6 @@ def try_test_audio():
 def generate_video(video_generator):
     main_generate_ai_video(video_generator)
 
-
-def get_audio_voices():
-    selected_audio_provider = my_config['audio']['provider']
-    if selected_audio_provider == 'Azure':
-        return audio_voices_azure
-    if selected_audio_provider == 'Ali':
-        return audio_voices_ali
-    if selected_audio_provider == 'Tencent':
-        return audio_voices_tencent
-
-test_mode = my_config["test_mode"]
 
 st.markdown("<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
             AI搞钱工具</h1>", unsafe_allow_html=True)
@@ -215,8 +204,6 @@ with video_container:
     with llm_columns[3]:
         st.selectbox(label=tr("video Transition effect duration"), key="video_transition_effect_duration",
                      options=["1", "2"])
-    # if test_mode:
-    #     st.button(label=tr("Get Video Resource"), on_click=get_video_resource)
 
 # 字幕
 subtitle_container = st.container(border=True)
@@ -265,13 +252,10 @@ with subtitle_container:
     with llm_columns[3]:
         st.slider(label=tr("subtitle border width"), min_value=0.0, value=0.0, max_value=4.0, step=1.0,
                   key="subtitle_border_width")
-    # if test_mode:
-    #     st.button(label=tr("Generate subtitle"), on_click=generate_subtitle)
 
 # 生成视频
 video_generator = st.container(border=True)
 with video_generator:
-    # st_status = st.status(tr("Generate Video in process..."), expanded=True)
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video, args=(video_generator,))
 result_video_file = st.session_state.get("result_video_file")
 if result_video_file:

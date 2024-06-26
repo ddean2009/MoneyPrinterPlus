@@ -1,9 +1,15 @@
 import os
+import random
 import re
 import string
 
 import yaml
 from PIL.Image import Image
+
+
+def random_line(afile):
+    lines = afile.readlines()
+    return random.choice(lines)
 
 
 def read_yaml(file_name):
@@ -49,7 +55,7 @@ def insert_newline(text):
     return re.sub(pattern, r'\1\n', text)
 
 
-def generate_temp_filename(original_filepath, new_ext=""):
+def generate_temp_filename(original_filepath, new_ext="", new_directory=None):
     # 获取文件的目录、文件名和扩展名
     directory, filename_with_ext = os.path.split(original_filepath)
     filename, ext = os.path.splitext(filename_with_ext)
@@ -61,7 +67,10 @@ def generate_temp_filename(original_filepath, new_ext=""):
         new_filename = filename + '.temp' + ext
 
     # 如果你需要完整的路径，可以使用os.path.join
-    new_filepath = os.path.join(directory, new_filename)
+    if new_directory:
+        new_filepath = os.path.join(new_directory, new_filename)
+    else:
+        new_filepath = os.path.join(directory, new_filename)
 
     return new_filepath
 
@@ -104,3 +113,10 @@ def download_file_from_url(url, output_path):
 
     except requests.exceptions.RequestException as e:
         print(f"发生了一个错误: {e}")
+
+
+def random_line_from_text_file(text_file):
+    # 从文本文件中随机读取文本
+    with open(text_file, 'r', encoding='utf-8') as file:
+        line = random_line(file)
+        return line.strip()

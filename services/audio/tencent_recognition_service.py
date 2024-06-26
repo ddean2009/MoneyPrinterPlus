@@ -61,7 +61,7 @@ class TencentRecognitionService:
             if code != 0:
                 print("recognize failed! request_id: ", request_id, " code: ", code, ", message: ", resp["message"])
                 st.toast("腾讯云语音识别失败", icon="⚠️")
-                st.stop()
+                return None
 
             print("request_id: ", request_id)
             # 一个channl_result对应一个声道的识别结果

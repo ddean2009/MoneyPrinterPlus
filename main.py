@@ -2,11 +2,12 @@ import os
 
 import streamlit as st
 
-from config.config import my_config
+from config.config import my_config, audio_voices_azure, audio_voices_ali, audio_voices_tencent
 from services.audio.alitts_service import AliAudioService
 from services.audio.azure_service import AzureAudioService
 from services.audio.tencent_tts_service import TencentAudioService
 from services.captioning.captioning_service import generate_caption, add_subtitles
+from services.hunjian.hunjian_service import concat_audio_list, get_audio_and_video_list
 from services.llm.azure_service import MyAzureService
 from services.llm.baichuan_service import MyBaichuanService
 from services.llm.baidu_qianfan_service import BaiduQianfanService
@@ -16,7 +17,7 @@ from services.llm.openai_service import MyOpenAIService
 from services.llm.tongyi_service import MyTongyiService
 from services.resource.pexels_service import PexelsService
 from services.resource.pixabay_service import PixabayService
-from services.video.video_service import get_audio_duration, VideoService
+from services.video.video_service import get_audio_duration, VideoService, VideoMixService
 from tools.tr_utils import tr
 from tools.utils import random_with_system_time, get_must_session_option, extent_audio
 
@@ -30,6 +31,16 @@ script_dir = os.path.dirname(script_path)
 # 音频输出目录
 audio_output_dir = os.path.join(script_dir, "./work")
 audio_output_dir = os.path.abspath(audio_output_dir)
+
+
+def get_audio_voices():
+    selected_audio_provider = my_config['audio']['provider']
+    if selected_audio_provider == 'Azure':
+        return audio_voices_azure
+    if selected_audio_provider == 'Ali':
+        return audio_voices_ali
+    if selected_audio_provider == 'Tencent':
+        return audio_voices_tencent
 
 
 def get_resource_provider():
@@ -71,6 +82,8 @@ def get_audio_service():
 def main_generate_video_content():
     print("main_generate_video_content begin")
     topic = get_must_session_option('video_subject', "请输入要生成的主题")
+    if topic is None:
+        return
     video_language = st.session_state.get('video_language')
     video_length = st.session_state.get('video_length')
 
@@ -97,6 +110,8 @@ def main_try_test_audio():
     else:
         video_content = "你好，我是程序那些事"
     audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
+    if audio_voice is None:
+        return
     audio_service.read_with_ssml(video_content,
                                  audio_voice,
                                  audio_rate)
@@ -111,7 +126,11 @@ def main_generate_video_dubbing():
     audio_rate = get_audio_rate()
 
     video_content = get_must_session_option("video_content", "请先设置视频主题")
+    if video_content is None:
+        return
     audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
+    if audio_voice is None:
+        return
     audio_service.save_with_ssml(video_content,
                                  audio_output_file,
                                  audio_voice,
@@ -119,6 +138,16 @@ def main_generate_video_dubbing():
     # 语音扩展2秒钟,防止突然结束很突兀
     extent_audio(audio_output_file, 2)
     print("main_generate_video_dubbing end")
+
+
+def main_generate_video_dubbing_for_mix():
+    print("main_generate_video_dubbing_for_mix begin")
+    audio_service = get_audio_service()
+    audio_rate = get_audio_rate()
+    audio_output_file_list, video_dir_list = get_audio_and_video_list(audio_service, audio_rate)
+    st.session_state["audio_output_file_list"] = audio_output_file_list
+    st.session_state["video_dir_list"] = video_dir_list
+    print("main_generate_video_dubbing_for_mix end")
 
 
 def get_audio_rate():
@@ -180,7 +209,11 @@ def main_get_video_resource():
     print("main_get_video_resource begin")
     resource_service = get_resource_provider()
     query = get_must_session_option("video_keyword", "请先设置视频关键字")
+    if query is None:
+        return
     audio_file = get_must_session_option("audio_output_file", "请先生成配音文件")
+    if audio_file is None:
+        return
     audio_length = get_audio_duration(audio_file)
     print("audio_length:", audio_length)
     return_videos, total_length = resource_service.handle_video_resource(query, audio_length, 50, False)
@@ -213,7 +246,11 @@ def main_generate_ai_video(video_generator):
             main_get_video_resource()
             st.write(tr("Video normalize..."))
             audio_file = get_must_session_option("audio_output_file", "请先生成配音文件")
+            if audio_file is None:
+                return
             video_list = get_must_session_option("return_videos", "请先生成视频资源文件")
+            if video_list is None:
+                return
 
             video_service = VideoService(video_list, audio_file)
             print("normalize video")
@@ -226,6 +263,72 @@ def main_generate_ai_video(video_generator):
             if enable_subtitles:
                 st.write(tr("Add Subtitles..."))
                 subtitle_file = get_must_session_option('captioning_output', "请先生成字幕文件")
+                if subtitle_file is None:
+                    return
+
+                font_name = st.session_state.get('subtitle_font')
+                font_size = st.session_state.get('subtitle_font_size')
+                primary_colour = st.session_state.get('subtitle_color')
+                outline_colour = st.session_state.get('subtitle_border_color')
+                outline = st.session_state.get('subtitle_border_width')
+                alignment = st.session_state.get('subtitle_position')
+                add_subtitles(video_file, subtitle_file,
+                              font_name=font_name,
+                              font_size=font_size,
+                              primary_colour=primary_colour,
+                              outline_colour=outline_colour,
+                              outline=outline,
+                              alignment=alignment)
+                print("final file with subtitle:", video_file)
+            st.session_state["result_video_file"] = video_file
+            status.update(label=tr("Generate Video completed!"), state="complete", expanded=False)
+
+
+def main_generate_ai_video_for_mix(video_generator):
+    print("main_generate_ai_video_for_fix begin:")
+    with video_generator:
+        st_area = st.status(tr("Generate Video in process..."), expanded=True)
+        with st_area as status:
+            st.write(tr("Generate Video Dubbing..."))
+            main_generate_video_dubbing_for_mix()
+            st.write(tr("Video normalize..."))
+            video_dir_list = get_must_session_option("video_dir_list", "请选择视频目录路径")
+            audio_file_list = get_must_session_option("audio_output_file_list", "请先生成配音文件列表")
+
+            video_mix_servie = VideoMixService()
+            # 使用 zip() 函数遍历两个列表并获得配对
+            i = 0
+            audio_output_file_list = []
+            final_video_file_list = []
+            for video_dir, audio_file in zip(video_dir_list, audio_file_list):
+                print(f"Video Directory: {video_dir}, Audio File: {audio_file}")
+                if i == 0:
+                    matching_videos, total_length = video_mix_servie.match_videos_from_dir(video_dir,
+                                                                                           audio_file, True)
+                else:
+                    matching_videos, total_length = video_mix_servie.match_videos_from_dir(video_dir,
+                                                                                           audio_file, False)
+                i = i + 1
+                audio_output_file_list.append(audio_file)
+                final_video_file_list.extend(matching_videos)
+
+            final_audio_output_file = concat_audio_list(audio_output_file_list)
+            st.session_state['audio_output_file'] = final_audio_output_file
+            st.write(tr("Generate Video subtitles..."))
+            main_generate_subtitle()
+            video_service = VideoService(final_video_file_list, final_audio_output_file)
+            print("normalize video")
+            video_service.normalize_video()
+            st.write(tr("Generate Video..."))
+            video_file = video_service.generate_video_with_audio()
+            print("final file without subtitle:", video_file)
+
+            enable_subtitles = st.session_state.get("enable_subtitles")
+            if enable_subtitles:
+                st.write(tr("Add Subtitles..."))
+                subtitle_file = get_must_session_option('captioning_output', "请先生成字幕文件")
+                if subtitle_file is None:
+                    return
 
                 font_name = st.session_state.get('subtitle_font')
                 font_size = st.session_state.get('subtitle_font_size')

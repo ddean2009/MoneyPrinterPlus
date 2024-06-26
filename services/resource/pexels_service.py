@@ -18,7 +18,7 @@ script_path = os.path.abspath(__file__)
 script_dir = os.path.dirname(script_path)
 
 # workdir
-workdir = os.path.join(script_dir, "../../work")
+workdir = os.path.join(script_dir, "../../resource")
 workdir = os.path.abspath(workdir)
 
 
@@ -61,11 +61,6 @@ class PexelsService(ResourceService):
                 if total_length < audio_length:
                     video_files = video["video_files"]
                     for video_file in video_files:
-                        # fps转换
-                        # video_fps = video_file["fps"]
-                        # video_duration = video_duration * video_fps / self.fps
-                        # if video_duration > self.video_segment_max_length:
-                        #     video_duration = self.video_segment_max_length
                         if exact_match:
                             if video_file["width"] == self.width and video_file["height"] == self.height:
                                 video_url = video_file['link']

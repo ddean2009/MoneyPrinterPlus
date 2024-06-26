@@ -72,7 +72,23 @@
   "Video normalize...": "视频初始化...",
   "Generate Video...": "生成视频...",
   "Add Subtitles...": "添加字幕...",
-  "Generate Video completed!": "生成视频完成!"
+  "Generate Video completed!": "生成视频完成!",
+
+
+  "Mix Video": "视频混剪区",
+  "Mix Video Scene": "视频片段",
+  "Video Scene Resource": "视频片段资源目录",
+  "Please input video scene resource folder path": "请输入视频片段资源目录路径",
+  "Video Scene Text": "视频片段文案路径",
+  "Please input video scene text path": "请输入视频片段文案路径",
+  "Add More Scene": "添加更多片段",
+  "Delete Extra Scene": "删除多余片段",
+  "One Line Text For One Scene,UTF-8 encoding": "一个场景所需的文字放在TXT文件中的一行,程序会随机从TXT文件中挑选一行文本作为该场景的文字内容,TXT文件必须UTF-8编码",
+  "You Need More Resource": "视频资源不足,请添加资源后重试"
+
+
+
+
 
 
 }
