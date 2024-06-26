@@ -19,3 +19,17 @@
 
 
 ![image-20240626104158441](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406261042930.png)
+
+
+## 2. No such filter
+
+在ffmpeg合成视频的时候出现下面错误：
+
+```
+[AVFilterGraph @ 000001f7486a8b40] No such filter: ''
+Error initializing complex filters.
+Invalid argument
+```
+
+查看你的ffmpeg版本，需要升级到6.0以上。
+
