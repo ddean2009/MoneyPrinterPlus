@@ -48,6 +48,18 @@ https://www.bilibili.com/video/BV16VVGefEp1/?spm_id_from=333.999.0.0&vd_source=a
 
 https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6e7665845c15089bd618
 
+# 图文系列教程
+
+[moneyPrinterPlus简介](https://mp.weixin.qq.com/s/0p9T_WFJ_yXcj74TgI7iMw)
+
+[moneyPrinterPlus详细使用教程](https://mp.weixin.qq.com/s/fAdws2grcZknG8VLQfjMjg)
+
+[moneyPrinterPlus阿里云详细配置使用教程](https://mp.weixin.qq.com/s?__biz=MzIxMTI0NzcyMQ==&mid=2650935498&idx=1&sn=7d29a350f36e14686252e9a22d8fce23&chksm=8cae87ccbbd90edaea45b595ec4028b91e464061c0a2f37f1f15e97f593fd7b51edba765ed6e&cur_album_id=1821975747683532806&scene=189#wechat_redirect)
+
+[moneyPrinterPlus腾讯云详细配置使用教程](https://mp.weixin.qq.com/s/VaI-Fy7dDz9dlW5tGM4mhg)
+
+[moneyPrinterPlus微软云详细配置使用教程](https://mp.weixin.qq.com/s/4p6MuDcwIurpVwkcQlWoDA)
+
 
 
 # 界面概览
@@ -59,8 +71,6 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 ## 2. AI视频批量混剪工具
 
 ![image-20240625143642364](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436426.png)
-
-
 
 
 # 更新预告
@@ -77,6 +87,8 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 
 # 已实现功能
 
+- [x] 视频批量混剪，批量产出大量不重复的短视频
+- [x] 支持本地素材选择(支持各种素材mp4,jpg,png),支持各种分辨率。
 - [x] 大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek,
 - [x] 支持**Azure**语音功能
 - [x] 支持**阿里云**语音功能
@@ -97,8 +109,6 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 - [] 支持更多的视频资源获取方式
 - [] 支持更多的视频转场特效
 - [] 支持更多的字幕特效
-- [] 支持本地素材选择
-- [] 视频批量混剪，批量产出大量不重复的短视频
 - [] 视频批量自动发布到各个视频平台
 - [] 接入stable diffusion，AI生图，合成视频
 - [] 接入Sora等AI视频大模型工具，自动生成视频
@@ -304,17 +314,8 @@ DeepSeek API获取地址: https://www.deepseek.com/
 
 如果大家有什么问题或者想法，欢迎入群讨论。
 
-![](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406200901346.png)
+![image-20240628093549912](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406280935005.png)
 
-# 图文系列教程
-
-[moneyPrinterPlus简介](https://mp.weixin.qq.com/s/0p9T_WFJ_yXcj74TgI7iMw)
-
-[moneyPrinterPlus详细使用教程](https://mp.weixin.qq.com/s/fAdws2grcZknG8VLQfjMjg)
-
-[moneyPrinterPlus阿里云详细配置使用教程](https://mp.weixin.qq.com/s?__biz=MzIxMTI0NzcyMQ==&mid=2650935498&idx=1&sn=7d29a350f36e14686252e9a22d8fce23&chksm=8cae87ccbbd90edaea45b595ec4028b91e464061c0a2f37f1f15e97f593fd7b51edba765ed6e&cur_album_id=1821975747683532806&scene=189#wechat_redirect)
-
-[moneyPrinterPlus腾讯云详细配置使用教程](https://mp.weixin.qq.com/s/VaI-Fy7dDz9dlW5tGM4mhg)
 
 
 
