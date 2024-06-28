@@ -66,16 +66,18 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 
 # 界面概览
 
-## 1. AI视频生成器
+## 1. AI视频批量混剪工具
 
-![image-20240625143613914](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436983.png)
-
-## 2. AI视频批量混剪工具
-
-![image-20240625143642364](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436426.png)
+![image-20240628153020140](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406281530983.png)
 
 使用介绍：
 [重磅!免费一键批量混剪工具它来了,一天上万短视频不是梦](https://mp.weixin.qq.com/s/gUB18fTwRUvo9dSgk0DXLg)
+
+## 2. AI视频生成器
+
+![image-20240628153041166](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406281530864.png)
+
+
 
 
 # 更新预告
