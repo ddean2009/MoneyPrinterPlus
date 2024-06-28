@@ -60,6 +60,8 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 
 [moneyPrinterPlus微软云详细配置使用教程](https://mp.weixin.qq.com/s/4p6MuDcwIurpVwkcQlWoDA)
 
+[重磅!免费一键批量混剪工具它来了,一天上万短视频不是梦](https://mp.weixin.qq.com/s/gUB18fTwRUvo9dSgk0DXLg)
+
 
 
 # 界面概览
@@ -71,6 +73,9 @@ https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6
 ## 2. AI视频批量混剪工具
 
 ![image-20240625143642364](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406251436426.png)
+
+使用介绍：
+[重磅!免费一键批量混剪工具它来了,一天上万短视频不是梦](https://mp.weixin.qq.com/s/gUB18fTwRUvo9dSgk0DXLg)
 
 
 # 更新预告
