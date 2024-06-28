@@ -71,7 +71,7 @@ def generate_video_for_mix(video_generator):
     if videos_count is not None:
         for i in range(int(videos_count)):
             print(i)
-            #main_generate_ai_video_for_mix(video_generator)
+            main_generate_ai_video_for_mix(video_generator)
 
 
 common_ui()
