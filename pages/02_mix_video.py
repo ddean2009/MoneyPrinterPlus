@@ -67,7 +67,11 @@ def more_scene_fragment(video_scene_container):
                               key="video_scene_text_" + str(k + 2))
 
 def generate_video_for_mix(video_generator):
-    main_generate_ai_video_for_mix(video_generator)
+    videos_count = st.session_state.get('videos_count')
+    if videos_count is not None:
+        for i in range(int(videos_count)):
+            print(i)
+            #main_generate_ai_video_for_mix(video_generator)
 
 
 common_ui()
@@ -234,6 +238,8 @@ with subtitle_container:
 # 生成视频
 video_generator = st.container(border=True)
 with video_generator:
+    st.slider(label=tr("how many videos do you want"), min_value=1.0, value=1.0, max_value=100.0, step=1.0,
+              key="videos_count")
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video_for_mix,
               args=(video_generator,))
 result_video_file = st.session_state.get("result_video_file")
