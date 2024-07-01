@@ -81,6 +81,9 @@ https://www.bilibili.com/video/BV1v43eekECn/?spm_id_from=333.999.0.0&vd_source=a
 
 ![image-20240628153041166](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406281530864.png)
 
+## 3. 批量视频自动上传工具
+
+![](auto_video_publish.gif)
 
 
 
