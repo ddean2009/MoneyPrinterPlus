@@ -87,6 +87,7 @@ https://www.bilibili.com/video/BV1v43eekECn/?spm_id_from=333.999.0.0&vd_source=a
 # 更新预告
 
 * 视频混剪功能已经上线了！！！！
+* 这周会考虑上线视频自动发布工具，敬请期待！！！
 
 # 更新列表
 
