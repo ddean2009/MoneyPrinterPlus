@@ -15,9 +15,6 @@ from config.config import my_config
 from services.llm.llm_service import MyLLMService
 from tools.utils import must_have_value
 
-# 设置 baichuan API 的基础 URL 和 API 密钥
-# BAICHUAN_API_KEY = my_config['llm']['Baichuan']['api_key']  # 替换为您的 Baichuan API 密钥
-# BAICHUAN_MODEL_NAME = my_config['llm']['Baichuan']['model_name']  # 替换为 Baichuan API 的model
 
 
 class MyBaichuanService(MyLLMService):

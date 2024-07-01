@@ -10,9 +10,6 @@ from services.llm.llm_service import MyLLMService
 from tools.utils import must_have_value
 
 
-# TONGYI_API_KEY = my_config['llm']['Tongyi']['api_key']  # 替换为您的 tongyi API 密钥
-# TONGYI_MODEL_NAME = my_config['llm']['Tongyi']['model_name']  # 替换为 tongyi API 的model
-
 class MyTongyiService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性

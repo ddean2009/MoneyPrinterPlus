@@ -7,10 +7,6 @@ from services.llm.llm_service import MyLLMService
 from tools.utils import must_have_value
 
 
-# 设置OpenAI API密钥
-# OPENAI_API_KEY = my_config['llm']['OpenAI']['api_key']
-# OPENAI_MODEL_NAME = my_config['llm']['OpenAI']['model_name']  # 替换为 open API 的model
-
 class MyOpenAIService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性

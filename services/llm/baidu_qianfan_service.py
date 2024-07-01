@@ -10,10 +10,6 @@ from langchain_community.llms import QianfanLLMEndpoint
 from tools.utils import must_have_value
 
 
-# QIANFAN_AK = my_config['llm']['Qianfan']['api_key']
-# QIANFAN_SK = my_config['llm']['Qianfan']['secret_key']
-# QIANFAN_MODEL_NAME = my_config['llm']['Qianfan']['model_name']
-
 class BaiduQianfanService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性

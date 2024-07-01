@@ -7,12 +7,6 @@ from services.llm.llm_service import MyLLMService
 from tools.utils import must_have_value
 
 
-# 设置 Azure OpenAI API 密钥和服务区域
-# AZURE_OPENAI_API_KEY = my_config['llm']['Azure']['api_key']  # 替换为您的 Azure OpenAI API 密钥
-# AZURE_OPENAI_API_BASE = my_config['llm']['Azure']['base_url']  # 替换为您的 Azure OpenAI API 基础 URL
-# AZURE_OPENAI_MODEL_NAME = my_config['llm']['Azure']['model_name']  # 替换为您的 Azure OpenAI 部署名称
-
-
 class MyAzureService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性

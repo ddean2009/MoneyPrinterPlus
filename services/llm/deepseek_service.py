@@ -7,11 +7,6 @@ from services.llm.llm_service import MyLLMService
 from tools.utils import must_have_value
 
 
-# 设置DeepSeek API密钥
-# DEEPSEEK_API_KEY = my_config['llm']['DeepSeek']['api_key']
-# DEEPSEEK_API_URL = my_config['llm']['DeepSeek']['base_url']
-# DEEPSEEK_MODEL_NAME = my_config['llm']['DeepSeek']['model_name']  # 替换为 DeepSeek API 的model
-
 class MyDeepSeekService(MyLLMService):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数来初始化父类的属性
