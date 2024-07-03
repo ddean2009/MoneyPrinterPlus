@@ -174,7 +174,7 @@ with video_container:
         st.slider(label=tr("video segment min length"), min_value=5.0, value=5.0, max_value=10.0, step=1.0,
                   key="video_segment_min_length")
     with llm_columns[1]:
-        st.slider(label=tr("video segment max length"), min_value=10.0, value=10.0, max_value=30.0, step=1.0,
+        st.slider(label=tr("video segment max length"), min_value=5.0, value=10.0, max_value=30.0, step=1.0,
                   key="video_segment_max_length")
     llm_columns = st.columns(4)
     with llm_columns[0]:

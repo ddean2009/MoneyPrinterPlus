@@ -1,6 +1,5 @@
 # 设置 tongyi API 的基础 URL 和 API 密钥
 import os
-from getpass import getpass
 
 from langchain_community.llms.tongyi import Tongyi
 from langchain_core.prompts import PromptTemplate

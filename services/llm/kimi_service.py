@@ -1,4 +1,5 @@
 import os
+
 from langchain.prompts import PromptTemplate
 from langchain_community.llms.moonshot import Moonshot
 

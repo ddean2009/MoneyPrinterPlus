@@ -1,5 +1,4 @@
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 from openai import OpenAI
 
 from config.config import my_config

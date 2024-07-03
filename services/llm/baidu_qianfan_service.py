@@ -29,9 +29,6 @@ class BaiduQianfanService(MyLLMService):
             model=self.QIANFAN_MODEL_NAME,
         )
 
-        # 创建 LLMChain
-        # chain = prompt_template | llm | StrOutputParser()
-
         # 生成视频内容描述
         description = llm.invoke(prompt_template.format(topic=topic, language=language, length=length))
 

@@ -1,20 +1,11 @@
 import os
-from typing import List, Optional, Any
 
-import requests
-from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_community.llms.baichuan import BaichuanLLM
-from langchain_community.llms.moonshot import Moonshot
-from langchain_core.callbacks import CallbackManagerForLLMRun
-from langchain_core.language_models import BaseLLM
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.outputs import LLMResult
 
 from config.config import my_config
 from services.llm.llm_service import MyLLMService
 from tools.utils import must_have_value
-
 
 
 class MyBaichuanService(MyLLMService):
