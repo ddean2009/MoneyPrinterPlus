@@ -160,6 +160,8 @@ https://www.bilibili.com/video/BV1v43eekECn/?spm_id_from=333.999.0.0&vd_source=a
 
 ## 安装
 
+### 手动安装
+
 1. 确保你有Python 3.10+的运行环境。如果是windows, 请确保安装了python路径已经添加到了PATH中。
 2. 确保你有ffmpeg 6.0+的运行环境。如果是windows, 请确保安装了ffmpeg路径已经添加到了PATH中。没有安装ffmpeg的朋友，请通过 https://ffmpeg.org/ 来安装对应的版本。
 3. 如果python和ffmpeg环境都有了。那么就可以通过pip安装依赖包了。
@@ -168,12 +170,38 @@ https://www.bilibili.com/video/BV1v43eekECn/?spm_id_from=333.999.0.0&vd_source=a
 pip install -r requirements.txt
 ```
 
+### 自动安装
+
+进入项目目录，windows下双击执行：
+
+```bash
+setup.bat
+```
+
+mac或者linux下执行：
+
+```bash
+sh setup.sh
+```
+
 ## 运行
 
 使用下面命令运行程序:
 
 ```bash
 streamlit run gui.py
+```
+
+### 自动运行
+
+如果你使用了自动安装脚本，那么可以执行下面的脚本来自动运行。
+
+windows下,双击 start.bat
+
+mac或者linux下执行：
+
+```bash
+sh start.sh
 ```
 
 在日志文件中可以看到程序运行的日志信息。

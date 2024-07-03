@@ -1,7 +1,4 @@
-import time
-
 import streamlit as st
-import tkinter as tk
 from config.config import my_config, save_config, languages
 from pages.common import common_ui
 from tools.tr_utils import tr

@@ -11,3 +11,5 @@ hunjian_main.py
 work/*
 final/*
 resource/*
+venv
+=2.13.3
