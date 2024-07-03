@@ -160,11 +160,15 @@ https://www.bilibili.com/video/BV1v43eekECn/?spm_id_from=333.999.0.0&vd_source=a
 
 ## 安装
 
-### 手动安装
+### 前提条件
 
 1. 确保你有Python 3.10+的运行环境。如果是windows, 请确保安装了python路径已经添加到了PATH中。
 2. 确保你有ffmpeg 6.0+的运行环境。如果是windows, 请确保安装了ffmpeg路径已经添加到了PATH中。没有安装ffmpeg的朋友，请通过 https://ffmpeg.org/ 来安装对应的版本。
-3. 如果python和ffmpeg环境都有了。那么就可以通过pip安装依赖包了。
+
+
+### 手动安装
+
+如果python和ffmpeg环境都有了。那么就可以通过pip安装依赖包了。
 
 ```bash
 pip install -r requirements.txt
