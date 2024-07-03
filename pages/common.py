@@ -17,6 +17,7 @@ def common_ui():
     st.sidebar.page_link("gui.py", label=tr("Base Config"))
     st.sidebar.page_link("pages/01_auto_video.py", label=tr("Generate Video"))
     st.sidebar.page_link("pages/02_mix_video.py", label=tr("Mix Video"))
+    st.sidebar.page_link("pages/03_auto_publish.py", label=tr("Video Auto Publish"))
     st.sidebar.markdown(
         '<a style="text-align: center;padding-top: 0rem;" href="http://www.flydean.com">Developed by 程序那些事</a>',
         unsafe_allow_html=True)
