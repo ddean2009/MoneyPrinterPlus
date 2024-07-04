@@ -123,7 +123,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "You may need to install Python. The command for this is brew install python@3.10."
   fi
 
-  echo -e "Setup finished! Run ./start.sh to start."
+  echo -e "Setup finished! Run sh start.sh to start."
 elif [[ "$OSTYPE" == "cygwin" ]]; then
   # Cygwin is a standalone suite of Linux utilities on Windows
   echo "This hasn't been validated on cygwin yet."
