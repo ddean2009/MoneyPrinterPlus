@@ -49,6 +49,7 @@ install_python_dependencies() {
   fi
 
   echo "setup python dependencies..."
+  python -m pip install --require-virtualenv --no-input -q -q  setuptools
   case "$OSTYPE" in
     "lin"*)
         python "$SCRIPT_DIR/setup/setup_linux.py" --platform-requirements-file=requirements.txt
