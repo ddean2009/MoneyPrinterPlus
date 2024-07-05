@@ -213,7 +213,9 @@ fade_list = ['fade', 'smoothleft', 'smoothright', 'smoothup', 'smoothdown', 'cir
              'wipetl', 'wipetr', 'wipebl', 'wipebr', 'zoomin', 'hlwind', 'hrwind', 'vuwind', 'vdwind', 'coverleft',
              'coverright', 'covertop', 'coverbottom', 'revealleft', 'revealright', 'revealup', 'revealdown']
 
-driver_types = ['chrome', 'firefox']
+driver_types = {
+    "chrome": 'chrome',
+    "firefox": 'firefox'}
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)

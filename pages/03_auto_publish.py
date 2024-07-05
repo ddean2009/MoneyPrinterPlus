@@ -4,6 +4,7 @@ import streamlit as st
 
 from config.config import driver_types
 from pages.common import common_ui
+from services.publish.open_test import start_all_pages
 from tools.tr_utils import tr
 
 # 获取当前脚本的绝对路径
@@ -15,8 +16,10 @@ script_dir = os.path.dirname(script_path)
 default_bg_music_dir = os.path.join(script_dir, "../bgmusic")
 default_bg_music_dir = os.path.abspath(default_bg_music_dir)
 
+
 def test_publish_video():
-    pass
+    start_all_pages()
+
 
 def start_publish_video():
     pass
@@ -32,7 +35,7 @@ st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>视频批量自�
 video_container = st.container(border=True)
 with video_container:
     st.subheader(tr("Video Auto Public Config"))
-    st.selectbox(label=tr("Driver Type"), options=driver_types,
+    st.selectbox(label=tr("Driver Type"), options=driver_types, format_func=lambda x: driver_types.get(x),
                  key="video_publish_driver_type")
     if st.session_state.get("video_publish_driver_type") == 'chrome':
         st.text_input(label=tr("Driver Location"), key="video_publish_driver_location",
@@ -41,7 +44,7 @@ with video_container:
     if st.session_state.get("video_publish_driver_type") == 'firefox':
         st.text_input(label=tr("Driver Location"), key="video_publish_driver_location",
                       help=tr("Download the driver from https://github.com/mozilla/geckodriver/releases"))
-        st.text_input(label=tr("Driver Debugger Address"),value="127.0.0.1:2828",  key="video_publish_debugger_address")
+        st.text_input(label=tr("Driver Debugger Address"), value="127.0.0.1:2828", key="video_publish_debugger_address")
     st.text_input(label=tr("Video Content Dir"), key="video_publish_content_dir")
 
 st_columns = st.columns(2)
