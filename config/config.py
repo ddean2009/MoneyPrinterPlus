@@ -130,7 +130,6 @@ audio_voices_azure = {
     }
 }
 
-
 audio_voices_ali = {
     "zh-CN": {
         "zhixiaobai": "知小白(普通话女声)",
@@ -166,7 +165,6 @@ audio_voices_ali = {
         "aitong": "艾彤(儿童音)",
         "aiwei": "艾薇(萝莉女声)",
         "aibao": "艾宝(萝莉女声)"
-
 
     },
     "en-US": {
@@ -214,6 +212,8 @@ fade_list = ['fade', 'smoothleft', 'smoothright', 'smoothup', 'smoothdown', 'cir
              'pixelize', 'radial', 'hblur',
              'wipetl', 'wipetr', 'wipebl', 'wipebr', 'zoomin', 'hlwind', 'hrwind', 'vuwind', 'vdwind', 'coverleft',
              'coverright', 'covertop', 'coverbottom', 'revealleft', 'revealright', 'revealup', 'revealdown']
+
+driver_types = ['chrome', 'firefox']
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)

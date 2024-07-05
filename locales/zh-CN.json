@@ -87,7 +87,19 @@
   "You Need More Resource": "视频资源不足,请添加资源后重试",
   "how many videos do you want": "你想生成多少个视频?",
 
-  "Video Auto Publish": "视频自动发布工具"
+  "Video Auto Publish": "视频自动发布工具",
+  "Video Auto Public Config": "视频自动发布配置",
+  "Driver Type": "驱动类型",
+  "Driver Location": "驱动位置",
+  "Driver Debugger Address": "驱动调试地址",
+  "Video Content Dir": "视频内容所在目录",
+  "Start Publish": "发布视频",
+  "Download the driver from https://googlechromelabs.github.io/chrome-for-testing/": "从 https://googlechromelabs.github.io/chrome-for-testing/ 下载驱动",
+  "Download the driver from https://github.com/mozilla/geckodriver/releases": "从 https://github.com/mozilla/geckodriver/releases 下载驱动",
+  "Test Publish": "环境检测"
+
+
+
 
 
 
