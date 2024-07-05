@@ -1,3 +1,4 @@
+- 
 - [MoneyPrinterPlus](#moneyprinterplus)
 - [视频教程](#视频教程)
 - [界面概览](#界面概览)
@@ -65,6 +66,8 @@ https://www.bilibili.com/video/BV1v43eekECn/?spm_id_from=333.999.0.0&vd_source=a
 [moneyPrinterPlus微软云详细配置使用教程](https://mp.weixin.qq.com/s/4p6MuDcwIurpVwkcQlWoDA)
 
 [重磅!免费一键批量混剪工具它来了,一天上万短视频不是梦](https://mp.weixin.qq.com/s/gUB18fTwRUvo9dSgk0DXLg)
+
+[MoneyPrinterPlus自动配置环境和自动运行](https://mp.weixin.qq.com/s/k3B08ol1GJVi2EIyfCgWAg)
 
 
 
