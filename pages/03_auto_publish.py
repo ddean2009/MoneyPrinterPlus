@@ -47,8 +47,8 @@ with video_container:
         st.text_input(label=tr("Driver Debugger Address"), value="127.0.0.1:2828", key="video_publish_debugger_address")
     st.text_input(label=tr("Video Content Dir"), key="video_publish_content_dir")
 
-st_columns = st.columns(2)
-with st_columns[0]:
-    st.button(label=tr("Test Publish"), type="primary", on_click=test_publish_video)
-with st_columns[1]:
-    st.button(label=tr("Start Publish"), type="primary", on_click=start_publish_video)
+
+st.warning(tr("Click the test button, one new page will be opened, if not, that means your config has some error."))
+st.button(label=tr("Test Publish"), type="primary", on_click=test_publish_video)
+st.warning(tr("Make sure your env is ready, before start publish"))
+st.button(label=tr("Start Publish"), type="primary", on_click=start_publish_video)

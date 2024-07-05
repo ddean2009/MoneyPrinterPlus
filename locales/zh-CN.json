@@ -96,7 +96,9 @@
   "Start Publish": "发布视频",
   "Download the driver from https://googlechromelabs.github.io/chrome-for-testing/": "从 https://googlechromelabs.github.io/chrome-for-testing/ 下载驱动",
   "Download the driver from https://github.com/mozilla/geckodriver/releases": "从 https://github.com/mozilla/geckodriver/releases 下载驱动",
-  "Test Publish": "环境检测"
+  "Test Publish": "环境检测",
+  "Click the test button, one new page will be opened, if not, that means your config has some error.": "点击测试按钮,会打开一个新页面,如果页面没有打开,说明你的配置有错误",
+  "Make sure your env is ready, before start publish": "在发布前，确保你的配置是正确的"
 
 
 
