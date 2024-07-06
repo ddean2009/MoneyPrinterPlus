@@ -21,7 +21,7 @@ env_var_exists() {
 # Directory of the script
 SCRIPT_DIR="$(cd -- $(dirname -- "$0") && pwd)"
 
-DIR="$(PWD)"
+DIR="$(pwd)"
 
 # Function to install Python dependencies
 install_python_dependencies() {
