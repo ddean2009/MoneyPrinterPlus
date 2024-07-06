@@ -192,7 +192,7 @@ setup.bat
 mac或者linux下执行：
 
 ```bash
-sh setup.sh
+bash setup.sh
 ```
 
 ## 运行
@@ -212,7 +212,7 @@ windows下,双击 start.bat
 mac或者linux下执行：
 
 ```bash
-sh start.sh
+bash start.sh
 ```
 
 在日志文件中可以看到程序运行的日志信息。
