@@ -217,6 +217,11 @@ driver_types = {
     "chrome": 'chrome',
     "firefox": 'firefox'}
 
+douyin_site ="https://creator.douyin.com/creator-micro/content/upload"
+shipinhao_site="https://channels.weixin.qq.com/platform/post/create"
+kuaishou_site="https://cp.kuaishou.com/article/publish/video"
+xiaohongshu_site="https://creator.xiaohongshu.com/publish/publish?source=official"
+
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
 
@@ -239,6 +244,14 @@ def load_config():
         shutil.copy(config_example_file, config_file)
     if os.path.exists(config_file):
         return read_yaml(config_file)
+
+
+def test_config(todo_config, *args):
+    temp_config = todo_config
+    for arg in args:
+        if arg not in temp_config:
+            temp_config[arg] = {}
+        temp_config = temp_config[arg]
 
 
 def save_config():

@@ -120,3 +120,51 @@ def random_line_from_text_file(text_file):
     with open(text_file, 'r', encoding='utf-8') as file:
         line = random_line(file)
         return line.strip()
+
+
+def read_head(file):
+    if os.path.exists(file):
+        with open(file, 'r', encoding='UTF-8') as file:
+            # 读取文件内容
+            head = file.readline()
+            return head
+    else:
+        return ""
+
+
+# 读取第一行之后 添加一个回车，适用于第一行是文章标题的情况
+def read_file_with_extra_enter(file):
+    with open(file, 'r', encoding='UTF-8') as f:
+        # 读取文件内容
+        content = f.read()
+        # 使用splitlines()将内容分割成行列表
+        lines = content.splitlines()
+        # 检查列表是否为空，并且只处理第一行（如果存在）
+        if lines:
+            # 在第一行末尾添加换行符（如果它不存在）
+            if not lines[0].endswith('\n'):
+                lines[0] += '\n'
+        # 使用join()将行重新组合成字符串
+        cleaned_content = '\n'.join(lines)
+        return cleaned_content
+
+
+def write_to_file(content, file_name):
+    with open(file_name, 'w', encoding='UTF-8') as file:
+        file.write(content)
+
+def list_all_files(video_dir, extension='.mp4'):
+    return_files = []
+    for root, dirs, files in os.walk(video_dir):
+        for file in files:
+            if file.endswith(extension):
+                return_files.append(os.path.join(root, file))
+    return sorted(return_files)
+
+
+def list_files(video_dir, extension='.mp4'):
+    return_files = []
+    for file in os.listdir(video_dir):
+        if file.endswith(extension):
+            return_files.append(os.path.join(video_dir, file))
+    return sorted(return_files)

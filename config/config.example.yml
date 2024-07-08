@@ -53,3 +53,31 @@ video:
 
 test_mode: False
 
+publisher:
+  auto_publish: True
+  common:
+    enable: True
+    title_prefix: 标题前缀
+    collection: 集合名称
+    tags:
+  douyin:
+    enable: True
+    title_prefix: 标题前缀
+    collection: 集合名称
+  kuaishou:
+    enable: True
+    title_prefix: 标题前缀
+    collection: 集合名称
+    domain:
+      enable: True
+      level1: 教育
+      level2: 语言教育
+  xiaohongshu:
+    enable: True
+    title_prefix: 标题前缀
+    collection: 集合名称
+  shipinhao:
+    enable: True
+    title_prefix: 标题前缀
+    collection: 集合名称
+

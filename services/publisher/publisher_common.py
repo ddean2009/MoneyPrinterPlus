@@ -32,24 +32,3 @@ def init_driver():
         options.page_load_strategy = 'normal'  # 设置页面加载策略为'normal' 默认值, 等待所有资源下载,
         driver = webdriver.Firefox(service=service, options=options)
         return driver
-
-
-
-
-def start_page(site_url, driver):
-    # 打开新标签页并切换到新标签页
-    driver.switch_to.new_window('tab')
-    # 浏览器实例现在可以被重用，进行你的自动化操作
-    driver.get(site_url)
-    time.sleep(1)
-
-
-def start_all_pages():
-    driver = init_driver()
-    start_page('http://www.flydean.com', driver)
-    # 在需要的时候关闭浏览器，不要关闭浏览器进程
-    driver.quit()
-
-
-if __name__ == '__main__':
-    start_all_pages()
