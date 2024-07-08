@@ -54,6 +54,9 @@ video:
 test_mode: False
 
 publisher:
+  driver_type: chrome
+  content_location:
+  driver_location:
   auto_publish: True
   common:
     enable: True

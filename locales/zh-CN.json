@@ -115,5 +115,7 @@
   "Domain Level1": "一级领域",
   "Domain Level2": "二级领域",
   "Auto Publish": "是否自动发布",
-  "Tags": "视频标签"
+  "Tags": "视频标签",
+  "Video File": "视频文件",
+  "Text File": "文本文件"
 }

@@ -14,3 +14,4 @@ tencentcloud-sdk-python-tts==3.0.1168
 pydub
 psutil
 selenium==4.20.0
+pyperclip

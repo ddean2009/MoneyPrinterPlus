@@ -72,6 +72,7 @@ def shipinhao_publisher(driver, video_file, text_file):
         tags = st.session_state.get('video_publish_tags')
     else:
         tags = st.session_state.get('video_publish_shipinhao_tags')
+    tags = tags.split()
     for tag in tags:
         content.send_keys(' ')
         content.send_keys(tag)

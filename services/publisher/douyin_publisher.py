@@ -68,6 +68,7 @@ def douyin_publisher(driver, video_file, text_file):
         tags = st.session_state.get('video_publish_tags')
     else:
         tags = st.session_state.get('video_publish_douyin_tags')
+    tags = tags.split()
     for tag in tags:
         is_firefox = st.session_state.get("video_publish_driver_type") == 'firefox'
         # firefox没有原创按钮？

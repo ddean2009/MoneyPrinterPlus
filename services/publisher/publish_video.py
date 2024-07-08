@@ -1,5 +1,6 @@
 import os
 import traceback
+import streamlit as st
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -39,6 +40,21 @@ def publish_to_platform(platform, driver, video_file, text_file):
 def save_last_published_file_name(filename):
     write_to_file(filename, last_published_file_name)
 
+def publish_file():
+    driver = init_driver()
+    video_file = get_must_session_option('video_publish_content_file', "请选择要发布的视频文件")
+    text_file = get_must_session_option('video_publish_content_text', "请选择要发布的内容文件")
+    if st.session_state.get("video_publish_enable_douyin"):
+        publish_to_platform('douyin', driver, video_file, text_file)
+
+    if st.session_state.get("video_publish_enable_kuaishou"):
+        publish_to_platform('kuaishou', driver, video_file, text_file)
+
+    if st.session_state.get("video_publish_enable_xiaohongshu"):
+        publish_to_platform('xiaohongshu', driver, video_file, text_file)
+
+    if st.session_state.get("video_publish_enable_shipinhao"):
+        publish_to_platform('shipinhao', driver, video_file, text_file)
 
 def publish_all():
     driver = init_driver()

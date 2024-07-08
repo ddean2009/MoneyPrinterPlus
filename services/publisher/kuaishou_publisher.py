@@ -62,6 +62,7 @@ def kuaishou_publisher(driver, video_file, text_file):
     else:
         tags = st.session_state.get('video_publish_kuaishou_tags')
     i =0
+    tags = tags.split()
     for tag in tags:
         # 快手只接受三个标签
         if i == 3:

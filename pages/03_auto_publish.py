@@ -5,8 +5,12 @@ import streamlit as st
 from config.config import driver_types, my_config, save_config, test_config
 from pages.common import common_ui
 from services.publisher.open_test import start_all_pages
-from services.publisher.publish_video import publish_all
+from services.publisher.publish_video import publish_all, publish_file
 from tools.tr_utils import tr
+import threading
+from streamlit.runtime.scriptrunner import add_script_run_ctx
+
+from tools.utils import get_file_map_from_dir
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -31,6 +35,43 @@ def set_tags(my_type, state_key):
     test_config(my_config, "publisher", my_type)
     my_config['publisher'][my_type]['tags'] = common_prefix.split()
     save_config()
+
+
+def get_content_location():
+    test_config(my_config, "publisher")
+    if 'content_location' not in my_config['publisher']:
+        # 默认''
+        my_config['publisher']['content_location'] = ''
+        save_config()
+        return ''
+    else:
+        return my_config['publisher']['content_location']
+
+
+def set_content_location(state_key):
+    use_common = st.session_state.get(state_key)
+    test_config(my_config, "publisher")
+    my_config['publisher']['content_location'] = use_common
+    save_config()
+
+
+def get_driver_location():
+    test_config(my_config, "publisher")
+    if 'driver_location' not in my_config['publisher']:
+        # 默认''
+        my_config['publisher']['driver_location'] = ''
+        save_config()
+        return ''
+    else:
+        return my_config['publisher']['driver_location']
+
+
+def set_driver_location(state_key):
+    use_common = st.session_state.get(state_key)
+    test_config(my_config, "publisher")
+    my_config['publisher']['driver_location'] = use_common
+    save_config()
+
 
 def get_auto():
     test_config(my_config, "publisher")
@@ -141,11 +182,16 @@ def set_collection_name(my_type, state_key):
 
 
 def test_publish_video():
-    start_all_pages()
+    t = threading.Thread(target=start_all_pages)
+    add_script_run_ctx(t)
+    t.start()
+
 
 
 def start_publish_video():
-    publish_all()
+    t = threading.Thread(target=publish_file)
+    add_script_run_ctx(t)
+    t.start()
 
 
 common_ui()
@@ -162,13 +208,24 @@ with video_container:
                  key="video_publish_driver_type")
     if st.session_state.get("video_publish_driver_type") == 'chrome':
         st.text_input(label=tr("Driver Location"), key="video_publish_driver_location",
+                      value=get_driver_location(), on_change=set_driver_location,
+                      args=('video_publish_driver_location',),
                       help=tr("Download the driver from https://googlechromelabs.github.io/chrome-for-testing/"))
         st.text_input(label=tr("Driver Debugger Address"), value="127.0.0.1:9222", key="video_publish_debugger_address")
     if st.session_state.get("video_publish_driver_type") == 'firefox':
         st.text_input(label=tr("Driver Location"), key="video_publish_driver_location",
+                      value=get_driver_location(), on_change=set_driver_location,
+                      args=('video_publish_driver_location',),
                       help=tr("Download the driver from https://github.com/mozilla/geckodriver/releases"))
         st.text_input(label=tr("Driver Debugger Address"), value="127.0.0.1:2828", key="video_publish_debugger_address")
-    st.text_input(label=tr("Video Content Dir"), key="video_publish_content_dir")
+    st.text_input(label=tr("Video Content Dir"), key="video_publish_content_dir",
+                  value=get_content_location(), on_change=set_content_location, args=('video_publish_content_dir',))
+    video_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".mp4")
+    st.selectbox(label=tr("Video File"), key="video_publish_content_file",
+                 options=video_list, format_func=lambda x: video_list[x])
+    file_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".txt")
+    st.selectbox(label=tr("Text File"), key="video_publish_content_text",
+                 options=file_list, format_func=lambda x: file_list[x])
 
 # 视频网站配置区
 video_config_container = st.container(border=True)
@@ -233,7 +290,7 @@ with video_config_container:
     st_columns = st.columns(2)
     with st_columns[0]:
         st.text_input(label=tr("Domain Level1"), key="video_publish_kuaishou_domain_level1",
-                      value=get_kuaishou_value('domain','level1'), on_change=set_kuaishou_value,
+                      value=get_kuaishou_value('domain', 'level1'), on_change=set_kuaishou_value,
                       args=('domain', 'level1', 'video_publish_kuaishou_domain_level1'))
     with st_columns[1]:
         st.text_input(label=tr("Domain Level2"), key="video_publish_kuaishou_domain_level2",

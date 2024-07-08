@@ -21,6 +21,7 @@ def init_driver():
         options.add_experimental_option('debuggerAddress', debugger_address)
         # 使用服务和选项初始化WebDriver
         driver = webdriver.Chrome(service=service, options=options)
+        driver.implicitly_wait(10)  # 设置隐式等待时间为15秒
         return driver
     elif driver_type == 'firefox':
         # 启动浏览器驱动服务
@@ -31,4 +32,5 @@ def init_driver():
         options = selenium.webdriver.firefox.options.Options()
         options.page_load_strategy = 'normal'  # 设置页面加载策略为'normal' 默认值, 等待所有资源下载,
         driver = webdriver.Firefox(service=service, options=options)
+        driver.implicitly_wait(10)  # 设置隐式等待时间为15秒
         return driver
