@@ -187,7 +187,6 @@ def test_publish_video():
     t.start()
 
 
-
 def start_publish_video():
     t = threading.Thread(target=publish_file)
     add_script_run_ctx(t)
