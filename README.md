@@ -90,6 +90,8 @@
 
 ## 3. 批量视频自动上传工具
 
+![image-20240709093858631](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407090939277.png)
+
 ![](auto_video_publish.gif)
 
 
