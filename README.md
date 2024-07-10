@@ -1,4 +1,8 @@
- <h2 align="center">MoneyPrinterPlus</h2>
+<div align="center">
+<a href=""><img src="https://trendshift.io/api/badge/repositories/10489" alt="MoneyPrinterPlus | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+
+
+<h2 align="center">MoneyPrinterPlus</h2>
 
 <p align="center">
 <a href="">
@@ -14,6 +18,7 @@
 </a>
 </p>
 
+</div>
 
 这是一个轻松赚钱的项目。
 
