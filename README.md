@@ -711,9 +711,19 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
 
 # 讨论组
 
-如果大家有什么问题或者想法，欢迎入群讨论。
+如果大家有什么问题或者想法，欢迎入群讨论。觉得项目不错的朋友可以请作者喝个茶。
 
-![image-20240704174131755](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407041741835.png)
+
+
+<table>
+<tr>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407041741835.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407101206229.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407101203209.png"></img></td>
+</tr>
+</table>
+
+
 
 
 
