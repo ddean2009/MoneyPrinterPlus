@@ -88,6 +88,9 @@
 
 ![image-20240628153041166](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202406281530864.png)
 
+使用介绍：
+[moneyPrinterPlus详细使用教程](https://mp.weixin.qq.com/s/fAdws2grcZknG8VLQfjMjg)
+
 ## 3. 批量视频自动上传工具
 
 ![image-20240709093858631](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407090939277.png)
