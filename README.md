@@ -96,6 +96,10 @@
 
 [MoneyPrinterPlus自动配置环境和自动运行](https://mp.weixin.qq.com/s/k3B08ol1GJVi2EIyfCgWAg)
 
+[MoneyPrinterPlus一键发布短视频到视频号,抖音,快手,小红书上线了](https://mp.weixin.qq.com/s/QOpSbb_q01E0CWAI3KQ89w)
+
+
+
 
 
 # 界面概览
