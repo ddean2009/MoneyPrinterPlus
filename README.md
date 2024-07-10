@@ -154,7 +154,8 @@
 - [x] 视频批量自动发布到各个视频平台,支持抖音，快手，小红书，视频号！！！
 - [x] 视频批量混剪，批量产出大量不重复的短视频
 - [x] 支持本地素材选择(支持各种素材mp4,jpg,png),支持各种分辨率。
-- [x] 大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek,
+- [x] 云大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek
+- [x] 本地大模型接入Ollama
 - [x] 支持**Azure**语音功能
 - [x] 支持**阿里云**语音功能
 - [x] 支持**腾讯云**语音功能
