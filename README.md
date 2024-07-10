@@ -6,8 +6,8 @@
 <a href=""> <img src="https://img.shields.io/github/license/ddean2009/MoneyPrinterPlus"/></a>
 <a href="https://github.com/ddean2009?tab=followers"> 
 <img src="https://img.shields.io/github/followers/ddean2009?label=Followers&style=plastic"/></a>
-<a href="https://github.com/ddean2009/MoneyPrinterPlus/graphs/contributors">
-<img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/ddean2009/MoneyPrinterPlus" />
+<a href="https://github.com/ddean2009/MoneyPrinterPlus/releases/">
+<img alt="GitHub Contributors" src="https://img.shields.io/github/v/release/ddean2009/MoneyPrinterPlus" />
 </a>
 <a href="https://github.com/ddean2009/MoneyPrinterPlus/issues">
 <img alt="Issues" src="https://img.shields.io/github/issues/ddean2009/MoneyPrinterPlus?color=0088ff" />
