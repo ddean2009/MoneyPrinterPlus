@@ -16,6 +16,10 @@ captioning:
   provider: Azure
 
 llm:
+  Ollama:
+    api_key: YOUR_API_KEY
+    base_url: http://127.0.0.1:11434/
+    model_name: llama3
   DeepSeek:
     api_key: YOUR_API_KEY
     base_url: https://api.deepseek.com/

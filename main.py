@@ -13,6 +13,7 @@ from services.llm.baichuan_service import MyBaichuanService
 from services.llm.baidu_qianfan_service import BaiduQianfanService
 from services.llm.deepseek_service import MyDeepSeekService
 from services.llm.kimi_service import MyKimiService
+from services.llm.ollama_service import OllamaService
 from services.llm.openai_service import MyOpenAIService
 from services.llm.tongyi_service import MyTongyiService
 from services.resource.pexels_service import PexelsService
@@ -67,6 +68,8 @@ def get_llm_provider(llm_provider):
         return MyTongyiService()
     if llm_provider == "DeepSeek":
         return MyDeepSeekService()
+    if llm_provider == "Ollama":
+        return OllamaService()
 
 
 def get_audio_service():
