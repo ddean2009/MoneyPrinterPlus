@@ -1,3 +1,40 @@
+ <h2 align="center">MoneyPrinterPlus</h2>
+ 
+<p align="center">
+    <a href="">
+    <img src="https://img.shields.io/github/stars/ddean2009/MoneyPrinterPlus.svg"/>
+    </a>
+    <a href="https://github.com/ddean2009/MoneyPrinterPlus/pulls">
+      <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/ddean2009/MoneyPrinterPlus?color=0088ff" />
+    </a>
+    <a href="https://github.com/ddean2009/MoneyPrinterPlus/graphs/contributors">
+      <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/ddean2009/MoneyPrinterPlus" />
+    </a>
+    <a href="https://github.com/ddean2009/MoneyPrinterPlus/issues">
+      <img alt="Issues" src="https://img.shields.io/github/issues/ddean2009/MoneyPrinterPlus?color=0088ff" />
+    </a>
+  </p>
+
+
+这是一个轻松赚钱的项目。
+
+短视频时代，谁掌握了流量谁就掌握了Money!
+
+所以给大家分享这个经过精心打造的MoneyPrinter项目。
+
+**它可以：使用AI大模型技术,一键批量生成各类短视频。**
+
+**它可以：一键混剪短视频，批量生成短视频不是梦。**
+
+**它可以：自动把视频发布到抖音,快手,小红书,视频号上。**
+
+赚钱从来没有这么容易过!
+
+觉得有用的朋友，请给个star! ![Github stars](https://img.shields.io/github/stars/ddean2009/MoneyPrinterPlus.svg)
+
+
+# 目录
+
 - [MoneyPrinterPlus](#moneyprinterplus)
 
 - [视频教程](#视频教程)
@@ -50,23 +87,6 @@
 
 
 
-# MoneyPrinterPlus
-
-这是一个轻松赚钱的项目。
-
-短视频时代，谁掌握了流量谁就掌握了Money!
-
-所以给大家分享这个经过精心打造的MoneyPrinter项目。
-
-**它可以：使用AI大模型技术,一键批量生成各类短视频。**
-
-**它可以：一键混剪短视频，批量生成短视频不是梦。**
-
-**它可以：自动把视频发布到抖音,快手,小红书,视频号上。**
-
-赚钱从来没有这么容易过!
-
-觉得有用的朋友，请给个star! ![Github stars](https://img.shields.io/github/stars/ddean2009/MoneyPrinterPlus.svg)
 
 # 视频教程
 
