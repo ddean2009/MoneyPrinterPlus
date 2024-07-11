@@ -19,7 +19,7 @@
 </a>
 </p>
 
-**English** | [**简体中文**](README.md) | [**日本語**](docs/jp/README.md) 
+**English** | [**简体中文**](../../README.md) | [**日本語**](README.md) 
 
 
 </div>
