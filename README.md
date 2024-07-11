@@ -18,6 +18,9 @@
 </a>
 </p>
 
+**简体中文** | [**English**](docs/en/README.md) | [**日本語**](docs/jp/README.md) 
+
+
 </div>
 
 这是一个轻松赚钱的项目。
