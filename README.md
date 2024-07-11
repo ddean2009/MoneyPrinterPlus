@@ -45,11 +45,6 @@
 - [MoneyPrinterPlus](#moneyprinterplus)
 
 - [视频教程](#视频教程)
-  - [简单介绍](#简单介绍)
-  - [详细介绍](#详细介绍)
-  - [批量短视频生成介绍](#批量短视频生成介绍)
-  - [小白使用教程](#小白使用教程)
-  
 - [图文系列教程](#图文系列教程)
 
 - [界面概览](#界面概览)
@@ -97,21 +92,12 @@
 
 # 视频教程
 
-## 简单介绍
 
 [MoneyPrinterPlus一键AI短视频生成工具开源啦](https://www.bilibili.com/video/BV16VVGefEp1/?spm_id_from=333.999.0.0&vd_source=a563b6c970df6e7665845c15089bd618)
-
-## 详细介绍
-
 [MoneyPrinterPlus AI视频工具详细使用说明](https://www.bilibili.com/video/BV1JKgYe5ERF/?pop_share=1&vd_source=a563b6c970df6e7665845c15089bd618)
-
-## 批量短视频生成介绍
-
 [MoneyPrinterPlus AI批量短视频混剪工具使用说明](https://www.bilibili.com/video/BV1v43eekECn/?spm_id_from=333.999.0.0&vd_source=a563b6c970df6e7665845c15089bd618)
-
-## 小白使用教程
-
 [MoneyPrinterPlus小白使用教程来啦!一键万条短视频](https://www.bilibili.com/video/BV1XgaKeGEFb/)
+[MoneyPrinterPlus一键批量上传视频功能来啦，让收费见鬼去吧！](https://www.bilibili.com/video/BV1Z7aje7EXc/)
 
 # 图文系列教程
 
