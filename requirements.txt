@@ -15,3 +15,4 @@ pydub
 psutil
 selenium==4.20.0
 pyperclip
+pyaudio
