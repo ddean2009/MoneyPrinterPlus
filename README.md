@@ -152,6 +152,7 @@
 
 # 更新预告
 
+* 接下来会接入本地语音模型，敬请期待。
 * 视频自动发布功能已经上线了！！！！ 使用教程[MoneyPrinterPlus一键发布短视频到视频号,抖音,快手,小红书上线了](https://mp.weixin.qq.com/s/QOpSbb_q01E0CWAI3KQ89w)
 
 
