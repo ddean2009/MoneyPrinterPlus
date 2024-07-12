@@ -111,40 +111,40 @@ class NlsSpeechSynthesizer:
                 )
 
     def __handle_message(self, message):
-        logging.debug('__handle_message')
+        print('__handle_message')
         try:
             __result = json.loads(message)
             if __result['header']['name'] in self.__response_handler__:
                 __handler = self.__response_handler__[__result['header']['name']]
                 __handler(message)
             else:
-                logging.error('cannot handle cmd{}'.format(
+                print('cannot handle cmd{}'.format(
                     __result['header']['name']))
                 return
         except json.JSONDecodeError:
-            logging.error('cannot parse message:{}'.format(message))
+            print('cannot parse message:{}'.format(message))
             return
 
     def __syn_core_on_open(self):
-        logging.debug('__syn_core_on_open')
+        print('__syn_core_on_open')
         with self.__start_cond:
             self.__start_flag = True
             self.__start_cond.notify()
 
     def __syn_core_on_data(self, data, opcode, flag):
-        logging.debug('__syn_core_on_data')
+        print('__syn_core_on_data')
         if self.__on_data:
             self.__on_data(data, *self.__callback_args)
 
     def __syn_core_on_msg(self, msg, *args):
-        logging.debug('__syn_core_on_msg:msg={} args={}'.format(msg, args))
+        print('__syn_core_on_msg:msg={} args={}'.format(msg, args))
         self.__handle_message(msg)
 
     def __syn_core_on_error(self, msg, *args):
-        logging.debug('__sr_core_on_error:msg={} args={}'.format(msg, args))
+        print('__sr_core_on_error:msg={} args={}'.format(msg, args))
 
     def __syn_core_on_close(self):
-        logging.debug('__sr_core_on_close')
+        print('__sr_core_on_close')
         if self.__on_close:
             self.__on_close(*self.__callback_args)
         with self.__start_cond:
@@ -152,14 +152,14 @@ class NlsSpeechSynthesizer:
             self.__start_cond.notify()
 
     def __metainfo(self, message):
-        logging.debug('__metainfo')
+        print('__metainfo')
         if self.__on_metainfo:
             self.__on_metainfo(message, *self.__callback_args)
 
     def __synthesis_completed(self, message):
-        logging.debug('__synthesis_completed')
+        print('__synthesis_completed')
         self.__nls.shutdown()
-        logging.debug('__synthesis_completed shutdown done')
+        print('__synthesis_completed shutdown done')
         if self.__on_completed:
             self.__on_completed(message, *self.__callback_args)
         with self.__start_cond:
@@ -167,7 +167,7 @@ class NlsSpeechSynthesizer:
             self.__start_cond.notify()
 
     def __task_failed(self, message):
-        logging.debug('__task_failed')
+        print('__task_failed')
         with self.__start_cond:
             self.__start_flag = False
             self.__start_cond.notify()
@@ -270,12 +270,12 @@ class NlsSpeechSynthesizer:
         __jmsg = json.dumps(__msg)
         with self.__start_cond:
             if self.__start_flag:
-                logging.debug('already start...')
+                print('already start...')
                 return
             self.__nls.start(__jmsg, ping_interval=0, ping_timeout=None)
             if self.__start_flag == False:
                 if not self.__start_cond.wait(start_timeout):
-                    logging.debug('syn start timeout')
+                    print('syn start timeout')
                     raise StartTimeoutException(f'Waiting Start over {start_timeout}s')
             if self.__start_flag and wait_complete:
                 if not self.__start_cond.wait(completed_timeout):

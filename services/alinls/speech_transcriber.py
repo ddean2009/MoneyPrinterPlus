@@ -120,7 +120,7 @@ class NlsSpeechTranscriber:
         )
 
     def __handle_message(self, message):
-        logging.debug('__handle_message')
+        print('__handle_message')
         try:
             __result = json.loads(message)
             if __result['header']['name'] in self.__response_handler__:
@@ -136,17 +136,17 @@ class NlsSpeechTranscriber:
             return
 
     def __tr_core_on_open(self):
-        logging.debug('__tr_core_on_open')
+        print('__tr_core_on_open')
 
     def __tr_core_on_msg(self, msg, *args):
-        logging.debug('__tr_core_on_msg:msg={} args={}'.format(msg, args))
+        print('__tr_core_on_msg:msg={} args={}'.format(msg, args))
         self.__handle_message(msg)
 
     def __tr_core_on_error(self, msg, *args):
-        logging.debug('__tr_core_on_error:msg={} args={}'.format(msg, args))
+        print('__tr_core_on_error:msg={} args={}'.format(msg, args))
 
     def __tr_core_on_close(self):
-        logging.debug('__tr_core_on_close')
+        print('__tr_core_on_close')
         if self.__on_close:
             self.__on_close(*self.__callback_args)
         with self.__start_cond:
@@ -154,17 +154,17 @@ class NlsSpeechTranscriber:
             self.__start_cond.notify()
 
     def __sentence_begin(self, message):
-        logging.debug('__sentence_begin')
+        print('__sentence_begin')
         if self.__on_sentence_begin:
             self.__on_sentence_begin(message, *self.__callback_args)
 
     def __sentence_end(self, message):
-        logging.debug('__sentence_end')
+        print('__sentence_end')
         if self.__on_sentence_end:
             self.__on_sentence_end(message, *self.__callback_args)
 
     def __transcription_started(self, message):
-        logging.debug('__transcription_started')
+        print('__transcription_started')
         if self.__on_start:
             self.__on_start(message, *self.__callback_args)
         with self.__start_cond:
@@ -172,14 +172,14 @@ class NlsSpeechTranscriber:
             self.__start_cond.notify()
 
     def __transcription_result_changed(self, message):
-        logging.debug('__transcription_result_changed')
+        print('__transcription_result_changed')
         if self.__on_result_changed:
             self.__on_result_changed(message, *self.__callback_args)
 
     def __transcription_completed(self, message):
-        logging.debug('__transcription_completed')
+        print('__transcription_completed')
         self.__nls.shutdown()
-        logging.debug('__transcription_completed shutdown done')
+        print('__transcription_completed shutdown done')
         if self.__on_completed:
             self.__on_completed(message, *self.__callback_args)
         with self.__start_cond:
@@ -187,7 +187,7 @@ class NlsSpeechTranscriber:
             self.__start_cond.notify()
 
     def __task_failed(self, message):
-        logging.debug('__task_failed')
+        print('__task_failed')
         with self.__start_cond:
             self.__start_flag = False
             self.__start_cond.notify()
@@ -269,7 +269,7 @@ class NlsSpeechTranscriber:
         __jmsg = json.dumps(__msg)
         with self.__start_cond:
             if self.__start_flag:
-                logging.debug('already start...')
+                print('already start...')
                 return
             self.__nls.start(__jmsg, ping_interval, ping_timeout)
             if self.__start_flag == False:
@@ -302,11 +302,11 @@ class NlsSpeechTranscriber:
         __jmsg = json.dumps(__msg)
         with self.__start_cond:
             if not self.__start_flag:
-                logging.debug('not start yet...')
+                print('not start yet...')
                 return
             self.__nls.send(__jmsg, False)
             if self.__start_flag == True:
-                logging.debug('stop wait..')
+                print('stop wait..')
                 if self.__start_cond.wait(timeout):
                     return
                 else:
@@ -341,7 +341,7 @@ class NlsSpeechTranscriber:
         __jmsg = json.dumps(__msg)
         with self.__start_cond:
             if not self.__start_flag:
-                logging.debug('not start yet...')
+                print('not start yet...')
                 return
             self.__nls.send(__jmsg, False)
 

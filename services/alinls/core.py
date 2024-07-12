@@ -19,7 +19,7 @@ __FORMAT__ = '%(asctime)s - %(levelname)s - %(message)s'
 #__all__ = ['NlsCore']
 
 def core_on_msg(ws, message, args):
-    logging.debug('core_on_msg:{}'.format(message))
+    print('core_on_msg:{}'.format(message))
     if not args:
         logging.error('callback core_on_msg with null args')
         return
@@ -27,7 +27,7 @@ def core_on_msg(ws, message, args):
     nls._NlsCore__issue_callback('on_message', [message])
 
 def core_on_error(ws, message, args):
-    logging.debug('core_on_error:{}'.format(message))
+    print('core_on_error:{}'.format(message))
     if not args:
         logging.error('callback core_on_error with null args')
         return
@@ -35,7 +35,7 @@ def core_on_error(ws, message, args):
     nls._NlsCore__issue_callback('on_error', [message])
 
 def core_on_close(ws, close_status_code, close_msg, args):
-    logging.debug('core_on_close')
+    print('core_on_close')
     if not args:
         logging.error('callback core_on_close with null args')
         return
@@ -43,12 +43,12 @@ def core_on_close(ws, close_status_code, close_msg, args):
     nls._NlsCore__issue_callback('on_close')
 
 def core_on_open(ws, args):
-    logging.debug('core_on_open:{}'.format(args))
+    print('core_on_open:{}'.format(args))
     if not args:
-        logging.debug('callback with null args')
+        print('callback with null args')
         ws.close()
     elif len(args) != 2:
-        logging.debug('callback args not 2')
+        print('callback args not 2')
         ws.close()
     nls = args[0]
     nls._NlsCore__notify_on_open()
@@ -56,7 +56,7 @@ def core_on_open(ws, args):
     nls._NlsCore__issue_callback('on_open')
 
 def core_on_data(ws, data, opcode, flag, args):
-    logging.debug('core_on_data opcode={}'.format(opcode))
+    print('core_on_data opcode={}'.format(opcode))
     if not args:
         logging.error('callback core_on_data with null args')
         return
@@ -97,7 +97,7 @@ class NlsCore:
             self.__callbacks['on_data'] = on_data
         if not on_open and not on_message and not on_close and not on_error:
             raise InvalidParameter('Must provide at least one callback')
-        logging.debug('callback args:{}'.format(callback_args))
+        print('callback args:{}'.format(callback_args))
         self.__callback_args = callback_args
         self.__header = __HEADER__ + ['X-NLS-Token: {}'.format(self.__token)]
         websocket.enableTrace(True)
@@ -126,7 +126,7 @@ class NlsCore:
             self.__ws.send(msg)
 
     def __notify_on_open(self):
-        logging.debug('notify on open')
+        print('notify on open')
         with self.__cond:
             self.__connection_status = NlsConnectionStatus.Connected
             self.__cond.notify()
@@ -153,19 +153,19 @@ class NlsCore:
             if binary:
                 self.__ws.send(msg, opcode=websocket.ABNF.OPCODE_BINARY)
             else:
-                logging.debug('send {}'.format(msg))
+                print('send {}'.format(msg))
                 self.__ws.send(msg)
     
     def shutdown(self):
         self.__ws.close()
 
     def __run(self, ping_interval, ping_timeout):
-        logging.debug('ws run...')
+        print('ws run...')
         self.__ws.run_forever(ping_interval=ping_interval,
                 ping_timeout=ping_timeout)
         with self.__lock:
             self.__connection_status = NlsConnectionStatus.Disconnected
-        logging.debug('ws exit...')
+        print('ws exit...')
 
     def __connect_before_start(self, ping_interval, ping_timeout):
         with self.__cond:
@@ -173,11 +173,11 @@ class NlsCore:
                     args=[ping_interval, ping_timeout])
             self.__th.start()
             if self.__connection_status == NlsConnectionStatus.Disconnected:
-                logging.debug('wait cond wakeup')
+                print('wait cond wakeup')
                 if not self.__async:
                     if self.__cond.wait(timeout=10):
-                        logging.debug('wakeup without timeout')
+                        print('wakeup without timeout')
                         return self.__connection_status == NlsConnectionStatus.Connected
                     else:
-                        logging.debug('wakeup with timeout')
+                        print('wakeup with timeout')
                         raise ConnectionTimeout('Wait response timeout! Please check local network!')
