@@ -6,10 +6,6 @@ IF NOT EXIST venv (
     python.exe -m venv venv
 )
 
-:: Create the directory if it doesn't exist
-:: mkdir ".\logs" > nul 2>&1
-
-:: Deactivate the virtual environment to prevent error
 call .\venv\Scripts\deactivate.bat
 
 call .\venv\Scripts\activate.bat

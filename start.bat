@@ -3,10 +3,8 @@ chcp 65001
 
 IF EXIST venv (
     echo venv 目录或文件已存在
-    :: Deactivate the virtual environment
     call .\venv\Scripts\deactivate.bat
 
-    :: Activate the virtual environment
     call .\venv\Scripts\activate.bat
 ) ELSE (
     echo venv 目录或文件不存在
