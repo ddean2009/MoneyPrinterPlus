@@ -60,6 +60,21 @@ def get_audio_and_video_list(audio_service, audio_rate):
     return audio_output_file_list, video_dir_list
 
 
+def get_audio_and_video_list_local(audio_service):
+    audio_output_file_list = []
+    video_dir_list, video_text_list = get_session_video_scene_text()
+    video_scene_text_list = get_video_scene_text_list(video_text_list)
+    i = 0
+    for video_scene_text in video_scene_text_list:
+        temp_file_name = str(random_with_system_time()) + str(i)
+        i = i + 1
+        audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".wav")
+        audio_service.chat_with_content(video_scene_text, audio_output_file)
+        extent_audio(audio_output_file, 1)
+        audio_output_file_list.append(audio_output_file)
+    return audio_output_file_list, video_dir_list
+
+
 def get_video_text():
     video_dir_list, video_text_list = get_session_video_scene_text()
     video_scene_text_list = get_video_scene_text_list(video_text_list)

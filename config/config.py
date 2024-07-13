@@ -3,6 +3,7 @@ import shutil
 
 from tools.file_utils import read_yaml, save_yaml
 
+audio_types = {'remote': "云服务", 'local': "本地模型" }
 languages = {'zh-CN': "简体中文", 'en': "english", 'zh-TW': "繁體中文"}
 audio_languages = {'zh-CN': "中文", 'en-US': "english"}
 audio_voices_tencent = {

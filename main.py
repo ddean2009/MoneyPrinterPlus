@@ -5,9 +5,10 @@ import streamlit as st
 from config.config import my_config, audio_voices_azure, audio_voices_ali, audio_voices_tencent
 from services.audio.alitts_service import AliAudioService
 from services.audio.azure_service import AzureAudioService
+from services.audio.chattts_service import ChatTTSAudioService
 from services.audio.tencent_tts_service import TencentAudioService
 from services.captioning.captioning_service import generate_caption, add_subtitles
-from services.hunjian.hunjian_service import concat_audio_list, get_audio_and_video_list
+from services.hunjian.hunjian_service import concat_audio_list, get_audio_and_video_list, get_audio_and_video_list_local
 from services.llm.azure_service import MyAzureService
 from services.llm.baichuan_service import MyBaichuanService
 from services.llm.baidu_qianfan_service import BaiduQianfanService
@@ -103,6 +104,13 @@ def main_generate_video_content():
     print("main_generate_video_content end")
 
 
+def main_try_test_local_audio():
+    print("main_try_test_local_audio begin")
+    audio_service = ChatTTSAudioService()
+    video_content = "你好，我是程序那些事"
+    audio_service.read_with_content(video_content)
+
+
 def main_try_test_audio():
     print("main_try_test_audio begin")
     audio_service = get_audio_service()
@@ -122,22 +130,29 @@ def main_try_test_audio():
 
 def main_generate_video_dubbing():
     print("main_generate_video_dubbing begin")
-    audio_service = get_audio_service()
-    temp_file_name = random_with_system_time()
-    audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".wav")
-    st.session_state["audio_output_file"] = audio_output_file
-    audio_rate = get_audio_rate()
-
     video_content = get_must_session_option("video_content", "请先设置视频主题")
     if video_content is None:
         return
-    audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
-    if audio_voice is None:
-        return
-    audio_service.save_with_ssml(video_content,
-                                 audio_output_file,
-                                 audio_voice,
-                                 audio_rate)
+
+    temp_file_name = random_with_system_time()
+    audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".wav")
+    st.session_state["audio_output_file"] = audio_output_file
+
+    if st.session_state.get("audio_type") == "remote":
+        print("use remote audio")
+        audio_service = get_audio_service()
+        audio_rate = get_audio_rate()
+        audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
+        if audio_voice is None:
+            return
+        audio_service.save_with_ssml(video_content,
+                                     audio_output_file,
+                                     audio_voice,
+                                     audio_rate)
+    else:
+        print("use local audio")
+        audio_service = ChatTTSAudioService()
+        audio_service.chat_with_content(video_content, audio_output_file)
     # 语音扩展2秒钟,防止突然结束很突兀
     extent_audio(audio_output_file, 2)
     print("main_generate_video_dubbing end")
@@ -145,9 +160,15 @@ def main_generate_video_dubbing():
 
 def main_generate_video_dubbing_for_mix():
     print("main_generate_video_dubbing_for_mix begin")
-    audio_service = get_audio_service()
-    audio_rate = get_audio_rate()
-    audio_output_file_list, video_dir_list = get_audio_and_video_list(audio_service, audio_rate)
+    if st.session_state.get("audio_type") == "remote":
+        print("use remote audio")
+        audio_service = get_audio_service()
+        audio_rate = get_audio_rate()
+        audio_output_file_list, video_dir_list = get_audio_and_video_list(audio_service, audio_rate)
+    else:
+        print("use local audio")
+        audio_service = ChatTTSAudioService()
+        audio_output_file_list, video_dir_list = get_audio_and_video_list_local(audio_service)
     st.session_state["audio_output_file_list"] = audio_output_file_list
     st.session_state["video_dir_list"] = video_dir_list
     print("main_generate_video_dubbing_for_mix end")

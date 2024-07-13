@@ -11,6 +11,9 @@ audio:
     access_key_secret: ACCESS_KEY_SECRET
     app_key: APP_KEY
   provider: Azure
+  loca_tts:
+    provider: chatTTS
+    server_location: http://127.0.0.1:8080/
 
 captioning:
   provider: Azure

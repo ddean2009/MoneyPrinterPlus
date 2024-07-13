@@ -1,5 +1,5 @@
 import streamlit as st
-from config.config import my_config, save_config, languages
+from config.config import my_config, save_config, languages, test_config
 from pages.common import common_ui
 from tools.tr_utils import tr
 
@@ -42,6 +42,22 @@ def set_resource_provider():
 
 def set_audio_provider():
     my_config['audio']['provider'] = st.session_state['audio_provider']
+    save_config()
+
+
+def set_local_audio_tts_provider():
+    test_config(my_config, "audio", "local_tts", 'provider')
+    my_config['audio']['local_tts']['provider'] = st.session_state['local_audio_tts_provider']
+    save_config()
+
+
+def get_chatTTS_server_location():
+    return my_config['audio'].get('local_tts', {}).get('server_location','')
+
+
+def set_chatTTS_server_location():
+    test_config(my_config, "audio", "local_tts", 'server_location')
+    my_config['audio']['local_tts']['server_location'] = st.session_state['chatTTS_server_location']
     save_config()
 
 
@@ -143,8 +159,29 @@ with resource_container:
 audio_container = st.container(border=True)
 with audio_container:
     st.info(tr("Audio Provider Info"))
+
+    local_tts_container = st.container(border=True)
+    with local_tts_container:
+        local_audio_tts_providers = ['chatTTS', ]
+        selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
+        if not selected_local_audio_tts_provider:
+            selected_local_audio_tts_provider = 'chatTTS'
+            st.session_state['local_audio_tts_provider'] = selected_local_audio_tts_provider
+            set_local_audio_tts_provider()
+        selected_local_audio_tts_provider_index = 0
+        for i, provider in enumerate(local_audio_tts_providers):
+            if provider == selected_local_audio_tts_provider:
+                selected_local_audio_tts_provider_index = i
+                break
+
+        local_audio_tts_provider = st.selectbox(tr("Local Audio TTS Provider"), options=local_audio_tts_providers,
+                                                index=selected_local_audio_tts_provider_index,
+                                                key='local_audio_tts_provider', on_change=set_local_audio_tts_provider)
+        st.text_input(label=tr("ChatTTS http server location"), placeholder=tr("Input chatTTS http server address"),
+                      value=get_chatTTS_server_location(),
+                      key="chatTTS_server_location", on_change=set_chatTTS_server_location)
+
     audio_providers = ['Azure', 'Ali', 'Tencent']
-    # audio_providers = ['Azure']
     selected_audio_provider = my_config['audio']['provider']
     selected_audio_provider_index = 0
     for i, provider in enumerate(audio_providers):
@@ -152,7 +189,8 @@ with audio_container:
             selected_audio_provider_index = i
             break
 
-    audio_provider = st.selectbox(tr("Audio Provider"), options=audio_providers, index=selected_audio_provider_index,
+    audio_provider = st.selectbox(tr("Remote Audio Provider"), options=audio_providers,
+                                  index=selected_audio_provider_index,
                                   key='audio_provider', on_change=set_audio_provider)
     with st.expander(audio_provider, expanded=True):
         if audio_provider == 'Azure':
@@ -209,7 +247,7 @@ with audio_container:
 # 设置默认的LLM
 llm_container = st.container(border=True)
 with (llm_container):
-    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan', 'Tongyi', 'DeepSeek','Ollama']
+    llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan', 'Tongyi', 'DeepSeek', 'Ollama']
     saved_llm_provider = my_config['llm']['provider']
     saved_llm_provider_index = 0
     for i, provider in enumerate(llm_providers):

@@ -12,6 +12,7 @@ def generate_operator():
     operators = ['+', '-']
     return random.choice(operators)
 
+
 def random_with_system_time():
     system_time = int(time.time() * 1000)
     random_seed = (system_time + random.randint(0, 10000))
@@ -139,4 +140,3 @@ def extent_audio(audio_file, pad_dur=2):
     if os.path.exists(temp_file):
         os.remove(audio_file)
         os.renames(temp_file, audio_file)
-

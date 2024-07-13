@@ -2,8 +2,8 @@ import os
 
 import streamlit as st
 
-from config.config import transition_types, fade_list, languages, audio_languages
-from main import main_generate_ai_video_for_mix, main_try_test_audio, get_audio_voices
+from config.config import transition_types, fade_list, languages, audio_languages, audio_types
+from main import main_generate_ai_video_for_mix, main_try_test_audio, get_audio_voices, main_try_test_local_audio
 from pages.common import common_ui
 from tools.tr_utils import tr
 from tools.utils import get_file_map_from_dir
@@ -17,9 +17,16 @@ script_dir = os.path.dirname(script_path)
 default_bg_music_dir = os.path.join(script_dir, "../bgmusic")
 default_bg_music_dir = os.path.abspath(default_bg_music_dir)
 
+default_chattts_dir = os.path.join(script_dir, "../chattts")
+default_chattts_dir = os.path.abspath(default_chattts_dir)
+
 
 def try_test_audio():
     main_try_test_audio()
+
+
+def try_test_local_audio():
+    main_try_test_local_audio()
 
 
 def delete_scene_for_mix(video_scene_container):
@@ -55,6 +62,7 @@ def add_more_scene_for_mix(video_scene_container):
     #         st.text_input(label=tr("Video Scene Text"), placeholder=tr("Please input video scene text path"),
     #                       key="video_scene_text_" + str(k + 2))
 
+
 def more_scene_fragment(video_scene_container):
     with video_scene_container:
         if 'scene_number' in st.session_state:
@@ -65,6 +73,7 @@ def more_scene_fragment(video_scene_container):
                               key="video_scene_folder_" + str(k + 2))
                 st.text_input(label=tr("Video Scene Text"), placeholder=tr("Please input video scene text path"),
                               key="video_scene_text_" + str(k + 2))
+
 
 def generate_video_for_mix(video_generator):
     videos_count = st.session_state.get('videos_count')
@@ -106,22 +115,77 @@ captioning_container = st.container(border=True)
 with captioning_container:
     # 配音
     st.subheader(tr("Video Captioning"))
+
     llm_columns = st.columns(4)
-    audio_voice = get_audio_voices()
     with llm_columns[0]:
-        st.selectbox(label=tr("Audio language"), options=audio_languages,
-                     format_func=lambda x: audio_languages.get(x), key="audio_language")
-    with llm_columns[1]:
-        st.selectbox(label=tr("Audio voice"),
-                     options=audio_voice.get(st.session_state.get("audio_language")),
-                     format_func=lambda x: audio_voice.get(st.session_state.get("audio_language")).get(x),
-                     key="audio_voice")
-    with llm_columns[2]:
-        st.selectbox(label=tr("Audio speed"),
-                     options=["normal", "fast", "faster", "fastest", "slow", "slower", "slowest"],
-                     key="audio_speed")
-    with llm_columns[3]:
-        st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_audio)
+        st.selectbox(label=tr("Choose audio type"), options=audio_types, format_func=lambda x: audio_types.get(x),
+                     key="audio_type")
+
+    if st.session_state.get("audio_type") == "remote":
+        llm_columns = st.columns(4)
+        audio_voice = get_audio_voices()
+        with llm_columns[0]:
+            st.selectbox(label=tr("Audio language"), options=audio_languages,
+                         format_func=lambda x: audio_languages.get(x), key="audio_language")
+        with llm_columns[1]:
+            st.selectbox(label=tr("Audio voice"),
+                         options=audio_voice.get(st.session_state.get("audio_language")),
+                         format_func=lambda x: audio_voice.get(st.session_state.get("audio_language")).get(x),
+                         key="audio_voice")
+        with llm_columns[2]:
+            st.selectbox(label=tr("Audio speed"),
+                         options=["normal", "fast", "faster", "fastest", "slow", "slower", "slowest"],
+                         key="audio_speed")
+        with llm_columns[3]:
+            st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_audio)
+    if st.session_state.get("audio_type") == "local":
+        llm_columns = st.columns(5)
+        with llm_columns[0]:
+            st.checkbox(label=tr("Refine text"), key="refine_text")
+            st.text_input(label=tr("Refine text Prompt"), placeholder=tr("[oral_2][laugh_0][break_6]"),
+                          key="refine_text_prompt")
+        with llm_columns[1]:
+            st.slider(label=tr("Text Seed"), min_value=1.0, value=20.0, max_value=4294967295.0, step=1.0,
+                      key="text_seed")
+        with llm_columns[2]:
+            st.slider(label=tr("Audio Temperature"), min_value=0.001, value=0.3, max_value=1.0, step=0.001,
+                      key="audio_temperature")
+        with llm_columns[3]:
+            st.slider(label=tr("top_P"), min_value=0.1, value=0.7, max_value=0.9, step=0.1,
+                      key="audio_top_p")
+        with llm_columns[4]:
+            st.slider(label=tr("top_K"), min_value=1.0, value=20.0, max_value=20.0, step=1.0,
+                      key="audio_top_k")
+
+        st.checkbox(label=tr("Use random voice"), key="use_random_voice")
+
+        if st.session_state.get("use_random_voice"):
+            llm_columns = st.columns(4)
+            with llm_columns[0]:
+                st.slider(label=tr("Audio Seed"), min_value=1.0, value=20.0, max_value=4294967295.0, step=1.0,
+                          key="audio_seed")
+            with llm_columns[1]:
+                st.selectbox(label=tr("Audio speed"),
+                             options=["normal", "fast", "faster", "fastest", "slow", "slower", "slowest"],
+                             key="audio_speed")
+            with llm_columns[2]:
+                st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
+        else:
+            llm_columns = st.columns(4)
+            with llm_columns[0]:
+                st.text_input(label=tr("Local Chattts Dir"), placeholder=tr("Input Local Chattts Dir"),
+                              value=default_chattts_dir,
+                              key="default_chattts_dir")
+            with llm_columns[1]:
+                chattts_list = get_file_map_from_dir(st.session_state["default_chattts_dir"], ".pt,.txt")
+                st.selectbox(label=tr("Audio voice"), key="audio_voice",
+                             options=chattts_list, format_func=lambda x: chattts_list[x])
+            with llm_columns[2]:
+                st.selectbox(label=tr("Audio speed"),
+                             options=["normal", "fast", "faster", "fastest", "slow", "slower", "slowest"],
+                             key="audio_speed")
+            with llm_columns[3]:
+                st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
 
 # 背景音乐
 bg_music_container = st.container(border=True)

@@ -2,6 +2,7 @@ import os
 import random
 import re
 import string
+import subprocess
 
 import yaml
 from PIL.Image import Image
@@ -149,9 +150,18 @@ def read_file_with_extra_enter(file):
         return cleaned_content
 
 
+def read_file(file):
+    # 打开文件
+    with open(file, 'r', encoding='UTF-8') as file:
+        # 读取文件内容
+        content = file.read()
+        return content
+
+
 def write_to_file(content, file_name):
     with open(file_name, 'w', encoding='UTF-8') as file:
         file.write(content)
+
 
 def list_all_files(video_dir, extension='.mp4'):
     return_files = []
@@ -168,3 +178,16 @@ def list_files(video_dir, extension='.mp4'):
         if file.endswith(extension):
             return_files.append(os.path.join(video_dir, file))
     return sorted(return_files)
+
+
+def convert_mp3_to_wav(input, output):
+    # 构建ffmpeg命令
+    cmd = [
+        'ffmpeg',
+        '-i', input,
+        # '-ar', '44100',
+        # '-ac', '2',
+        output
+    ]
+    # 运行ffmpeg命令
+    subprocess.run(cmd)

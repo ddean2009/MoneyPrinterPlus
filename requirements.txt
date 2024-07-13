@@ -16,3 +16,6 @@ psutil
 selenium==4.20.0
 pyperclip
 pyaudio
+torch==2.3.1
+pybase16384
+numpy==1.26.4
