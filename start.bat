@@ -2,12 +2,12 @@ chcp 65001
 @echo off
 
 IF EXIST venv (
-    echo venv 目录或文件已存在
+    echo venv dir exist
     call .\venv\Scripts\deactivate.bat
 
     call .\venv\Scripts\activate.bat
 ) ELSE (
-    echo venv 目录或文件不存在
+    echo venv dir not exist
 )
 
 REM Check if the batch was started via double-click
