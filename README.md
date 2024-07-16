@@ -121,7 +121,7 @@
 
 [MoneyPrinterPlus一键发布短视频到视频号,抖音,快手,小红书上线了](https://mp.weixin.qq.com/s/QOpSbb_q01E0CWAI3KQ89w)
 
-
+[MoneyPrinterPlus全面支持本地Ollama大模型](https://mp.weixin.qq.com/s/Q1C7kxJytDeQ6v12I5vdoQ)
 
 
 
@@ -153,6 +153,7 @@
 # 更新预告
 
 * 已经支持本地语音模型ChatTTS了，教程稍后上。
+* 支持本地大模型工具Ollama [MoneyPrinterPlus全面支持本地Ollama大模型](https://mp.weixin.qq.com/s/Q1C7kxJytDeQ6v12I5vdoQ)
 * 视频自动发布功能已经上线了！！！！ 使用教程[MoneyPrinterPlus一键发布短视频到视频号,抖音,快手,小红书上线了](https://mp.weixin.qq.com/s/QOpSbb_q01E0CWAI3KQ89w)
 * 全面支持更多本地语音模型，coming soon!!!
 
