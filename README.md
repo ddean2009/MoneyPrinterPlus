@@ -749,9 +749,11 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
 
 
 
+
+
 <table>
 <tr>
-<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407111620744.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407181642658.png"></img></td>
 <td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407101206229.png"></img></td>
 <td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407101203209.png"></img></td>
 </tr>
