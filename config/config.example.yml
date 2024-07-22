@@ -95,6 +95,7 @@ publisher:
     collection: 集合名称
   shipinhao:
     enable: True
+    original: False
     title_prefix: 标题前缀
     collection: 集合名称
 

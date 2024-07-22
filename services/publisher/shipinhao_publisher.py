@@ -103,26 +103,26 @@ def shipinhao_publisher(driver, video_file, text_file):
         actions.move_to_element(collection_to_select).click().perform()
         time.sleep(1)
 
-    is_firefox = st.session_state.get("video_publish_driver_type") == 'firefox'
-    # firefox没有原创按钮？
-    # if not is_firefox:
-    # 原创
-    original_tag = driver.find_element(By.XPATH, '//div[@class="declare-original-checkbox"]//input[@type="checkbox"]')
-    original_tag.click()
-    time.sleep(1)
-    original_tag_click = driver.find_element(By.XPATH, '//div[@class="original-type-form"]//dt[contains(text(),"请选择")]')
-    actions.move_to_element(original_tag_click).click().perform()
-    time.sleep(1)
-    original_tag_item = driver.find_element(By.XPATH,
-                                             '//div[@class="original-type-form"]//span[text()="知识"]')
-    actions.move_to_element(original_tag_item).click().perform()
-    time.sleep(1)
-    agree_button = driver.find_element(By.XPATH, '//div[@class="original-proto-wrapper"]//input[@type="checkbox"]')
-    agree_button.click()
-    time.sleep(1)
-    agree_button_click = driver.find_element(By.XPATH,'//button[@type="button" and text()="声明原创"]')
-    agree_button_click.click()
-    time.sleep(1)
+    is_original = st.session_state.get("video_publish_shipinhao_enable_original")
+
+    if is_original:
+        # 原创
+        original_tag = driver.find_element(By.XPATH, '//div[@class="declare-original-checkbox"]//input[@type="checkbox"]')
+        original_tag.click()
+        time.sleep(1)
+        # original_tag_click = driver.find_element(By.XPATH, '//div[@class="original-type-form"]//dt[contains(text(),"请选择")]')
+        # actions.move_to_element(original_tag_click).click().perform()
+        # time.sleep(1)
+        # original_tag_item = driver.find_element(By.XPATH,
+        #                                          '//div[@class="original-type-form"]//span[text()="知识"]')
+        # actions.move_to_element(original_tag_item).click().perform()
+        # time.sleep(1)
+        agree_button = driver.find_element(By.XPATH, '//div[@class="original-proto-wrapper"]//input[@type="checkbox"]')
+        agree_button.click()
+        time.sleep(1)
+        agree_button_click = driver.find_element(By.XPATH,'//button[@type="button" and text()="声明原创"]')
+        agree_button_click.click()
+        time.sleep(1)
 
     # 发布
     publish_button = driver.find_element(By.XPATH, '//button[text()="发表"]')

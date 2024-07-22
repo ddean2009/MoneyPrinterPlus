@@ -108,6 +108,23 @@ def set_enable(my_type, state_key):
     my_config['publisher'][my_type]['enable'] = use_common
     save_config()
 
+def get_original(my_type):
+    test_config(my_config, "publisher", my_type)
+    if 'original' not in my_config['publisher'][my_type]:
+        # 默认False
+        my_config['publisher'][my_type]['original'] = False
+        save_config()
+        return False
+    else:
+        return my_config['publisher'][my_type]['original']
+
+
+def set_original(my_type, state_key):
+    use_common = st.session_state.get(state_key)
+    test_config(my_config, "publisher", my_type)
+    my_config['publisher'][my_type]['original'] = use_common
+    save_config()
+
 
 def get_enable_kuaishou(my_type):
     test_config(my_config, "publisher", "kuaishou", my_type)
@@ -299,8 +316,11 @@ with video_config_container:
     st.checkbox(label=tr("Enable shipinhao"), key="video_publish_enable_shipinhao",
                 value=get_enable('shipinhao'), on_change=set_enable,
                 args=('shipinhao', 'video_publish_enable_shipinhao'))
+    st.checkbox(label=tr("Enable original"), key="video_publish_shipinhao_enable_original",
+                    value=get_original('shipinhao'), on_change=set_original,
+                    args=('shipinhao', 'video_publish_shipinhao_enable_original'))
     if not st.session_state.get("video_publish_use_common_config"):
-        st_columns = st.columns(3)
+        st_columns = st.columns(4)
         with st_columns[0]:
             st.text_input(label=tr("Title Prefix"), key="video_publish_shipinhao_title_prefix",
                           value=get_title_prefix('shipinhao'), on_change=set_title_prefix,
@@ -313,6 +333,8 @@ with video_config_container:
             st.text_input(label=tr("Tags"), key="video_publish_shipinhao_tags",
                           value=get_tags('shipinhao'), on_change=set_tags,
                           args=('shipinhao', 'video_publish_shipinhao_tags'))
+
+
     st.subheader(tr("Xiaohongshu Config"))
     st.checkbox(label=tr("Enable xiaohongshu"), key="video_publish_enable_xiaohongshu",
                 value=get_enable('xiaohongshu'), on_change=set_enable,
