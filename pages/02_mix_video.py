@@ -187,6 +187,15 @@ with captioning_container:
             with llm_columns[3]:
                 st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
 
+recognition_container = st.container(border=True)
+with recognition_container:
+    # 配音
+    st.subheader(tr("Audio recognition"))
+    llm_columns = st.columns(4)
+    with llm_columns[0]:
+        st.selectbox(label=tr("Choose recognition type"), options=audio_types, format_func=lambda x: audio_types.get(x),
+                     key="recognition_audio_type")
+
 # 背景音乐
 bg_music_container = st.container(border=True)
 with bg_music_container:

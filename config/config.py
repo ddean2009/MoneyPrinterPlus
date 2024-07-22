@@ -3,6 +3,12 @@ import shutil
 
 from tools.file_utils import read_yaml, save_yaml
 
+local_audio_tts_providers = ['chatTTS', ]
+local_audio_recognition_providers = ['fasterwhisper', ]
+local_audio_recognition_fasterwhisper_module_names = ['large-v3',  'large-v2', 'large-v1', 'distil-large-v3', 'distil-large-v2', 'medium', 'base', 'small', 'tiny']
+local_audio_recognition_fasterwhisper_device_types =['cuda', 'cpu','auto']
+local_audio_recognition_fasterwhisper_compute_types =['int8','int8_float16','float16']
+
 audio_types = {'remote': "云服务", 'local': "本地模型" }
 languages = {'zh-CN': "简体中文", 'en': "english", 'zh-TW': "繁體中文"}
 audio_languages = {'zh-CN': "中文", 'en-US': "english"}

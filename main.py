@@ -253,7 +253,7 @@ def main_generate_subtitle():
         random_name = random_with_system_time()
         captioning_output = os.path.join(audio_output_dir, f"{random_name}.srt")
         st.session_state["captioning_output"] = captioning_output
-        audio_output_file = get_must_session_option("audio_output_file", "请先生成配音文件")
+        audio_output_file = get_must_session_option("audio_output_file", "请先生成视频对应的语音文件")
         generate_caption()
 
 

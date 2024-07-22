@@ -5,6 +5,7 @@ from typing import Optional
 
 from config.config import my_config
 from services.alinls.speech_process import AliRecognitionService
+from services.audio.faster_whisper_recognition_service import FasterWhisperRecognitionService
 from services.audio.tencent_recognition_service import TencentRecognitionService
 from services.captioning.common_captioning_service import Captioning
 import subprocess
@@ -37,26 +38,40 @@ def generate_caption():
     captioning.initialize()
     speech_recognizer_data = captioning.speech_recognizer_from_user_config()
     # print(speech_recognizer_data)
-    selected_audio_provider = my_config['audio']['provider']
-    if selected_audio_provider == 'Azure':
-        print("selected_audio_provider: Azure")
-        captioning.recognize_continuous(speech_recognizer=speech_recognizer_data["speech_recognizer"],
-                                        format=speech_recognizer_data["audio_stream_format"],
-                                        callback=speech_recognizer_data["pull_input_audio_stream_callback"],
-                                        stream=speech_recognizer_data["pull_input_audio_stream"])
-    if selected_audio_provider == 'Ali':
-        print("selected_audio_provider: Ali")
-        ali_service = AliRecognitionService()
-        result_list = ali_service.process(get_session_option("audio_output_file"))
-        captioning._offline_results = result_list
-    if selected_audio_provider == 'Tencent':
-        print("selected_audio_provider: Tencent")
-        tencent_service = TencentRecognitionService()
-        result_list = tencent_service.process(get_session_option("audio_output_file"),
-                                              get_session_option("audio_language"))
-        if result_list is None:
-            return
-        captioning._offline_results = result_list
+    recognition_type = st.session_state.get('recognition_audio_type')
+    if recognition_type == "remote":
+        selected_audio_provider = my_config['audio']['provider']
+        if selected_audio_provider == 'Azure':
+            print("selected_audio_provider: Azure")
+            captioning.recognize_continuous(speech_recognizer=speech_recognizer_data["speech_recognizer"],
+                                            format=speech_recognizer_data["audio_stream_format"],
+                                            callback=speech_recognizer_data["pull_input_audio_stream_callback"],
+                                            stream=speech_recognizer_data["pull_input_audio_stream"])
+        if selected_audio_provider == 'Ali':
+            print("selected_audio_provider: Ali")
+            ali_service = AliRecognitionService()
+            result_list = ali_service.process(get_session_option("audio_output_file"))
+            captioning._offline_results = result_list
+        if selected_audio_provider == 'Tencent':
+            print("selected_audio_provider: Tencent")
+            tencent_service = TencentRecognitionService()
+            result_list = tencent_service.process(get_session_option("audio_output_file"),
+                                                  get_session_option("audio_language"))
+            if result_list is None:
+                return
+            captioning._offline_results = result_list
+    if recognition_type == "local":
+        selected_audio_provider = my_config['audio'].get('local_recognition',{}).get('provider','fasterwhisper')
+        if selected_audio_provider =='fasterwhisper':
+            print("selected_audio_provider: fasterwhisper")
+            fasterwhisper_service = FasterWhisperRecognitionService()
+            result_list = fasterwhisper_service.process(get_session_option("audio_output_file"),
+                                                  get_session_option("audio_language"))
+            print(result_list)
+            if result_list is None:
+                return
+            captioning._offline_results = result_list
+
     captioning.finish()
 
 

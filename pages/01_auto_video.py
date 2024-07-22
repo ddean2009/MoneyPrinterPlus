@@ -1,7 +1,7 @@
 import streamlit as st
 
-from config.config import my_config, save_config, languages, audio_languages,  transition_types, \
-    fade_list,  audio_types
+from config.config import my_config, save_config, languages, audio_languages, transition_types, \
+    fade_list, audio_types
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
     main_get_video_resource, main_generate_subtitle, main_try_test_audio, get_audio_voices, main_try_test_local_audio
 from pages.common import common_ui
@@ -9,7 +9,7 @@ from tools.tr_utils import tr
 
 import os
 
-from tools.utils import  get_file_map_from_dir
+from tools.utils import get_file_map_from_dir
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -25,13 +25,6 @@ default_bg_music_dir = os.path.abspath(default_bg_music_dir)
 default_chattts_dir = os.path.join(script_dir, "../chattts")
 default_chattts_dir = os.path.abspath(default_chattts_dir)
 
-
-# def select_folder():
-#    root = tk.Tk()
-#    root.withdraw()
-#    folder_path = filedialog.askdirectory(master=root)
-#    root.destroy()
-#    return folder_path
 
 def save_to_config(region, key):
     value = st.session_state.get(key)
@@ -63,6 +56,7 @@ def generate_video_dubbing():
 
 def try_test_audio():
     main_try_test_audio()
+
 
 def try_test_local_audio():
     main_try_test_local_audio()
@@ -106,7 +100,7 @@ with captioning_container:
 
     llm_columns = st.columns(4)
     with llm_columns[0]:
-        st.selectbox(label=tr("Choose audio type"), options=audio_types, format_func=lambda x: audio_types.get(x),
+        st.selectbox(label=tr("Choose TTS audio type"), options=audio_types, format_func=lambda x: audio_types.get(x),
                      key="audio_type")
 
     if st.session_state.get("audio_type") == "remote":
@@ -176,8 +170,15 @@ with captioning_container:
                 st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
 
 
+recognition_container = st.container(border=True)
+with recognition_container:
+    # 配音
+    st.subheader(tr("Audio recognition"))
 
-
+    llm_columns = st.columns(4)
+    with llm_columns[0]:
+        st.selectbox(label=tr("Choose recognition type"), options=audio_types, format_func=lambda x: audio_types.get(x),
+                     key="recognition_audio_type")
 
 # 背景音乐
 bg_music_container = st.container(border=True)

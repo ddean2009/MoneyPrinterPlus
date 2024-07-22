@@ -19,3 +19,4 @@ pyaudio
 torch==2.3.1
 pybase16384
 numpy==1.26.4
+faster-whisper==1.0.3

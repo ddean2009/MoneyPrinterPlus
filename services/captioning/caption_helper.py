@@ -9,6 +9,7 @@ from typing import List, Optional, Tuple
 from services.alinls.speech_process import AliRecognitionResult
 import azure.cognitiveservices.speech as speechsdk
 
+from services.audio.faster_whisper_recognition_service import FasterWhisperRecognitionResult
 from services.audio.tencent_recognition_service import TencentRecognitionResult
 from services.captioning import helper
 
@@ -144,6 +145,10 @@ class CaptionHelper(object):
             begin = helper.time_from_milliseconds(result.begin_time)
             end = helper.time_from_milliseconds(result.end_time)
             return begin, end
+        if isinstance(result, FasterWhisperRecognitionResult):
+            begin = helper.time_from_seconds(result.begin_time)
+            end = helper.time_from_seconds(result.end_time)
+            return begin, end
 
     def get_partial_result_caption_timing(self, result: object, text: str, caption_text: str,
                                           caption_starts_at: int, caption_length: int) -> Tuple[time, time]:
@@ -158,7 +163,7 @@ class CaptionHelper(object):
     def is_final_result(self, result: object) -> bool:
         if isinstance(result, speechsdk.RecognitionResult):
             return speechsdk.ResultReason.RecognizedSpeech == result.reason or speechsdk.ResultReason.RecognizedIntent == result.reason or speechsdk.ResultReason.TranslatedSpeech == result.reason
-        if isinstance(result, AliRecognitionResult) or isinstance(result, TencentRecognitionResult):
+        if isinstance(result, AliRecognitionResult) or isinstance(result, TencentRecognitionResult) or isinstance(result, FasterWhisperRecognitionResult):
             return True
 
     def lines_from_text(self, text: str) -> List[str]:

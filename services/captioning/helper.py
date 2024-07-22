@@ -80,6 +80,12 @@ def time_from_ticks(ticks) -> time:
     return time(int(hours), int(minutes_2), int(seconds_2), int(microseconds_2))
 
 
+def time_from_seconds(seconds) -> time:
+    seconds = str.replace(str(seconds), "s", "")
+    milliseconds = float(seconds) * 1000
+    return time_from_milliseconds(milliseconds)
+
+
 def time_from_milliseconds(milliseconds) -> time:
     # 假设我们有毫秒数
     # 将毫秒转换为微秒（timedelta 以微秒为单位）

@@ -11,9 +11,16 @@ audio:
     access_key_secret: ACCESS_KEY_SECRET
     app_key: APP_KEY
   provider: Azure
-  loca_tts:
+  local_tts:
     provider: chatTTS
     server_location: http://127.0.0.1:8080/
+  local_recognition:
+    provider: fasterwhisper
+    fasterwhisper:
+      model_name: tiny
+      device_type: cuda
+      compute_type: int8
+
 
 captioning:
   provider: Azure
