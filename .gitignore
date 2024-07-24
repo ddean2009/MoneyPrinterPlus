@@ -3,6 +3,7 @@ __pycache__/
 config/sceneconfig.yml
 config/sceneconfig_linux.yml
 config/config.yml
+config/config-back.yml
 *.db
 temp/*
 hunjian_main.py

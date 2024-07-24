@@ -68,21 +68,22 @@ def get_file_from_dir(file_dir, extension):
 def get_file_map_from_dir(file_dir, extension):
     extension_list = [ext.strip() for ext in extension.split(',')]
     # 确保提供的是绝对路径
-    file_dir = os.path.abspath(file_dir)
     # 所有文件的列表
     file_map = {}
+    if file_dir is not None and os.path.exists(file_dir):
+        file_dir = os.path.abspath(file_dir)
 
-    # 遍历file_dir中的文件
-    for filename in os.listdir(file_dir):
-        # print('filename:', filename)
-        file_extension = os.path.splitext(filename)[1]
-        # 检查文件名是否以img_file_prefix开头 并且后缀是.txt
-        if file_extension in extension_list:
-            # 构建完整的文件路径
-            file_path = os.path.join(file_dir, filename)
-            # 确保这是一个文件而不是目录
-            if os.path.isfile(file_path):
-                file_map[file_path] = os.path.split(file_path)[1]
+        # 遍历file_dir中的文件
+        for filename in os.listdir(file_dir):
+            # print('filename:', filename)
+            file_extension = os.path.splitext(filename)[1]
+            # 检查文件名是否以img_file_prefix开头 并且后缀是.txt
+            if file_extension in extension_list:
+                # 构建完整的文件路径
+                file_path = os.path.join(file_dir, filename)
+                # 确保这是一个文件而不是目录
+                if os.path.isfile(file_path):
+                    file_map[file_path] = os.path.split(file_path)[1]
 
     return file_map
 

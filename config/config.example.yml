@@ -76,7 +76,6 @@ publisher:
     enable: True
     title_prefix: 标题前缀
     collection: 集合名称
-    tags:
   douyin:
     enable: True
     title_prefix: 标题前缀
