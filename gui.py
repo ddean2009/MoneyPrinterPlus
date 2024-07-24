@@ -270,7 +270,7 @@ with audio_container:
                 if module_name == selected_local_audio_recognition_compute:
                     selected_local_audio_recognition_compute_index = i
                     break
-            st.selectbox(tr("device type"),
+            st.selectbox(tr("compute type"),
                          options=local_audio_recognition_fasterwhisper_compute_types,
                          index=selected_local_audio_recognition_compute_index,
                          key='recognition_compute_type',
