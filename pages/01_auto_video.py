@@ -235,11 +235,11 @@ with video_container:
         st.slider(label=tr("video segment max length"), min_value=10.0, value=10.0, max_value=30.0, step=1.0,
                   key="video_segment_max_length")
     # 开启本地目录
-    llm_columns = st.columns(2)
-    with llm_columns[0]:
-        st.checkbox(label=tr("Enable local video dir"), key="enable_local_video_dir", value=False)
-    with llm_columns[1]:
-        st.text_input(label=tr("local video dir"), key="local_video_dir")
+    # llm_columns = st.columns(2)
+    # with llm_columns[0]:
+    #     st.checkbox(label=tr("Enable local video dir"), key="enable_local_video_dir", value=False)
+    # with llm_columns[1]:
+    #     st.text_input(label=tr("local video dir"), key="local_video_dir")
     llm_columns = st.columns(4)
     with llm_columns[0]:
         st.checkbox(label=tr("Enable video Transition effect"), key="enable_video_transition_effect", value=True)
