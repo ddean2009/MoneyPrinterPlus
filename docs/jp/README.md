@@ -698,13 +698,21 @@ Mac環境では、プロジェクトのルートディレクトリでsh start.sh
 
 皆さんが質問やアイデアを持っている場合、グループディスカッションに参加してください。プロジェクトが良いと思った人は、著者にお茶をごちそうしてください。
 
+
+
 <table>
+  <thead>
+    <tr>
+  <th>交流群</th>
+  <th>我的微信</th>
+  </tr>
+</thead>
 <tr>
-<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407111620744.png"></img></td>
-<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407101206229.png"></img></td>
-<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407101203209.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202408021730754.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202408021732303.png"></img></td>
 </tr>
 </table>
+
 
 
 
