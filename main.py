@@ -309,7 +309,7 @@ def main_generate_ai_video(video_generator):
 
 
 def main_generate_ai_video_for_mix(video_generator):
-    print("main_generate_ai_video_for_fix begin:")
+    print("main_generate_ai_video_for_mix begin:")
     with video_generator:
         st_area = st.status(tr("Generate Video in process..."), expanded=True)
         with st_area as status:
@@ -338,6 +338,70 @@ def main_generate_ai_video_for_mix(video_generator):
 
             final_audio_output_file = concat_audio_list(audio_output_file_list)
             st.session_state['audio_output_file'] = final_audio_output_file
+            st.write(tr("Generate Video subtitles..."))
+            main_generate_subtitle()
+            video_service = VideoService(final_video_file_list, final_audio_output_file)
+            print("normalize video")
+            video_service.normalize_video()
+            st.write(tr("Generate Video..."))
+            video_file = video_service.generate_video_with_audio()
+            print("final file without subtitle:", video_file)
+
+            enable_subtitles = st.session_state.get("enable_subtitles")
+            if enable_subtitles:
+                st.write(tr("Add Subtitles..."))
+                subtitle_file = get_must_session_option('captioning_output', "请先生成字幕文件")
+                if subtitle_file is None:
+                    return
+
+                font_name = st.session_state.get('subtitle_font')
+                font_size = st.session_state.get('subtitle_font_size')
+                primary_colour = st.session_state.get('subtitle_color')
+                outline_colour = st.session_state.get('subtitle_border_color')
+                outline = st.session_state.get('subtitle_border_width')
+                alignment = st.session_state.get('subtitle_position')
+                add_subtitles(video_file, subtitle_file,
+                              font_name=font_name,
+                              font_size=font_size,
+                              primary_colour=primary_colour,
+                              outline_colour=outline_colour,
+                              outline=outline,
+                              alignment=alignment)
+                print("final file with subtitle:", video_file)
+            st.session_state["result_video_file"] = video_file
+            status.update(label=tr("Generate Video completed!"), state="complete", expanded=False)
+
+
+def main_generate_ai_video_for_merge(video_generator):
+    print("main_generate_ai_video_for_merge begin:")
+    with video_generator:
+        st_area = st.status(tr("Generate Video in process..."), expanded=True)
+        with st_area as status:
+            # st.write(tr("Generate Video Dubbing..."))
+            # main_generate_video_dubbing_for_mix()
+            st.write(tr("Video normalize..."))
+            video_dir_list = get_must_session_option("video_dir_list", "请选择视频目录路径")
+            # audio_file_list = get_must_session_option("audio_output_file_list", "请先生成配音文件列表")
+
+            video_mix_service = VideoMixService()
+            # 使用 zip() 函数遍历两个列表并获得配对
+            i = 0
+            audio_output_file_list = []
+            final_video_file_list = []
+            for video_dir, audio_file in zip(video_dir_list, audio_file_list):
+                print(f"Video Directory: {video_dir}, Audio File: {audio_file}")
+                if i == 0:
+                    matching_videos, total_length = video_mix_service.match_videos_from_dir(video_dir,
+                                                                                           audio_file, True)
+                else:
+                    matching_videos, total_length = video_mix_service.match_videos_from_dir(video_dir,
+                                                                                           audio_file, False)
+                i = i + 1
+                # audio_output_file_list.append(audio_file)
+                final_video_file_list.extend(matching_videos)
+
+            # final_audio_output_file = concat_audio_list(audio_output_file_list)
+            # st.session_state['audio_output_file'] = final_audio_output_file
             st.write(tr("Generate Video subtitles..."))
             main_generate_subtitle()
             video_service = VideoService(final_video_file_list, final_audio_output_file)
