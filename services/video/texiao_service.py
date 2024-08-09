@@ -35,7 +35,7 @@ def gen_filter(segments, target_width, target_height,transition_type, transition
             # audio_fades += "[%s][%d:a]acrossfade=d=%f%s" % \
             # 第二段音频不需要淡入效果
             audio_fades += "[%s][%d:a]acrossfade=d=%f:c2=nofade%s" % \
-                           (last_audio_output, i + 1, transition_duration,
+                           (last_audio_output, i + 1, float(transition_duration),
                             '[' + next_audio_output + '];' if (i) < len(segments) - 2 else "[audio]")
             # 直接concat 不做效果处理
             # audio_fades += "[%s][%d:a]concat=n=2:v=0:a=1%s" % \
