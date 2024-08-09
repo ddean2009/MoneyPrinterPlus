@@ -247,24 +247,43 @@ session_file_name = "session.yml"
 config_example_file = os.path.join(script_dir, config_example_file_name)
 config_file = os.path.join(script_dir, config_file_name)
 session_file = os.path.join(script_dir, session_file_name)
+exclude_keys = ['01_first_visit', '02_first_visit', '03_first_visit', '04_first_visit']
 
 
 def save_session_state_to_yaml():
+    # 创建一个字典副本，排除指定的键
+    state_to_save = {key: value for key, value in st.session_state.items() if key not in exclude_keys}
+
     """将 Streamlit session_state 中的所有值保存到 YAML 文件"""
     with open(session_file, 'w') as file:
-        yaml.dump(dict(st.session_state), file)
+        yaml.dump(dict(state_to_save), file)
 
 
-def load_session_state_from_yaml():
-    """从 YAML 文件中读取数据并更新 session_state"""
-    if os.path.exists(session_file):
-        try:
-            with open(session_file, 'r') as file:
-                data = yaml.safe_load(file)
-                for key, value in data.items():
-                    st.session_state[key] = value
-        except FileNotFoundError:
-            st.warning(f"File {session_file} not found.")
+def delete_first_visit_session_state(first_visit):
+    # 从session_state中删除其他first_vist标记
+    for key in exclude_keys:
+        if key != first_visit and key in st.session_state:
+            del st.session_state[key]
+
+
+def load_session_state_from_yaml(first_visit):
+    delete_first_visit_session_state(first_visit)
+    # 检查是否存在 "first_visit" 标志
+    if first_visit not in st.session_state:
+        # 第一次进入页面，设置标志为 True
+        st.session_state[first_visit] = True
+        """从 YAML 文件中读取数据并更新 session_state"""
+        if os.path.exists(session_file):
+            try:
+                with open(session_file, 'r') as file:
+                    data = yaml.safe_load(file)
+                    for key, value in data.items():
+                        st.session_state[key] = value
+            except FileNotFoundError:
+                st.warning(f"File {session_file} not found.")
+    else:
+        # 后续访问页面，标志设置为 False
+        st.session_state[first_visit] = False
 
 
 def load_config():

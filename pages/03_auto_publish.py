@@ -19,7 +19,7 @@ script_path = os.path.abspath(__file__)
 # 脚本所在的目录
 script_dir = os.path.dirname(script_path)
 
-load_session_state_from_yaml()
+load_session_state_from_yaml('04_first_visit')
 
 def get_tags(my_type):
     test_config(my_config, "publisher", my_type)

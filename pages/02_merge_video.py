@@ -21,10 +21,11 @@ default_bg_music_dir = os.path.abspath(default_bg_music_dir)
 default_chattts_dir = os.path.join(script_dir, "../chattts")
 default_chattts_dir = os.path.abspath(default_chattts_dir)
 
-load_session_state_from_yaml()
+load_session_state_from_yaml('03_first_visit')
 
 def try_test_audio():
     main_try_test_audio()
+
 
 def try_test_local_audio():
     main_try_test_local_audio()
@@ -47,7 +48,6 @@ def add_more_scene_for_merge(video_scene_container):
     else:
         st.session_state['scene_number'] = 1
     save_session_state_to_yaml()
-
 
 
 def more_scene_fragment(video_scene_container):

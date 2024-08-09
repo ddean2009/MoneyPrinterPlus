@@ -25,7 +25,7 @@ default_bg_music_dir = os.path.abspath(default_bg_music_dir)
 default_chattts_dir = os.path.join(script_dir, "../chattts")
 default_chattts_dir = os.path.abspath(default_chattts_dir)
 
-load_session_state_from_yaml()
+load_session_state_from_yaml('01_first_visit')
 
 
 def save_to_config(region, key):
