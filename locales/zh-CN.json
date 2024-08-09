@@ -100,6 +100,9 @@
   "You Need More Resource": "视频资源不足,请添加资源后重试",
   "how many videos do you want": "你想生成多少个视频?",
 
+  "Merge Video": "合并视频",
+  "Merge Video Scene": "视频片段",
+
   "Video Auto Publish": "视频自动发布工具",
   "Video Auto Public Config": "视频自动发布配置",
   "Driver Type": "驱动类型",

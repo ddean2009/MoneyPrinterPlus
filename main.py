@@ -19,6 +19,7 @@ from services.llm.openai_service import MyOpenAIService
 from services.llm.tongyi_service import MyTongyiService
 from services.resource.pexels_service import PexelsService
 from services.resource.pixabay_service import PixabayService
+from services.video.merge_service import merge_get_video_list, VideoMergeService, merge_generate_subtitle
 from services.video.video_service import get_audio_duration, VideoService, VideoMixService
 from tools.tr_utils import tr
 from tools.utils import random_with_system_time, get_must_session_option, extent_audio
@@ -309,7 +310,7 @@ def main_generate_ai_video(video_generator):
 
 
 def main_generate_ai_video_for_mix(video_generator):
-    print("main_generate_ai_video_for_fix begin:")
+    print("main_generate_ai_video_for_mix begin:")
     with video_generator:
         st_area = st.status(tr("Generate Video in process..."), expanded=True)
         with st_area as status:
@@ -368,5 +369,25 @@ def main_generate_ai_video_for_mix(video_generator):
                               outline=outline,
                               alignment=alignment)
                 print("final file with subtitle:", video_file)
+            st.session_state["result_video_file"] = video_file
+            status.update(label=tr("Generate Video completed!"), state="complete", expanded=False)
+
+
+def main_generate_ai_video_for_merge(video_generator):
+    print("main_generate_ai_video_for_merge begin:")
+    with video_generator:
+        st_area = st.status(tr("Generate Video in process..."), expanded=True)
+        with st_area as status:
+            video_scene_video_list, video_scene_text_list = merge_get_video_list()
+            st.write(tr("Video normalize..."))
+            video_service = VideoMergeService(video_scene_video_list)
+            print("normalize video")
+            video_scene_video_list = video_service.normalize_video()
+            st.write(tr("Generate Video subtitles..."))
+            merge_generate_subtitle(video_scene_video_list, video_scene_text_list)
+            st.write(tr("Generate Video..."))
+            video_file = video_service.generate_video_with_bg_music()
+            print("final file:", video_file)
+
             st.session_state["result_video_file"] = video_file
             status.update(label=tr("Generate Video completed!"), state="complete", expanded=False)
