@@ -1,15 +1,18 @@
 import os
 import shutil
+import streamlit as st
+import yaml
 
 from tools.file_utils import read_yaml, save_yaml
 
 local_audio_tts_providers = ['chatTTS', ]
 local_audio_recognition_providers = ['fasterwhisper', ]
-local_audio_recognition_fasterwhisper_module_names = ['large-v3',  'large-v2', 'large-v1', 'distil-large-v3', 'distil-large-v2', 'medium', 'base', 'small', 'tiny']
-local_audio_recognition_fasterwhisper_device_types =['cuda', 'cpu','auto']
-local_audio_recognition_fasterwhisper_compute_types =['int8','int8_float16','float16']
+local_audio_recognition_fasterwhisper_module_names = ['large-v3', 'large-v2', 'large-v1', 'distil-large-v3',
+                                                      'distil-large-v2', 'medium', 'base', 'small', 'tiny']
+local_audio_recognition_fasterwhisper_device_types = ['cuda', 'cpu', 'auto']
+local_audio_recognition_fasterwhisper_compute_types = ['int8', 'int8_float16', 'float16']
 
-audio_types = {'remote': "云服务", 'local': "本地模型" }
+audio_types = {'remote': "云服务", 'local': "本地模型"}
 languages = {'zh-CN': "简体中文", 'en': "english", 'zh-TW': "繁體中文"}
 audio_languages = {'zh-CN': "中文", 'en-US': "english"}
 audio_voices_tencent = {
@@ -224,10 +227,10 @@ driver_types = {
     "chrome": 'chrome',
     "firefox": 'firefox'}
 
-douyin_site ="https://creator.douyin.com/creator-micro/content/upload"
-shipinhao_site="https://channels.weixin.qq.com/platform/post/create"
-kuaishou_site="https://cp.kuaishou.com/article/publish/video"
-xiaohongshu_site="https://creator.xiaohongshu.com/publish/publish?source=official"
+douyin_site = "https://creator.douyin.com/creator-micro/content/upload"
+shipinhao_site = "https://channels.weixin.qq.com/platform/post/create"
+kuaishou_site = "https://cp.kuaishou.com/article/publish/video"
+xiaohongshu_site = "https://creator.xiaohongshu.com/publish/publish?source=official"
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -239,9 +242,29 @@ script_dir = os.path.dirname(script_path)
 
 config_example_file_name = "config.example.yml"
 config_file_name = "config.yml"
+session_file_name = "session.yml"
 
 config_example_file = os.path.join(script_dir, config_example_file_name)
 config_file = os.path.join(script_dir, config_file_name)
+session_file = os.path.join(script_dir, session_file_name)
+
+
+def save_session_state_to_yaml():
+    """将 Streamlit session_state 中的所有值保存到 YAML 文件"""
+    with open(session_file, 'w') as file:
+        yaml.dump(dict(st.session_state), file)
+
+
+def load_session_state_from_yaml():
+    """从 YAML 文件中读取数据并更新 session_state"""
+    if os.path.exists(session_file):
+        try:
+            with open(session_file, 'r') as file:
+                data = yaml.safe_load(file)
+                for key, value in data.items():
+                    st.session_state[key] = value
+        except FileNotFoundError:
+            st.warning(f"File {session_file} not found.")
 
 
 def load_config():

@@ -2,7 +2,8 @@ import os
 
 import streamlit as st
 
-from config.config import driver_types, my_config, save_config, test_config
+from config.config import driver_types, my_config, save_config, test_config, load_session_state_from_yaml, \
+    save_session_state_to_yaml
 from pages.common import common_ui
 from services.publisher.open_test import start_all_pages
 from services.publisher.publish_video import publish_all, publish_file
@@ -18,6 +19,7 @@ script_path = os.path.abspath(__file__)
 # 脚本所在的目录
 script_dir = os.path.dirname(script_path)
 
+load_session_state_from_yaml()
 
 def get_tags(my_type):
     test_config(my_config, "publisher", my_type)
@@ -199,12 +201,14 @@ def set_collection_name(my_type, state_key):
 
 
 def test_publish_video():
+    save_session_state_to_yaml()
     t = threading.Thread(target=start_all_pages)
     add_script_run_ctx(t)
     t.start()
 
 
 def start_publish_video():
+    save_session_state_to_yaml()
     t = threading.Thread(target=publish_file)
     add_script_run_ctx(t)
     t.start()

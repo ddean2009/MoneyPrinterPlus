@@ -4,6 +4,7 @@ config/sceneconfig.yml
 config/sceneconfig_linux.yml
 config/config.yml
 config/config-back.yml
+config/session.yml
 *.db
 temp/*
 hunjian_main.py
