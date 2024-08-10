@@ -21,7 +21,8 @@ audio_output_dir = os.path.abspath(audio_output_dir)
 def get_session_video_scene_text():
     video_dir_list = []
     video_text_list = []
-    for i in range(5):
+    for i in range(int(st.session_state.get('scene_number'))+1):
+        print("select video scene " + str(i + 1))
         if "video_scene_folder_" + str(i + 1) in st.session_state and st.session_state["video_scene_folder_" + str(i + 1)] is not None:
             video_dir_list.append(st.session_state["video_scene_folder_" + str(i + 1)])
             video_text_list.append(st.session_state["video_scene_text_" + str(i + 1)])

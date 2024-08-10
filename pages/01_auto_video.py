@@ -1,7 +1,7 @@
 import streamlit as st
 
 from config.config import my_config, save_config, languages, audio_languages, transition_types, \
-    fade_list, audio_types
+    fade_list, audio_types, load_session_state_from_yaml, save_session_state_to_yaml
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
     main_get_video_resource, main_generate_subtitle, main_try_test_audio, get_audio_voices, main_try_test_local_audio
 from pages.common import common_ui
@@ -24,6 +24,8 @@ default_bg_music_dir = os.path.abspath(default_bg_music_dir)
 
 default_chattts_dir = os.path.join(script_dir, "../chattts")
 default_chattts_dir = os.path.abspath(default_chattts_dir)
+
+load_session_state_from_yaml('01_first_visit')
 
 
 def save_to_config(region, key):
@@ -63,6 +65,7 @@ def try_test_local_audio():
 
 
 def generate_video(video_generator):
+    save_session_state_to_yaml()
     main_generate_ai_video(video_generator)
 
 

@@ -2,7 +2,8 @@ import os
 
 import streamlit as st
 
-from config.config import transition_types, fade_list, audio_languages, audio_types
+from config.config import transition_types, fade_list, audio_languages, audio_types, load_session_state_from_yaml, \
+    save_session_state_to_yaml
 from main import main_generate_ai_video_for_mix, main_try_test_audio, get_audio_voices, main_try_test_local_audio
 from pages.common import common_ui
 from tools.tr_utils import tr
@@ -20,6 +21,8 @@ default_bg_music_dir = os.path.abspath(default_bg_music_dir)
 default_chattts_dir = os.path.join(script_dir, "../chattts")
 default_chattts_dir = os.path.abspath(default_chattts_dir)
 
+load_session_state_from_yaml('02_first_visit')
+
 
 def try_test_audio():
     main_try_test_audio()
@@ -33,7 +36,7 @@ def delete_scene_for_mix(video_scene_container):
     if 'scene_number' not in st.session_state or st.session_state['scene_number'] < 1:
         return
     st.session_state['scene_number'] = st.session_state['scene_number'] - 1
-
+    save_session_state_to_yaml()
 
 
 def add_more_scene_for_mix(video_scene_container):
@@ -45,6 +48,7 @@ def add_more_scene_for_mix(video_scene_container):
             st.toast(tr("Maximum number of scenes reached"), icon="⚠️")
     else:
         st.session_state['scene_number'] = 1
+    save_session_state_to_yaml()
 
 
 def more_scene_fragment(video_scene_container):
@@ -60,6 +64,7 @@ def more_scene_fragment(video_scene_container):
 
 
 def generate_video_for_mix(video_generator):
+    save_session_state_to_yaml()
     videos_count = st.session_state.get('videos_count')
     if videos_count is not None:
         for i in range(int(videos_count)):
