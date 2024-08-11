@@ -3,7 +3,7 @@ import os
 import streamlit as st
 
 from config.config import transition_types, fade_list, load_session_state_from_yaml, \
-    save_session_state_to_yaml
+    save_session_state_to_yaml, app_title
 from main import main_try_test_audio, main_try_test_local_audio, main_generate_ai_video_for_merge
 from pages.common import common_ui
 from tools.tr_utils import tr
@@ -73,8 +73,8 @@ def generate_video_for_merge(video_generator):
 
 common_ui()
 
-st.markdown("<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            AI搞钱工具</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
+            {app_title}</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>视频批量合并工具</h2>", unsafe_allow_html=True)
 
 # 场景设置
