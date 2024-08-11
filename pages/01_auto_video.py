@@ -1,7 +1,7 @@
 import streamlit as st
 
 from config.config import my_config, save_config, languages, audio_languages, transition_types, \
-    fade_list, audio_types, load_session_state_from_yaml, save_session_state_to_yaml
+    fade_list, audio_types, load_session_state_from_yaml, save_session_state_to_yaml, app_title
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
     main_get_video_resource, main_generate_subtitle, main_try_test_audio, get_audio_voices, main_try_test_local_audio
 from pages.common import common_ui
@@ -69,8 +69,8 @@ def generate_video(video_generator):
     main_generate_ai_video(video_generator)
 
 
-st.markdown("<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            AI搞钱工具</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
+            {app_title}</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>自动短视频生成器</h2>", unsafe_allow_html=True)
 
 # LLM区域

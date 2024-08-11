@@ -2,7 +2,7 @@ import streamlit as st
 from config.config import my_config, save_config, languages, test_config, local_audio_tts_providers, \
     local_audio_recognition_providers, local_audio_recognition_fasterwhisper_module_names, \
     local_audio_recognition_fasterwhisper_device_types, local_audio_recognition_fasterwhisper_compute_types, \
-    delete_first_visit_session_state
+    delete_first_visit_session_state, app_title
 from pages.common import common_ui
 from tools.tr_utils import tr
 
@@ -10,8 +10,8 @@ delete_first_visit_session_state("all_first_visit")
 
 common_ui()
 
-st.markdown("<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            AI搞钱工具</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
+            {app_title}</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>基本配置信息</h2>", unsafe_allow_html=True)
 
 

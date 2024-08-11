@@ -3,7 +3,7 @@ import os
 import streamlit as st
 
 from config.config import driver_types, my_config, save_config, test_config, load_session_state_from_yaml, \
-    save_session_state_to_yaml
+    save_session_state_to_yaml, app_title
 from pages.common import common_ui
 from services.publisher.open_test import start_all_pages
 from services.publisher.publish_video import publish_all, publish_file
@@ -216,8 +216,8 @@ def start_publish_video():
 
 common_ui()
 
-st.markdown("<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            AI搞钱工具</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
+            {app_title}</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>视频批量自动发布工具</h2>", unsafe_allow_html=True)
 
 # 选择要发布的视频目录

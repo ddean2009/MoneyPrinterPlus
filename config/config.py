@@ -5,6 +5,8 @@ import yaml
 
 from tools.file_utils import read_yaml, save_yaml
 
+app_title = "AI搞钱工具"
+
 local_audio_tts_providers = ['chatTTS', ]
 local_audio_recognition_providers = ['fasterwhisper', ]
 local_audio_recognition_fasterwhisper_module_names = ['large-v3', 'large-v2', 'large-v1', 'distil-large-v3',
