@@ -32,9 +32,11 @@ def get_session_video_scene_text():
 def get_video_scene_text_list(video_text_list):
     video_scene_text_list = []
     for video_text in video_text_list:
-        if video_text is not None:
+        if video_text is not None and video_text != "":
             video_line = random_line_from_text_file(video_text)
             video_scene_text_list.append(video_line)
+        else:
+            video_scene_text_list.append("")
     return video_scene_text_list
 
 
@@ -49,15 +51,20 @@ def get_audio_and_video_list(audio_service, audio_rate):
     audio_voice = get_must_session_option("audio_voice", "请先设置配音语音")
     i = 0
     for video_scene_text in video_scene_text_list:
-        temp_file_name = str(random_with_system_time()) + str(i)
-        i = i + 1
-        audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".wav")
-        audio_service.save_with_ssml(video_scene_text,
-                                     audio_output_file,
-                                     audio_voice,
-                                     audio_rate)
-        extent_audio(audio_output_file, 1)
-        audio_output_file_list.append(audio_output_file)
+        if video_scene_text is not None and video_scene_text != "":
+            temp_file_name = str(random_with_system_time()) + str(i)
+            i = i + 1
+            audio_output_file = os.path.join(audio_output_dir, str(temp_file_name) + ".wav")
+            audio_service.save_with_ssml(video_scene_text,
+                                         audio_output_file,
+                                         audio_voice,
+                                         audio_rate)
+            extent_audio(audio_output_file, 1)
+            audio_output_file_list.append(audio_output_file)
+        else:
+            st.toast("配音文字不能为空", icon="⚠️")
+            st.stop()
+
     return audio_output_file_list, video_dir_list
 
 
