@@ -2,9 +2,9 @@ import os
 
 import streamlit as st
 
-from config.config import transition_types, fade_list, audio_languages, audio_types, load_session_state_from_yaml, \
+from config.config import transition_types, fade_list, load_session_state_from_yaml, \
     save_session_state_to_yaml
-from main import main_try_test_audio, get_audio_voices, main_try_test_local_audio, main_generate_ai_video_for_merge
+from main import main_try_test_audio, main_try_test_local_audio, main_generate_ai_video_for_merge
 from pages.common import common_ui
 from tools.tr_utils import tr
 from tools.utils import get_file_map_from_dir

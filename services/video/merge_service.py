@@ -31,10 +31,10 @@ work_output_dir = os.path.abspath(work_output_dir)
 
 def merge_generate_subtitle(video_scene_video_list, video_scene_text_list):
     enable_subtitles = st.session_state.get("enable_subtitles")
-    if enable_subtitles:
+    if enable_subtitles and video_scene_text_list is not None:
         st.write(tr("Add Subtitles..."))
         for video_file, scene_text in zip(video_scene_video_list, video_scene_text_list):
-            if scene_text is not None:
+            if scene_text is not None and scene_text != "":
                 generate_subtitles(video_file, scene_text)
 
 
@@ -91,7 +91,9 @@ def gen_subtitle_file(subtitle_file, scene_text, video_duration):
 def merge_get_video_list():
     print("merge_get_video_list begin")
     video_dir_list, video_text_list = get_session_video_scene_text()
-    video_scene_text_list = get_video_scene_text_list(video_text_list)
+    video_scene_text_list =[]
+    if video_text_list is not None:
+        video_scene_text_list = get_video_scene_text_list(video_text_list)
     video_scene_video_list = get_video_scene_video_list(video_dir_list)
     return video_scene_video_list, video_scene_text_list
 
