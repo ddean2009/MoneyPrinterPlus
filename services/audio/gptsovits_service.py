@@ -1,4 +1,5 @@
 import datetime
+import json
 import lzma
 import os
 import zipfile
@@ -11,7 +12,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 from config.config import my_config
-from tools.file_utils import read_file, convert_mp3_to_wav
+from tools.file_utils import read_file, convert_mp3_to_wav, save_uploaded_file
 from tools.utils import must_have_value, random_with_system_time
 import streamlit as st
 import pybase16384 as b14
@@ -50,28 +51,32 @@ class GPTSoVITSAudioService:
 
         self.audio_temperature = st.session_state.get('audio_temperature')
         self.audio_top_p = st.session_state.get('audio_top_p')
-        self.audio_top_k = st.session_state.get('audio_top_k')
+        self.audio_top_k = int(st.session_state.get('audio_top_k'))
 
         audio_speed = st.session_state.get("audio_speed")
         if audio_speed == "normal":
-            self.audio_speed = "1.0"
+            self.audio_speed = 1.0
         if audio_speed == "fast":
-            self.audio_speed = "1.1"
+            self.audio_speed = 1.1
         if audio_speed == "slow":
-            self.audio_speed = "0.9"
+            self.audio_speed = 0.9
         if audio_speed == "faster":
-            self.audio_speed = "1.2"
+            self.audio_speed = 1.2
         if audio_speed == "slower":
-            self.audio_speed = "0.8"
+            self.audio_speed = 0.8
         if audio_speed == "fastest":
-            self.audio_speed = "1.3"
+            self.audio_speed = 1.3
         if audio_speed == "slowest":
-            self.audio_speed = "0.7"
+            self.audio_speed = 0.7
 
         if st.session_state.get("use_reference_audio"):
-            self.refer_wav_path= st.session_state.get("reference_audio")
-            self.prompt_text = st.session_state.get("reference_audio_text")
-            self.prompt_language = st.session_state.get("reference_audio_language")
+            uploaded_file = st.session_state.get("reference_audio")
+            if uploaded_file is not None:
+                output_file_name = os.path.join(audio_output_dir, str(random_with_system_time())+uploaded_file.name)
+                save_uploaded_file(uploaded_file, output_file_name)
+                self.refer_wav_path=output_file_name
+                self.prompt_text = st.session_state.get("reference_audio_text")
+                self.prompt_language = st.session_state.get("reference_audio_language")
 
         self.text_language = st.session_state.get("inference_audio_language")
 
@@ -84,9 +89,9 @@ class GPTSoVITSAudioService:
 
     def chat_with_content(self, content, audio_output_file):
         # main infer params
-        if self.refer_wav_path:
+        if hasattr(self, 'refer_wav_path') and self.refer_wav_path:
             body = {
-                "text": [content],
+                "text": content,
                 "refer_wav_path": self.refer_wav_path,
                 "prompt_text": self.prompt_text,
                 "prompt_language": self.prompt_language,
@@ -98,7 +103,7 @@ class GPTSoVITSAudioService:
             }
         else:
             body = {
-                "text": [content],
+                "text": content,
                 "text_language": self.text_language,
                 "top_k": self.audio_top_k,
                 "top_p": self.audio_top_p,
@@ -111,14 +116,13 @@ class GPTSoVITSAudioService:
         try:
             response = requests.post(self.service_location, json=body)
             response.raise_for_status()
-            with zipfile.ZipFile(BytesIO(response.content), "r") as zip_ref:
-                zip_ref.extractall(audio_output_dir)
-                file_names = zip_ref.namelist()
-                output_file = os.path.join(audio_output_dir, file_names[0])
-
-                convert_mp3_to_wav(output_file, audio_output_file)
-                print("Extracted files into", audio_output_file)
-                return audio_output_file
+            # 读取响应内容
+            content = response.content
+            # 打开一个文件用于写入二进制数据
+            with open(audio_output_file, 'wb') as file:
+                file.write(content)  # 将响应内容写入文件
+            print(f"文件已保存到 {audio_output_file}")
+            return audio_output_file
 
         except requests.exceptions.RequestException as e:
             print(f"Request Error: {e}")

@@ -191,3 +191,11 @@ def convert_mp3_to_wav(input, output):
     ]
     # 运行ffmpeg命令
     subprocess.run(cmd)
+
+
+def save_uploaded_file(uploaded_file, save_path):
+    # 假设你已经获取了文件内容
+    file_content = uploaded_file.read()
+    # 将文件内容写入到服务器的文件系统中
+    with open(save_path, 'wb') as f:
+        f.write(file_content)

@@ -214,7 +214,7 @@ with audio_container:
             st.text_input(label=tr("ChatTTS http server location"), placeholder=tr("Input chatTTS http server address"),
                           value=get_chatTTS_server_location(),
                           key="chatTTS_server_location", on_change=set_chatTTS_server_location)
-        if local_audio_tts_provider == 'GPT-SoVITS':
+        if local_audio_tts_provider == 'GPTSoVITS':
             st.text_input(label=tr("GPT-SoVITS http server location"), placeholder=tr("Input GPT-SoVITS http server address"),
                           value=get_GPTSoVITS_server_location(),
                           key="GPTSoVITS_server_location", on_change=set_GPTSoVITS_server_location)

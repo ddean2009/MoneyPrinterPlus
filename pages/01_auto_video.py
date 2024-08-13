@@ -175,7 +175,7 @@ with captioning_container:
                                  key="audio_speed")
                 with llm_columns[3]:
                     st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
-        if selected_local_audio_tts_provider == 'GPT-SoVITS':
+        if selected_local_audio_tts_provider == 'GPTSoVITS':
             use_reference_audio=st.checkbox(label=tr("Use reference audio"), key="use_reference_audio")
             if use_reference_audio:
                 llm_columns = st.columns(4)

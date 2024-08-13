@@ -160,6 +160,7 @@ def main_generate_video_dubbing():
     else:
         print("use local audio")
         selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
+        audio_service = None
         if selected_local_audio_tts_provider == "chatTTS":
             audio_service = ChatTTSAudioService()
         if selected_local_audio_tts_provider == "GPTSoVITS":
@@ -180,6 +181,7 @@ def main_generate_video_dubbing_for_mix():
     else:
         print("use local audio")
         selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
+        audio_service = None
         if selected_local_audio_tts_provider == "chatTTS":
             audio_service = ChatTTSAudioService()
         if selected_local_audio_tts_provider == "GPTSoVITS":
