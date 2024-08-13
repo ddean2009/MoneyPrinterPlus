@@ -14,6 +14,20 @@ local_audio_recognition_fasterwhisper_module_names = ['large-v3', 'large-v2', 'l
 local_audio_recognition_fasterwhisper_device_types = ['cuda', 'cpu', 'auto']
 local_audio_recognition_fasterwhisper_compute_types = ['int8', 'int8_float16', 'float16']
 
+GPT_soVITS_languages = {
+    "auto": "多语种混合",
+    "all_zh": "中文",
+    "all_yue": "粤语",
+    "en": "英文",
+    "all_ja": "日文",
+    "all_ko": "韩文",
+    "zh": "中英混合",
+    "yue": "粤英混合",
+    "ja": "日英混合",
+    "ko": "韩英混合",
+    "auto_yue": "多语种混合(粤语)",
+}
+
 audio_types = {'remote': "云服务", 'local': "本地模型"}
 languages = {'zh-CN': "简体中文", 'en': "english", 'zh-TW': "繁體中文"}
 audio_languages = {'zh-CN': "中文", 'en-US': "english"}

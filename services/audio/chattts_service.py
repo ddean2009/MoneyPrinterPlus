@@ -44,7 +44,7 @@ def encode_spk_emb(spk_emb: torch.Tensor) -> str:
 class ChatTTSAudioService:
     def __init__(self):
         super().__init__()
-        self.service_location = my_config['audio']['local_tts']['server_location']
+        self.service_location = my_config['audio']['local_tts']['chatTTS']['server_location']
         must_have_value(self.service_location, "请设置ChatTTS server location")
         self.service_location = self.service_location + '/generate_voice'
         if st.session_state.get('refine_text'):

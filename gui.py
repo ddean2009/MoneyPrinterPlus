@@ -76,14 +76,23 @@ def set_recognition_value(key, session_key):
 
 
 def get_chatTTS_server_location():
-    return my_config['audio'].get('local_tts', {}).get('server_location', '')
+    return my_config['audio'].get('local_tts', {}).get('chatTTS', {}).get('server_location', '')
 
 
 def set_chatTTS_server_location():
-    test_config(my_config, "audio", "local_tts", 'server_location')
-    my_config['audio']['local_tts']['server_location'] = st.session_state['chatTTS_server_location']
+    test_config(my_config, "audio", "local_tts", 'chatTTS', 'server_location')
+    my_config['audio']['local_tts']['chatTTS']['server_location'] = st.session_state['chatTTS_server_location']
     save_config()
 
+
+def get_GPTSoVITS_server_location():
+    return my_config['audio'].get('local_tts', {}).get('GPTSoVITS', {}).get('server_location', '')
+
+
+def set_GPTSoVITS_server_location():
+    test_config(my_config, "audio", "local_tts", 'GPTSoVITS', 'server_location')
+    my_config['audio']['local_tts']['GPTSoVITS']['server_location'] = st.session_state['GPTSoVITS_server_location']
+    save_config()
 
 def set_audio_key(provider, key):
     if provider not in my_config['audio']:
@@ -201,9 +210,14 @@ with audio_container:
         local_audio_tts_provider = st.selectbox(tr("Local Audio TTS Provider"), options=local_audio_tts_providers,
                                                 index=selected_local_audio_tts_provider_index,
                                                 key='local_audio_tts_provider', on_change=set_local_audio_tts_provider)
-        st.text_input(label=tr("ChatTTS http server location"), placeholder=tr("Input chatTTS http server address"),
-                      value=get_chatTTS_server_location(),
-                      key="chatTTS_server_location", on_change=set_chatTTS_server_location)
+        if local_audio_tts_provider == 'chatTTS':
+            st.text_input(label=tr("ChatTTS http server location"), placeholder=tr("Input chatTTS http server address"),
+                          value=get_chatTTS_server_location(),
+                          key="chatTTS_server_location", on_change=set_chatTTS_server_location)
+        if local_audio_tts_provider == 'GPT-SoVITS':
+            st.text_input(label=tr("GPT-SoVITS http server location"), placeholder=tr("Input GPT-SoVITS http server address"),
+                          value=get_GPTSoVITS_server_location(),
+                          key="GPTSoVITS_server_location", on_change=set_GPTSoVITS_server_location)
 
     # local recognition config
     local_recognition_container = st.container(border=True)

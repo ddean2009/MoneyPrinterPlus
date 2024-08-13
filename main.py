@@ -6,6 +6,7 @@ from config.config import my_config, audio_voices_azure, audio_voices_ali, audio
 from services.audio.alitts_service import AliAudioService
 from services.audio.azure_service import AzureAudioService
 from services.audio.chattts_service import ChatTTSAudioService
+from services.audio.gptsovits_service import GPTSoVITSAudioService
 from services.audio.tencent_tts_service import TencentAudioService
 from services.captioning.captioning_service import generate_caption, add_subtitles
 from services.hunjian.hunjian_service import concat_audio_list, get_audio_and_video_list, get_audio_and_video_list_local
@@ -107,9 +108,15 @@ def main_generate_video_content():
 
 def main_try_test_local_audio():
     print("main_try_test_local_audio begin")
-    audio_service = ChatTTSAudioService()
+    selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
     video_content = "你好，我是程序那些事"
+    if selected_local_audio_tts_provider == "chatTTS":
+        audio_service = ChatTTSAudioService()
+    if selected_local_audio_tts_provider == "GPTSoVITS":
+        audio_service = GPTSoVITSAudioService()
     audio_service.read_with_content(video_content)
+
+
 
 
 def main_try_test_audio():
@@ -152,7 +159,11 @@ def main_generate_video_dubbing():
                                      audio_rate)
     else:
         print("use local audio")
-        audio_service = ChatTTSAudioService()
+        selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
+        if selected_local_audio_tts_provider == "chatTTS":
+            audio_service = ChatTTSAudioService()
+        if selected_local_audio_tts_provider == "GPTSoVITS":
+            audio_service = GPTSoVITSAudioService()
         audio_service.chat_with_content(video_content, audio_output_file)
     # 语音扩展2秒钟,防止突然结束很突兀
     extent_audio(audio_output_file, 2)
@@ -168,7 +179,11 @@ def main_generate_video_dubbing_for_mix():
         audio_output_file_list, video_dir_list = get_audio_and_video_list(audio_service, audio_rate)
     else:
         print("use local audio")
-        audio_service = ChatTTSAudioService()
+        selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
+        if selected_local_audio_tts_provider == "chatTTS":
+            audio_service = ChatTTSAudioService()
+        if selected_local_audio_tts_provider == "GPTSoVITS":
+            audio_service = GPTSoVITSAudioService()
         audio_output_file_list, video_dir_list = get_audio_and_video_list_local(audio_service)
     st.session_state["audio_output_file_list"] = audio_output_file_list
     st.session_state["video_dir_list"] = video_dir_list

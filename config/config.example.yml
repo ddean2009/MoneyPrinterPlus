@@ -13,7 +13,10 @@ audio:
   provider: Azure
   local_tts:
     provider: chatTTS
-    server_location: http://127.0.0.1:8080/
+    chatTTS:
+      server_location: http://127.0.0.1:8080/
+    GPTSoVITS:
+      server_location: http://127.0.0.1:9880/
   local_recognition:
     provider: fasterwhisper
     fasterwhisper:
