@@ -158,13 +158,15 @@
 # 更新预告
 
 * 准备接入stable diffusion和comfyUI， OOOOO，太牛了！
+* 已经支持GPTsoVITS本地语音模型啦,教程晚点上。
 * 已经支持本地语音识别模型fasterwhisper, 教程[fasterWhisper和MoneyPrinterPlus无缝集成](https://mp.weixin.qq.com/s/dSZjpfqUKBz3PyAOYvJKGw)。 可关注我公众号获得最新进度。
 * 已经支持本地语音模型ChatTTS了，教程 [在MoneyPrinterPlus中使用本地chatTTS语音模型](https://mp.weixin.qq.com/s/bToXG_3XSYHKVI6Nf5W3Dw)
 * 支持本地大模型工具Ollama [MoneyPrinterPlus全面支持本地Ollama大模型](https://mp.weixin.qq.com/s/Q1C7kxJytDeQ6v12I5vdoQ)
 * 视频自动发布功能已经上线了！！！！ 使用教程[MoneyPrinterPlus一键发布短视频到视频号,抖音,快手,小红书上线了](https://mp.weixin.qq.com/s/QOpSbb_q01E0CWAI3KQ89w)
-* 全面支持更多本地语音模型，coming soon!!!
+
 
 # 更新列表
+- 20240813 支持GPTsoVITS本地语音模型
 - 20240807 存储了session值,这样在刷新的时候不需要重新输入信息了
 - 20240722 支持本地语音识别模型fasterwhisper
 - 20240713 支持本地语音模型ChatTTS
