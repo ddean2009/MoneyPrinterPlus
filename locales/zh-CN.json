@@ -9,7 +9,7 @@
   "Pixabay API Key" : "Pixabay API Key",
   "Stable Diffusion API User Name": "Stable Diffusion API用户名(没有可不填)",
   "Stable Diffusion API Password": "Stable Diffusion API密码(没有可不填)",
-  "Stable Diffusion API Server Address": "Stable Diffusion API服务器地址(必填)",
+  "Stable Diffusion API Server Address": "Stable Diffusion API服务器地址(必填如：http://127.0.0.1:7860/sdapi/v1)",
   "LLM Provider" : "LLM大模型配置",
   "API Key": "API Key",
   "Base Url": "Base Url",

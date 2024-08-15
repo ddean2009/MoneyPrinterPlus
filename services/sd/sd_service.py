@@ -14,11 +14,8 @@ class SDService:
         else:
             self.api = webuiapi.WebUIApi(baseurl=self.base_url)
 
-
     def handle_video_resource(self, query, audio_length, per_page=10, exact_match=False):
         pass
-
-
 
     def set_checkpoint(self, checkpoint_name):
         self.api.util_set_model(checkpoint_name)

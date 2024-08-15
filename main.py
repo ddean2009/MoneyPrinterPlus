@@ -395,6 +395,12 @@ def main_generate_ai_video_for_mix(video_generator):
 
 
 def main_generate_ai_video_from_img(video_generator):
+    print("main_generate_ai_video_from_img begin:")
+    with video_generator:
+        st_area = st.status(tr("Generate Video in process..."), expanded=True)
+        with st_area as status:
+            pass
+
     pass
 
 

@@ -209,13 +209,16 @@ with resource_container:
                                             key='pixabay_api_key', on_change=save_pixabay_api_key)
     if selected_resource_provider == 'stableDiffusion':
         with key_panels[0]:
-            st.text_input(tr("Stable Diffusion API User Name"),
+            sd_api_user_name = my_config['resource'].get('stableDiffusion', {}).get('user_name', '')
+            st.text_input(tr("Stable Diffusion API User Name"), value=sd_api_user_name,
                           key='stableDiffusion_api_user_name', on_change=save_stable_diffusion_api_user_name)
         with key_panels[1]:
-            st.text_input(tr("Stable Diffusion API Password"),  type="password",
+            sd_api_password = my_config['resource'].get('stableDiffusion', {}).get('password', '')
+            st.text_input(tr("Stable Diffusion API Password"), type="password", value=sd_api_password,
                           key='stableDiffusion_api_password', on_change=save_stable_diffusion_api_password)
         with key_panels[2]:
-            st.text_input(tr("Stable Diffusion API Server Address"),
+            sd_api_address = my_config['resource'].get('stableDiffusion', {}).get('server_address', '')
+            st.text_input(tr("Stable Diffusion API Server Address"), value=sd_api_address,
                           key='stableDiffusion_api_server_address', on_change=save_stable_diffusion_api_server_address)
 
 # 设置语音
