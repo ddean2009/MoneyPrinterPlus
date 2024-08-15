@@ -138,16 +138,16 @@ with captioning_container:
                 st.text_input(label=tr("Refine text Prompt"), placeholder=tr("[oral_2][laugh_0][break_6]"),
                               key="refine_text_prompt")
             with llm_columns[1]:
-                st.slider(label=tr("Text Seed"), min_value=1.0, value=20.0, max_value=4294967295.0, step=1.0,
+                st.slider(label=tr("Text Seed"), min_value=1, value=20, max_value=4294967295, step=1,
                           key="text_seed")
             with llm_columns[2]:
-                st.slider(label=tr("Audio Temperature"), min_value=0.001, value=0.3, max_value=1.0, step=0.001,
+                st.slider(label=tr("Audio Temperature"), min_value=0.01, value=0.3, max_value=1.0, step=0.01,
                           key="audio_temperature")
             with llm_columns[3]:
                 st.slider(label=tr("top_P"), min_value=0.1, value=0.7, max_value=0.9, step=0.1,
                           key="audio_top_p")
             with llm_columns[4]:
-                st.slider(label=tr("top_K"), min_value=1.0, value=20.0, max_value=20.0, step=1.0,
+                st.slider(label=tr("top_K"), min_value=1, value=20, max_value=20, step=1,
                           key="audio_top_k")
 
             st.checkbox(label=tr("Use random voice"), key="use_random_voice")
@@ -155,7 +155,7 @@ with captioning_container:
             if st.session_state.get("use_random_voice"):
                 llm_columns = st.columns(4)
                 with llm_columns[0]:
-                    st.slider(label=tr("Audio Seed"), min_value=1.0, value=20.0, max_value=4294967295.0, step=1.0,
+                    st.slider(label=tr("Audio Seed"), min_value=1, value=20, max_value=4294967295, step=1,
                               key="audio_seed")
                 with llm_columns[1]:
                     st.selectbox(label=tr("Audio speed"),
@@ -195,13 +195,13 @@ with captioning_container:
                                  key="reference_audio_language")
             llm_columns = st.columns(6)
             with llm_columns[0]:
-                st.slider(label=tr("Audio Temperature"), min_value=0.001, value=0.3, max_value=1.0, step=0.001,
+                st.slider(label=tr("Audio Temperature"), min_value=0.01, value=0.3, max_value=1.0, step=0.01,
                           key="audio_temperature")
             with llm_columns[1]:
                 st.slider(label=tr("top_P"), min_value=0.1, value=0.7, max_value=0.9, step=0.1,
                           key="audio_top_p")
             with llm_columns[2]:
-                st.slider(label=tr("top_K"), min_value=1.0, value=20.0, max_value=20.0, step=1.0,
+                st.slider(label=tr("top_K"), min_value=1, value=20, max_value=20, step=1,
                           key="audio_top_k")
             with llm_columns[3]:
                 st.selectbox(label=tr("Audio speed"),
@@ -271,10 +271,10 @@ with video_container:
                      format_func=lambda x: video_size_options[x])
     llm_columns = st.columns(2)
     with llm_columns[0]:
-        st.slider(label=tr("video segment min length"), min_value=5.0, value=5.0, max_value=10.0, step=1.0,
+        st.slider(label=tr("video segment min length"), min_value=5, value=5, max_value=10, step=1,
                   key="video_segment_min_length")
     with llm_columns[1]:
-        st.slider(label=tr("video segment max length"), min_value=5.0, value=10.0, max_value=30.0, step=1.0,
+        st.slider(label=tr("video segment max length"), min_value=5, value=10, max_value=30, step=1,
                   key="video_segment_max_length")
     llm_columns = st.columns(4)
     with llm_columns[0]:
@@ -332,13 +332,13 @@ with subtitle_container:
     with llm_columns[2]:
         st.color_picker(label=tr("subtitle border color"), key="subtitle_border_color", value="#000000")
     with llm_columns[3]:
-        st.slider(label=tr("subtitle border width"), min_value=0.0, value=0.0, max_value=4.0, step=1.0,
+        st.slider(label=tr("subtitle border width"), min_value=0, value=0, max_value=4, step=1,
                   key="subtitle_border_width")
 
 # 生成视频
 video_generator = st.container(border=True)
 with video_generator:
-    st.slider(label=tr("how many videos do you want"), min_value=1.0, value=1.0, max_value=100.0, step=1.0,
+    st.slider(label=tr("how many videos do you want"), min_value=1, value=1, max_value=100, step=1,
               key="videos_count")
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video_for_mix,
               args=(video_generator,))

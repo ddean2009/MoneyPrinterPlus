@@ -7,6 +7,9 @@
   "Resource Provider": "资源库",
   "Pexels API Key" : "Pexels API Key",
   "Pixabay API Key" : "Pixabay API Key",
+  "Stable Diffusion API User Name": "Stable Diffusion API用户名(没有可不填)",
+  "Stable Diffusion API Password": "Stable Diffusion API密码(没有可不填)",
+  "Stable Diffusion API Server Address": "Stable Diffusion API服务器地址(必填)",
   "LLM Provider" : "LLM大模型配置",
   "API Key": "API Key",
   "Base Url": "Base Url",
@@ -39,6 +42,9 @@
   "Video content keyword" : "视频文案关键词(英文)",
   "Video content language": "视频文案语言",
   "Video length": "视频时长",
+
+  "Video Source": "视频素材来源",
+  "Using Resource:": "使用源:",
 
   "Video Captioning": "视频TTS语音合成区",
   "Audio language" : "配音语言",

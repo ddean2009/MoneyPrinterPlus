@@ -14,7 +14,6 @@ st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic
             {app_title}</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>基本配置信息</h2>", unsafe_allow_html=True)
 
-
 if 'ui_language' not in st.session_state:
     st.session_state['ui_language'] = 'zh-CN - 简体中文'
 
@@ -33,6 +32,24 @@ def save_pexels_api_key():
 
 def save_pixabay_api_key():
     my_config['resource']['pixabay']['api_key'] = st.session_state['pixabay_api_key']
+    save_config()
+
+
+def save_stable_diffusion_api_user_name():
+    test_config(my_config, "resource", 'stableDiffusion')
+    my_config['resource']['stableDiffusion']['user_name'] = st.session_state['stableDiffusion_api_user_name']
+    save_config()
+
+
+def save_stable_diffusion_api_password():
+    test_config(my_config, "resource", 'stableDiffusion')
+    my_config['resource']['stableDiffusion']['password'] = st.session_state['stableDiffusion_api_password']
+    save_config()
+
+
+def save_stable_diffusion_api_server_address():
+    test_config(my_config, "resource", 'stableDiffusion')
+    my_config['resource']['stableDiffusion']['server_address'] = st.session_state['stableDiffusion_api_server_address']
     save_config()
 
 
@@ -93,6 +110,7 @@ def set_GPTSoVITS_server_location():
     test_config(my_config, "audio", "local_tts", 'GPTSoVITS', 'server_location')
     my_config['audio']['local_tts']['GPTSoVITS']['server_location'] = st.session_state['GPTSoVITS_server_location']
     save_config()
+
 
 def set_audio_key(provider, key):
     if provider not in my_config['audio']:
@@ -164,7 +182,7 @@ selected_language = st.selectbox(tr("Language"), options=display_languages,
 # 设置资源
 resource_container = st.container(border=True)
 with resource_container:
-    resource_providers = ['pexels', 'pixabay']
+    resource_providers = ['pexels', 'pixabay', 'stableDiffusion', 'comfyUI']
     selected_resource_provider = my_config['resource']['provider']
     selected_resource_provider_index = 0
     for i, provider in enumerate(resource_providers):
@@ -177,16 +195,28 @@ with resource_container:
                                 key='resource_provider', on_change=set_resource_provider)
 
     # 设置资源key
-    key_panels = st.columns(2)
-    with key_panels[0]:
-        pexels_api_key = my_config['resource']['pexels']['api_key']
-        pexels_api_key = st.text_input(tr("Pexels API Key"), value=pexels_api_key, type="password",
-                                       key='pexels_api_key',
-                                       on_change=save_pexels_api_key)
-    with key_panels[1]:
-        pixabay_api_key = my_config['resource']['pixabay']['api_key']
-        pixabay_api_key = st.text_input(tr("Pixabay API Key"), value=pixabay_api_key, type="password",
-                                        key='pixabay_api_key', on_change=save_pixabay_api_key)
+    key_panels = st.columns(3)
+    if selected_resource_provider == 'pexels':
+        with key_panels[0]:
+            pexels_api_key = my_config['resource']['pexels']['api_key']
+            pexels_api_key = st.text_input(tr("Pexels API Key"), value=pexels_api_key, type="password",
+                                           key='pexels_api_key',
+                                           on_change=save_pexels_api_key)
+    if selected_resource_provider == 'pixabay':
+        with key_panels[0]:
+            pixabay_api_key = my_config['resource']['pixabay']['api_key']
+            pixabay_api_key = st.text_input(tr("Pixabay API Key"), value=pixabay_api_key, type="password",
+                                            key='pixabay_api_key', on_change=save_pixabay_api_key)
+    if selected_resource_provider == 'stableDiffusion':
+        with key_panels[0]:
+            st.text_input(tr("Stable Diffusion API User Name"),
+                          key='stableDiffusion_api_user_name', on_change=save_stable_diffusion_api_user_name)
+        with key_panels[1]:
+            st.text_input(tr("Stable Diffusion API Password"),  type="password",
+                          key='stableDiffusion_api_password', on_change=save_stable_diffusion_api_password)
+        with key_panels[2]:
+            st.text_input(tr("Stable Diffusion API Server Address"),
+                          key='stableDiffusion_api_server_address', on_change=save_stable_diffusion_api_server_address)
 
 # 设置语音
 audio_container = st.container(border=True)
@@ -215,7 +245,8 @@ with audio_container:
                           value=get_chatTTS_server_location(),
                           key="chatTTS_server_location", on_change=set_chatTTS_server_location)
         if local_audio_tts_provider == 'GPTSoVITS':
-            st.text_input(label=tr("GPT-SoVITS http server location"), placeholder=tr("Input GPT-SoVITS http server address"),
+            st.text_input(label=tr("GPT-SoVITS http server location"),
+                          placeholder=tr("Input GPT-SoVITS http server address"),
                           value=get_GPTSoVITS_server_location(),
                           key="GPTSoVITS_server_location", on_change=set_GPTSoVITS_server_location)
 
@@ -240,9 +271,10 @@ with audio_container:
                                                         on_change=set_local_audio_recognition_provider)
         recognition_columns = st.columns(3)
         with recognition_columns[0]:
-            selected_local_audio_recognition_module = my_config['audio'].get('local_recognition', {}).get(st.session_state['local_audio_recognition_provider'],
-                                                                                                          {}).get('model_name',
-                                                                                                            '')
+            selected_local_audio_recognition_module = my_config['audio'].get('local_recognition', {}).get(
+                st.session_state['local_audio_recognition_provider'],
+                {}).get('model_name',
+                        '')
             if not selected_local_audio_recognition_module:
                 selected_local_audio_recognition_module = 'tiny'
                 st.session_state['recognition_model_name'] = selected_local_audio_recognition_module
@@ -293,7 +325,6 @@ with audio_container:
                          index=selected_local_audio_recognition_compute_index,
                          key='recognition_compute_type',
                          on_change=set_recognition_value, args=('compute_type', 'recognition_compute_type',))
-
 
     # remote Audio config
     audio_providers = ['Azure', 'Ali', 'Tencent']

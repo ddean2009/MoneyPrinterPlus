@@ -3,8 +3,10 @@ import streamlit as st
 from config.config import my_config, save_config, languages, audio_languages, transition_types, \
     fade_list, audio_types, load_session_state_from_yaml, save_session_state_to_yaml, app_title, GPT_soVITS_languages
 from main import main_generate_video_content, main_generate_ai_video, main_generate_video_dubbing, \
-    main_get_video_resource, main_generate_subtitle, main_try_test_audio, get_audio_voices, main_try_test_local_audio
+    main_get_video_resource, main_generate_subtitle, main_try_test_audio, get_audio_voices, main_try_test_local_audio, \
+    main_generate_ai_video_from_img
 from pages.common import common_ui
+from services.sd.sd_service import SDService
 from tools.tr_utils import tr
 
 import os
@@ -66,7 +68,11 @@ def try_test_local_audio():
 
 def generate_video(video_generator):
     save_session_state_to_yaml()
-    main_generate_ai_video(video_generator)
+    resource_provider = my_config['resource']['provider']
+    if resource_provider == 'stableDiffusion':
+        main_generate_ai_video_from_img(video_generator)
+    else:
+        main_generate_ai_video(video_generator)
 
 
 st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
@@ -94,6 +100,37 @@ with llm_container:
     # print(st.session_state.get("video_content"))
     st.text_area(label=tr("Video content"), key="video_content", height=200)
     st.text_input(label=tr("Video content keyword"), key="video_keyword")
+
+# 资源区
+resource_container = st.container(border=True)
+with resource_container:
+    st.subheader(tr("Video Source"))
+    resource_name = my_config['resource'].get('provider', '')
+    st.text(tr("Using Resource:") + resource_name)
+    if resource_name == "stableDiffusion":
+        sd_service = SDService()
+        sd_checkpoints = sd_service.get_checkpoints()
+        llm_columns = st.columns(4)
+        with llm_columns[0]:
+            st.selectbox(label=tr("Check Point"), options=sd_checkpoints,
+                         key="sd_checkpoint")
+        with llm_columns[1]:
+            st.slider(label=tr("Width"), min_value=64, max_value=2048, step=1, value=720, key="sd_width")
+        with llm_columns[2]:
+            st.slider(label=tr("Height"), min_value=64, max_value=2048, step=1, value=1280, key="sd_height")
+        with llm_columns[3]:
+            st.text_input(label=tr("Seed"), value=2008, key="sd_seed")
+        llm_columns = st.columns(4)
+        with llm_columns[0]:
+            sd_samplers = sd_service.get_samples()
+            st.selectbox(label=tr("Sampler"), options=sd_samplers,  key="sd_sample")
+        with llm_columns[1]:
+            sd_schedules = sd_service.get_schedulers()
+            st.selectbox(label=tr("Schedule"), options=sd_schedules,  key="sd_schedule")
+        with llm_columns[2]:
+            st.slider(label=tr("Steps"), min_value=1, max_value=150, step=1, value=20, key="sd_step")
+        with llm_columns[3]:
+            st.slider(label=tr("CFG Scale"), min_value=0.0, max_value=1.0, step=0.1, value=0.7, key="sd_cfg_scale")
 
 # 配音区域
 captioning_container = st.container(border=True)
@@ -134,16 +171,16 @@ with captioning_container:
                 st.text_input(label=tr("Refine text Prompt"), placeholder=tr("[oral_2][laugh_0][break_6]"),
                               key="refine_text_prompt")
             with llm_columns[1]:
-                st.slider(label=tr("Text Seed"), min_value=1.0, value=20.0, max_value=4294967295.0, step=1.0,
+                st.slider(label=tr("Text Seed"), min_value=1, value=20, max_value=4294967295, step=1,
                           key="text_seed")
             with llm_columns[2]:
-                st.slider(label=tr("Audio Temperature"), min_value=0.001, value=0.3, max_value=1.0, step=0.001,
+                st.slider(label=tr("Audio Temperature"), min_value=0.01, value=0.3, max_value=1.0, step=0.01,
                           key="audio_temperature")
             with llm_columns[3]:
                 st.slider(label=tr("top_P"), min_value=0.1, value=0.7, max_value=0.9, step=0.1,
                           key="audio_top_p")
             with llm_columns[4]:
-                st.slider(label=tr("top_K"), min_value=1.0, value=20.0, max_value=20.0, step=1.0,
+                st.slider(label=tr("top_K"), min_value=1, value=20, max_value=20, step=1,
                           key="audio_top_k")
 
             st.checkbox(label=tr("Use random voice"), key="use_random_voice")
@@ -151,7 +188,7 @@ with captioning_container:
             if st.session_state.get("use_random_voice"):
                 llm_columns = st.columns(4)
                 with llm_columns[0]:
-                    st.slider(label=tr("Audio Seed"), min_value=1.0, value=20.0, max_value=4294967295.0, step=1.0,
+                    st.slider(label=tr("Audio Seed"), min_value=1, value=20, max_value=4294967295, step=1,
                               key="audio_seed")
                 with llm_columns[1]:
                     st.selectbox(label=tr("Audio speed"),
@@ -176,27 +213,28 @@ with captioning_container:
                 with llm_columns[3]:
                     st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
         if selected_local_audio_tts_provider == 'GPTSoVITS':
-            use_reference_audio=st.checkbox(label=tr("Use reference audio"), key="use_reference_audio")
+            use_reference_audio = st.checkbox(label=tr("Use reference audio"), key="use_reference_audio")
             if use_reference_audio:
                 llm_columns = st.columns(4)
                 with llm_columns[0]:
                     st.file_uploader(label=tr("Reference Audio"), type=["wav", "mp3"], accept_multiple_files=False,
-                                      key="reference_audio")
+                                     key="reference_audio")
                 with llm_columns[1]:
                     st.text_area(label=tr("Reference Audio Text"), placeholder=tr("Input Reference Audio Text"),
-                                   key="reference_audio_text")
+                                 key="reference_audio_text")
                 with llm_columns[2]:
-                    st.selectbox(label=tr("Reference Audio language"), options=GPT_soVITS_languages,format_func=lambda x: GPT_soVITS_languages.get(x),
-                                  key="reference_audio_language")
+                    st.selectbox(label=tr("Reference Audio language"), options=GPT_soVITS_languages,
+                                 format_func=lambda x: GPT_soVITS_languages.get(x),
+                                 key="reference_audio_language")
             llm_columns = st.columns(6)
             with llm_columns[0]:
-                st.slider(label=tr("Audio Temperature"), min_value=0.001, value=0.3, max_value=1.0, step=0.001,
+                st.slider(label=tr("Audio Temperature"), min_value=0.01, value=0.3, max_value=1.0, step=0.01,
                           key="audio_temperature")
             with llm_columns[1]:
                 st.slider(label=tr("top_P"), min_value=0.1, value=0.7, max_value=0.9, step=0.1,
                           key="audio_top_p")
             with llm_columns[2]:
-                st.slider(label=tr("top_K"), min_value=1.0, value=20.0, max_value=20.0, step=1.0,
+                st.slider(label=tr("top_K"), min_value=1, value=20, max_value=20, step=1,
                           key="audio_top_k")
             with llm_columns[3]:
                 st.selectbox(label=tr("Audio speed"),
@@ -204,15 +242,10 @@ with captioning_container:
                              key="audio_speed")
             with llm_columns[4]:
                 st.selectbox(label=tr("Inference Audio language"),
-                             options=GPT_soVITS_languages,format_func=lambda x: GPT_soVITS_languages.get(x),
+                             options=GPT_soVITS_languages, format_func=lambda x: GPT_soVITS_languages.get(x),
                              key="inference_audio_language")
             with llm_columns[5]:
                 st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
-
-
-
-
-
 
 recognition_container = st.container(border=True)
 with recognition_container:
@@ -273,10 +306,10 @@ with video_container:
                      format_func=lambda x: video_size_options[x])
     llm_columns = st.columns(2)
     with llm_columns[0]:
-        st.slider(label=tr("video segment min length"), min_value=5.0, value=5.0, max_value=10.0, step=1.0,
+        st.slider(label=tr("video segment min length"), min_value=5, value=5, max_value=10, step=1,
                   key="video_segment_min_length")
     with llm_columns[1]:
-        st.slider(label=tr("video segment max length"), min_value=10.0, value=10.0, max_value=30.0, step=1.0,
+        st.slider(label=tr("video segment max length"), min_value=10, value=10, max_value=30, step=1,
                   key="video_segment_max_length")
     # 开启本地目录
     # llm_columns = st.columns(2)
@@ -340,7 +373,7 @@ with subtitle_container:
     with llm_columns[2]:
         st.color_picker(label=tr("subtitle border color"), key="subtitle_border_color", value="#000000")
     with llm_columns[3]:
-        st.slider(label=tr("subtitle border width"), min_value=0.0, value=0.0, max_value=4.0, step=1.0,
+        st.slider(label=tr("subtitle border width"), min_value=0, value=0, max_value=4, step=1,
                   key="subtitle_border_width")
 
 # 生成视频

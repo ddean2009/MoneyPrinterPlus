@@ -20,6 +20,7 @@ from services.llm.openai_service import MyOpenAIService
 from services.llm.tongyi_service import MyTongyiService
 from services.resource.pexels_service import PexelsService
 from services.resource.pixabay_service import PixabayService
+from services.sd.sd_service import SDService
 from services.video.merge_service import merge_get_video_list, VideoMergeService, merge_generate_subtitle
 from services.video.video_service import get_audio_duration, VideoService, VideoMixService
 from tools.tr_utils import tr
@@ -54,6 +55,9 @@ def get_resource_provider():
         return PexelsService()
     if resource_provider == "pixabay":
         return PixabayService()
+    if resource_provider == "stableDiffusion":
+        return SDService()
+
 
 
 def get_llm_provider(llm_provider):
@@ -388,6 +392,10 @@ def main_generate_ai_video_for_mix(video_generator):
                 print("final file with subtitle:", video_file)
             st.session_state["result_video_file"] = video_file
             status.update(label=tr("Generate Video completed!"), state="complete", expanded=False)
+
+
+def main_generate_ai_video_from_img(video_generator):
+    pass
 
 
 def main_generate_ai_video_for_merge(video_generator):

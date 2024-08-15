@@ -1,21 +1,13 @@
-import datetime
-import json
-import lzma
 import os
-import zipfile
-from io import BytesIO
 
-import numpy as np
 import requests
-import torch
 from pydub import AudioSegment
 from pydub.playback import play
 
 from config.config import my_config
-from tools.file_utils import read_file, convert_mp3_to_wav, save_uploaded_file
+from tools.file_utils import save_uploaded_file
 from tools.utils import must_have_value, random_with_system_time
 import streamlit as st
-import pybase16384 as b14
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
@@ -29,18 +21,6 @@ script_dir = os.path.dirname(script_path)
 audio_output_dir = os.path.join(script_dir, "../../work")
 audio_output_dir = os.path.abspath(audio_output_dir)
 
-
-def encode_spk_emb(spk_emb: torch.Tensor) -> str:
-    arr: np.ndarray = spk_emb.to(dtype=torch.float16, device="cpu").detach().numpy()
-    s = b14.encode_to_string(
-        lzma.compress(
-            arr.tobytes(),
-            format=lzma.FORMAT_RAW,
-            filters=[{"id": lzma.FILTER_LZMA2, "preset": 9 | lzma.PRESET_EXTREME}],
-        ),
-    )
-    del arr
-    return s
 
 class GPTSoVITSAudioService:
     def __init__(self):
