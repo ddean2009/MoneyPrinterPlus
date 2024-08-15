@@ -399,6 +399,8 @@ def main_generate_ai_video_from_img(video_generator):
     with video_generator:
         st_area = st.status(tr("Generate Video in process..."), expanded=True)
         with st_area as status:
+            sd_service = SDService()
+            video_list, audio_list,text_list = sd_service.sd_get_video_list()
             pass
 
     pass

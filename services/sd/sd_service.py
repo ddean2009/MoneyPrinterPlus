@@ -1,7 +1,9 @@
 from config.config import my_config
 from services.sd import webuiapi
 from tools.utils import must_have_value
+import streamlit as st
 
+text_min_length = 10
 
 class SDService:
     def __init__(self):
@@ -14,7 +16,8 @@ class SDService:
         else:
             self.api = webuiapi.WebUIApi(baseurl=self.base_url)
 
-    def handle_video_resource(self, query, audio_length, per_page=10, exact_match=False):
+    def sd_get_video_list(self):
+        video_content = st.session_state.get("video_content")
         pass
 
     def set_checkpoint(self, checkpoint_name):
