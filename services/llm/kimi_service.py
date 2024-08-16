@@ -20,7 +20,7 @@ class MyKimiService(MyLLMService):
 
     def generate_content(self, topic: str, prompt_template: PromptTemplate, language: str = None, length: str = None):
         # 创建 Kimi 的 LLM 实例
-        llm = Moonshot(model=self.KIMI_MODEL_NAME)
+        llm = Moonshot(model=self.KIMI_MODEL_NAME, moonshot_api_key=self.KIMI_API_KEY)
 
         # 创建 LLMChain
         # chain = prompt_template | llm | StrOutputParser()
