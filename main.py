@@ -59,7 +59,6 @@ def get_resource_provider():
         return SDService()
 
 
-
 def get_llm_provider(llm_provider):
     if llm_provider == "Azure":
         return MyAzureService()
@@ -119,8 +118,6 @@ def main_try_test_local_audio():
     if selected_local_audio_tts_provider == "GPTSoVITS":
         audio_service = GPTSoVITSAudioService()
     audio_service.read_with_content(video_content)
-
-
 
 
 def main_try_test_audio():
@@ -400,7 +397,8 @@ def main_generate_ai_video_from_img(video_generator):
         st_area = st.status(tr("Generate Video in process..."), expanded=True)
         with st_area as status:
             sd_service = SDService()
-            video_list, audio_list,text_list = sd_service.sd_get_video_list()
+            video_content = st.session_state.get('video_content')
+            video_list, audio_list, text_list = sd_service.sd_get_video_list(video_content)
             pass
 
     pass

@@ -16,8 +16,7 @@ class SDService:
         else:
             self.api = webuiapi.WebUIApi(baseurl=self.base_url)
 
-    def sd_get_video_list(self):
-        video_content = st.session_state.get("video_content")
+    def sd_get_video_list(self, video_content):
         pass
 
     def set_checkpoint(self, checkpoint_name):
