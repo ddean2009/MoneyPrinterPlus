@@ -33,3 +33,7 @@ Invalid argument
 
 查看你的ffmpeg版本，需要升级到6.0以上。
 
+## 3. chatTTS Error loading \site-packages\torch\lib\fbgemm.dll" or one of its dependencies.
+torch少了依赖包：torch下fbgemm.dll缺少的依赖libomp140.x86-64
+在这里下载：https://www.dllme.com/dll/files/libomp140_x86_64?sort=upload&arch=0x8664
+把dll文件复制到你的电脑C:\Windows\System32 文件夹下面
