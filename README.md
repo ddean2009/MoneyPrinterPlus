@@ -231,8 +231,9 @@
 
 ## 环境要求
 
-- Python 3.10+
-- ffmpeg 6.0+
+- Python 3.10,3.11 安装包： https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe 
+- ffmpeg 6.1.1 安装包：https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-6.1.1-essentials_build.zip  
+- windows 必须安装VC： https://aka.ms/vs/17/release/vc_redist.x64.exe 
 - LLM api key
 - Azure语音服务(https://speech.microsoft.com/portal) 
 - 或者阿里云智能语音功能(https://nls-portal.console.aliyun.com/overview)
