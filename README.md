@@ -762,6 +762,8 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
 
 
 
+
+
 <table>
   <thead>
     <tr>
@@ -770,7 +772,7 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
   </tr>
 </thead>
 <tr>
-<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202409021650508.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202409042106047.png"></img></td>
 <td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202408021732303.png"></img></td>
 </tr>
 </table>
