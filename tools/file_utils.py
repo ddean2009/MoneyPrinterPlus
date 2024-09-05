@@ -199,3 +199,34 @@ def save_uploaded_file(uploaded_file, save_path):
     # 将文件内容写入到服务器的文件系统中
     with open(save_path, 'wb') as f:
         f.write(file_content)
+
+
+def split_text(text, min_length):
+    # 首先按照。！；拆分文本
+    paragraph_segments = re.split(r'[。！？；.!?;]', text)
+
+    merged_segments = []
+
+    for paragraph in paragraph_segments:
+        if paragraph:  # 确保段落非空
+            # 然后按照空格、逗号、冒号拆分段落
+            sub_segments = re.split(r'[ ，：,:]+', paragraph.strip())
+
+            # 初始化变量，用于累积片段
+            current_segment = ""
+            for sub_segment in sub_segments:
+                # 如果当前片段加上新片段的长度小于min_length，累积片段
+                if len(current_segment) + len(sub_segment) < min_length:
+                    current_segment += sub_segment
+                else:
+                    # 否则，如果当前片段非空，将其添加到结果列表
+                    if current_segment:
+                        merged_segments.append(current_segment)
+                    # 开始新的片段
+                    current_segment = sub_segment
+
+            # 如果最后累积的片段非空，也添加到结果列表
+            if current_segment:
+                merged_segments.append(current_segment)
+
+    return merged_segments
