@@ -1,6 +1,14 @@
 chcp 65001
 @echo off
 
+set "CURRENT_DIR=%cd%"
+
+set "FFMPEG_PATH=%CURRENT_DIR%\ffmpeg-6.1.1\bin"
+set "PYTHON_PATH=%CURRENT_DIR%\python311"
+
+set "PATH=%FFMPEG_PATH%;%PYTHON_PATH%;%PATH%"
+
+
 IF NOT EXIST venv (
     echo Creating venv...
     python.exe -m venv venv
