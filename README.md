@@ -168,6 +168,7 @@
 
 
 # 更新列表
+- 20240905 从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击setup.bat. 2.双击start.bat即可运行。
 - 20240813 支持GPTsoVITS本地语音模型
 - 20240807 存储了session值,这样在刷新的时候不需要重新输入信息了
 - 20240722 支持本地语音识别模型fasterwhisper
@@ -234,6 +235,7 @@
 - Python 3.10,3.11 安装包： https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe 
 - ffmpeg 6.1.1 安装包：https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-6.1.1-essentials_build.zip  
 - windows 必须安装VC： https://aka.ms/vs/17/release/vc_redist.x64.exe 
+- 从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击安装vc_redist.x64.exe 2.双击setup.bat. 3.双击start.bat即可运行。
 - LLM api key
 - Azure语音服务(https://speech.microsoft.com/portal) 
 - 或者阿里云智能语音功能(https://nls-portal.console.aliyun.com/overview)
@@ -248,6 +250,7 @@
 1. 确保你有Python 3.10+的运行环境。如果是windows, 请确保安装了python路径已经添加到了PATH中。
 2. 确保你有ffmpeg 6.0+的运行环境。如果是windows, 请确保安装了ffmpeg路径已经添加到了PATH中。没有安装ffmpeg的朋友，请通过 https://ffmpeg.org/ 来安装对应的版本。
 
+从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击安装vc_redist.x64.exe 2.双击setup.bat. 3.双击start.bat即可运行。
 
 ### 手动安装
 
