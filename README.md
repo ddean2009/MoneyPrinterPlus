@@ -105,6 +105,8 @@
 
 [MoneyPrinterPlus全面支持本地chatTTS模型](https://www.bilibili.com/video/BV1Ng8MePE6L)
 
+[MoneyPrinterPlus无缝对接GPT-SoVITS](https://www.bilibili.com/video/BV1f1HdeKEcM)
+
 # 图文系列教程
 
 [moneyPrinterPlus简介](https://mp.weixin.qq.com/s/0p9T_WFJ_yXcj74TgI7iMw)
