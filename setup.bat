@@ -9,6 +9,7 @@ set "PYTHON_PATH=%CURRENT_DIR%\python311"
 set "PATH=%FFMPEG_PATH%;%PYTHON_PATH%;%PATH%"
 
 
+python.exe -m venv venv
 IF NOT EXIST venv (
     echo Creating venv...
     python.exe -m venv venv
