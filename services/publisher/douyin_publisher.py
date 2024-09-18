@@ -51,7 +51,8 @@ def douyin_publisher(driver, video_file, text_file):
     wait = WebDriverWait(driver, 10)
 
     # 上传视频按钮
-    file_input = driver.find_element(By.NAME,'upload-btn')
+    # file_input = driver.find_element(By.NAME,'upload-btn')
+    file_input = driver.find_element(By.XPATH, '//input[@type="file"]')
     file_input.send_keys(video_file)
     time.sleep(10)  # 等待
     # 等待视频上传完毕
