@@ -96,6 +96,8 @@ class PixabayService(ResourceService):
                                     else:
                                         total_length = total_length + video_duration - float(
                                             self.video_transition_effect_duration)
+                                else:
+                                    total_length = total_length + video_duration
                                 matching_videos.append(video_url)
                                 i = i + 1
                                 break
@@ -110,6 +112,8 @@ class PixabayService(ResourceService):
                                     else:
                                         total_length = total_length + video_duration - float(
                                             self.video_transition_effect_duration)
+                                else:
+                                    total_length = total_length + video_duration
                                 matching_videos.append(video_url)
                                 i = i + 1
                                 break
