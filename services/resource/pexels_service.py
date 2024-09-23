@@ -71,6 +71,7 @@ class PexelsService(ResourceService):
 
     def match_videos(self, video_data, audio_length,
                      exact_match=False) -> tuple[list[Any], int | Any]:
+        # print(video_data)
         matching_videos = []
         total_length = 0
         if video_data and 'videos' in video_data:
@@ -78,6 +79,7 @@ class PexelsService(ResourceService):
             for video in video_data['videos']:
 
                 video_duration = video['duration']
+                print('video_duration:', video_duration)
                 # 排除短的视频
                 if video_duration < self.video_segment_min_length:
                     continue
@@ -91,7 +93,7 @@ class PexelsService(ResourceService):
                         if exact_match:
                             if video_file["width"] == self.width and video_file["height"] == self.height:
                                 video_url = video_file['link']
-                                print("match:", video_file)
+                                print("exact match:", video_file)
                                 # total_length = total_length + video_duration
                                 if self.enable_video_transition_effect:
                                     if i == 0:
@@ -99,6 +101,8 @@ class PexelsService(ResourceService):
                                     else:
                                         total_length = total_length + video_duration - float(
                                             self.video_transition_effect_duration)
+                                else:
+                                    total_length = total_length + video_duration
                                 matching_videos.append(video_url)
                                 i = i + 1
                                 break
@@ -113,6 +117,8 @@ class PexelsService(ResourceService):
                                     else:
                                         total_length = total_length + video_duration - float(
                                             self.video_transition_effect_duration)
+                                else:
+                                    total_length = total_length + video_duration
                                 matching_videos.append(video_url)
                                 i = i + 1
                                 break
