@@ -31,7 +31,6 @@ from const.video_const import Orientation
 from services.resource.resource_service import ResourceService
 from tools.utils import must_have_value
 
-
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
 
@@ -44,9 +43,13 @@ script_dir = os.path.dirname(script_path)
 workdir = os.path.join(script_dir, "../../resource")
 workdir = os.path.abspath(workdir)
 
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36',
+}
+
 
 def download_video(video_url, save_path):
-    response = requests.get(video_url, stream=True)
+    response = requests.get(video_url, headers=HEADERS, stream=True)
     if response.status_code == 200:
         with open(save_path, 'wb') as file:
             for chunk in response.iter_content(chunk_size=8192):
@@ -62,8 +65,9 @@ class PexelsService(ResourceService):
         self.API_KEY = my_config['resource']['pexels']['api_key']
         must_have_value(self.API_KEY, "请设置pexels密钥")
         self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36',
             'Authorization': self.API_KEY
-            }
+        }
 
     def match_videos(self, video_data, audio_length,
                      exact_match=False) -> tuple[list[Any], int | Any]:
@@ -93,7 +97,8 @@ class PexelsService(ResourceService):
                                     if i == 0:
                                         total_length = total_length + video_duration
                                     else:
-                                        total_length = total_length + video_duration - float(self.video_transition_effect_duration)
+                                        total_length = total_length + video_duration - float(
+                                            self.video_transition_effect_duration)
                                 matching_videos.append(video_url)
                                 i = i + 1
                                 break
@@ -106,7 +111,8 @@ class PexelsService(ResourceService):
                                     if i == 0:
                                         total_length = total_length + video_duration
                                     else:
-                                        total_length = total_length + video_duration - float(self.video_transition_effect_duration)
+                                        total_length = total_length + video_duration - float(
+                                            self.video_transition_effect_duration)
                                 matching_videos.append(video_url)
                                 i = i + 1
                                 break
@@ -145,7 +151,7 @@ class PexelsService(ResourceService):
 def main():
     query = input("Enter search keyword: ")
     resource_service = PexelsService()
-    resource_service.handle_video_resource(query, 100,  1080, False)
+    resource_service.handle_video_resource(query, 100, 1080, False)
 
 
 if __name__ == "__main__":
