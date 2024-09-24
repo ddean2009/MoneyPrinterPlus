@@ -105,6 +105,8 @@
 
 [MoneyPrinterPlus全面支持本地chatTTS模型](https://www.bilibili.com/video/BV1Ng8MePE6L)
 
+[MoneyPrinterPlus无缝对接GPT-SoVITS](https://www.bilibili.com/video/BV1f1HdeKEcM)
+
 # 图文系列教程
 
 [moneyPrinterPlus简介](https://mp.weixin.qq.com/s/0p9T_WFJ_yXcj74TgI7iMw)
@@ -168,6 +170,7 @@
 
 
 # 更新列表
+- 20240905 从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击setup.bat. 2.双击start.bat即可运行。
 - 20240813 支持GPTsoVITS本地语音模型
 - 20240807 存储了session值,这样在刷新的时候不需要重新输入信息了
 - 20240722 支持本地语音识别模型fasterwhisper
@@ -234,6 +237,7 @@
 - Python 3.10,3.11 安装包： https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe 
 - ffmpeg 6.1.1 安装包：https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-6.1.1-essentials_build.zip  
 - windows 必须安装VC： https://aka.ms/vs/17/release/vc_redist.x64.exe 
+- 从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击安装vc_redist.x64.exe 2.双击setup.bat. 3.双击start.bat即可运行。
 - LLM api key
 - Azure语音服务(https://speech.microsoft.com/portal) 
 - 或者阿里云智能语音功能(https://nls-portal.console.aliyun.com/overview)
@@ -248,6 +252,7 @@
 1. 确保你有Python 3.10+的运行环境。如果是windows, 请确保安装了python路径已经添加到了PATH中。
 2. 确保你有ffmpeg 6.0+的运行环境。如果是windows, 请确保安装了ffmpeg路径已经添加到了PATH中。没有安装ffmpeg的朋友，请通过 https://ffmpeg.org/ 来安装对应的版本。
 
+从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击安装vc_redist.x64.exe 2.双击setup.bat. 3.双击start.bat即可运行。
 
 ### 手动安装
 
@@ -743,8 +748,25 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
 ![image-20240710105336580](https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202407101053683.png)
 
 
+# 关于版权
 
-## 
+版权所有©[2024]程序那些事
+
+版权所有。本软件及相关文档文件(“软件”)仅供个人和教育用途。除非获得作者的明确许可，否则严禁将本软件用于商业用途。
+
+在满足以下条件的情况下，特此允许任何人出于非商业目的使用、复制和修改本软件:
+
+1. 原始版权声明和本许可声明必须包含在本软件的所有副本或主要部分中。
+2. 修改(如有)必须保留原始版权信息，不得暗示修改后的版本是本软件的正式版本。
+3. 本软件的任何分发或其修改必须保留原始版权声明，并包括本许可声明。
+
+对于商业用途，包括但不限于销售、分发或使用本软件作为任何商业产品或服务的一部分，您必须获得作者的明确授权。
+
+本软件虽然是开源的，但是开源协议是基于GPL-3.0 license。 任何人不得以本软件为基础进行商业使用。
+
+最近有发现部分人改一改我的代码，把作者名字删除就打包拿出去卖。 这里保留追究的权利。
+
+开源不易，希望大家珍惜!
 
 
 
@@ -762,8 +784,6 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
 
 
 
-
-
 <table>
   <thead>
     <tr>
@@ -772,7 +792,7 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
   </tr>
 </thead>
 <tr>
-<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202409042106047.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202409201338509.png"></img></td>
 <td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202408021732303.png"></img></td>
 </tr>
 </table>
