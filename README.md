@@ -170,6 +170,7 @@
 
 
 # 更新列表
+- 20240927 添加docker file,感谢**子涵**同学提供的dockerfile文件。 
 - 20240905 从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击setup.bat. 2.双击start.bat即可运行。
 - 20240813 支持GPTsoVITS本地语音模型
 - 20240807 存储了session值,这样在刷新的时候不需要重新输入信息了
