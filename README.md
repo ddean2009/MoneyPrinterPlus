@@ -168,8 +168,10 @@
 * 支持本地大模型工具Ollama [MoneyPrinterPlus全面支持本地Ollama大模型](https://mp.weixin.qq.com/s/Q1C7kxJytDeQ6v12I5vdoQ)
 * 视频自动发布功能已经上线了！！！！ 使用教程[MoneyPrinterPlus一键发布短视频到视频号,抖音,快手,小红书上线了](https://mp.weixin.qq.com/s/QOpSbb_q01E0CWAI3KQ89w)
 
-
 # 更新列表
+
+* 20241116 添加合并视频功能。不需要配置语音了，只是单纯的进行视频合并。
+
 - 20240927 添加docker file,感谢**子涵**同学提供的dockerfile文件。 
 - 20240905 从V4.5版本开始，提供了小白版的windows版本，大家不需要设置python，ffmpeg环境了.只需要解压缩：1.双击setup.bat. 2.双击start.bat即可运行。
 - 20240813 支持GPTsoVITS本地语音模型
@@ -186,10 +188,12 @@
 - 20240614 资源库支持pixabay,支持语音试听功能,修复一些bug
 
 # 已实现功能
+
 - [x] 支持本地语音模型chatTTS, fasterwhisper等
 - [x] 支持本地语音字幕识别模型
 - [x] 视频批量自动发布到各个视频平台,支持抖音，快手，小红书，视频号！！！
 - [x] 视频批量混剪，批量产出大量不重复的短视频
+- [x] 支持本地视频合并功能
 - [x] 支持本地素材选择(支持各种素材mp4,jpg,png),支持各种分辨率。
 - [x] 云大模型接入OpenAI,Azure,Kimi,Qianfan,Baichuan,Tongyi Qwen, DeepSeek
 - [x] 本地大模型接入Ollama
@@ -785,6 +789,8 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
 
 
 
+
+
 <table>
   <thead>
     <tr>
@@ -793,7 +799,7 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
   </tr>
 </thead>
 <tr>
-<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202410080905132.png"></img></td>
+<td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202411162101069.png"></img></td>
 <td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202408021732303.png"></img></td>
 </tr>
 </table>
