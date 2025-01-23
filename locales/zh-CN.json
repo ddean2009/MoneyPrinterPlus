@@ -21,6 +21,7 @@
   "Local Audio recognition Provider": "本地语音识别",
   "ChatTTS http server location": "ChatTTS Http Server地址(如: http://127.0.0.1:8000/)",
   "GPT-SoVITS http server location": "GPT-SoVITS Http Server地址(如: http://127.0.0.1:9880/)",
+  "CosyVoice http server location": "CosyVoice Http Server地址(如: http://127.0.0.1:8000/)",
   "Generate Video dubbing": "生成视频配音",
   "Testing Audio": "试听声音",
   "Audio Azure config": "需要开通微软speech服务",

@@ -135,6 +135,16 @@ def set_GPTSoVITS_server_location():
     save_config()
 
 
+def get_CosyVoice_server_location():
+    return my_config['audio'].get('local_tts', {}).get('CosyVoice', {}).get('server_location', '')
+
+
+def set_CosyVoice_server_location():
+    test_config(my_config, "audio", "local_tts", 'CosyVoice', 'server_location')
+    my_config['audio']['local_tts']['CosyVoice']['server_location'] = st.session_state['CosyVoice_server_location']
+    save_config()
+
+
 def set_audio_key(provider, key):
     if provider not in my_config['audio']:
         my_config['audio'][provider] = {}
@@ -275,6 +285,11 @@ with audio_container:
                           placeholder=tr("Input GPT-SoVITS http server address"),
                           value=get_GPTSoVITS_server_location(),
                           key="GPTSoVITS_server_location", on_change=set_GPTSoVITS_server_location)
+        if local_audio_tts_provider == 'CosyVoice':
+            st.text_input(label=tr("CosyVoice http server location"),
+                          placeholder=tr("Input CosyVoice http server address"),
+                          value=get_CosyVoice_server_location(),
+                          key="CosyVoice_server_location", on_change=set_CosyVoice_server_location)
 
     # local recognition config
     local_recognition_container = st.container(border=True)

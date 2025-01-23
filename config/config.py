@@ -30,7 +30,7 @@ from tools.file_utils import read_yaml, save_yaml
 
 app_title = "AI搞钱工具"
 
-local_audio_tts_providers = ['chatTTS', 'GPTSoVITS']
+local_audio_tts_providers = ['chatTTS', 'GPTSoVITS', 'CosyVoice']
 local_audio_recognition_providers = ['fasterwhisper', ]
 local_audio_recognition_fasterwhisper_module_names = ['large-v3', 'large-v2', 'large-v1', 'distil-large-v3',
                                                       'distil-large-v2', 'medium', 'base', 'small', 'tiny']
@@ -49,6 +49,20 @@ GPT_soVITS_languages = {
     "ja": "日英混合",
     "ko": "韩英混合",
     "auto_yue": "多语种混合(粤语)",
+}
+
+CosyVoice_languages = {
+    "中文女":"中文女",
+    "中文男":"中文男",
+    "日语男":"日语男",
+    "粤语女":"粤语女",
+    "英文女":"英文女",
+    "英文男":"英文男",
+    "韩语女":"韩语女",
+    "客服":"客服",
+    "网红1":"网红1",
+    "都亮":"都亮",
+    "网红2":"网红2",
 }
 
 audio_types = {'remote': "云服务", 'local': "本地模型"}
