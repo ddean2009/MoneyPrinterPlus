@@ -119,7 +119,7 @@ def main_generate_video_content():
 def main_try_test_local_audio():
     print("main_try_test_local_audio begin")
     selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
-    video_content = "你好，我是程序那些事"
+    video_content = "你好，今天你吃饭了没有？你心情如何？"
     if selected_local_audio_tts_provider == "chatTTS":
         audio_service = ChatTTSAudioService()
     if selected_local_audio_tts_provider == "GPTSoVITS":
