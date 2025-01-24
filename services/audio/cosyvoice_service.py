@@ -88,13 +88,13 @@ class CosyVoiceAudioService:
     def chat_with_content(self, content, audio_output_file):
         # main infer params
         if hasattr(self, 'refer_wav_path') and self.refer_wav_path:
-            print("1111:",self.prompt_text)
             body = {
                 "mode": "zero_shot",
                 "tts_text": content,
                 "prompt_text": self.prompt_text,
                 "seed": self.audio_seed,
                 "speed": self.audio_speed,
+                "prompt_voice": self.refer_wav_path,
                 "stream":False,
                 "instruct_text": None,
                 "sft_dropdown": None,
@@ -110,6 +110,7 @@ class CosyVoiceAudioService:
                 "stream":False,
                 "prompt_text": None,
                 "instruct_text": None,
+                "prompt_voice": None,
             }
 
         print(body)
