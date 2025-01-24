@@ -18,3 +18,4 @@ venv
 last_published_cn.txt
 fasterwhisper
 .DS_Store
+chromedriver/*
