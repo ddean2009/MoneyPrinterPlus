@@ -294,7 +294,7 @@ with audio_container:
     # local recognition config
     local_recognition_container = st.container(border=True)
     with local_recognition_container:
-        selected_local_audio_recognition_provider = my_config['audio'].get('local_recognition', {}).get('provider', '')
+        selected_local_audio_recognition_provider = my_config['audio'].get('local_recognition', {}).get('provider', 'sensevoice')
         if not selected_local_audio_recognition_provider:
             selected_local_audio_recognition_provider = 'fasterwhisper'
             st.session_state['local_audio_recognition_provider'] = selected_local_audio_recognition_provider
@@ -310,62 +310,63 @@ with audio_container:
                                                         index=selected_local_audio_recognition_provider_index,
                                                         key='local_audio_recognition_provider',
                                                         on_change=set_local_audio_recognition_provider)
-        recognition_columns = st.columns(3)
-        with recognition_columns[0]:
-            selected_local_audio_recognition_module = my_config['audio'].get('local_recognition', {}).get(
-                st.session_state['local_audio_recognition_provider'],
-                {}).get('model_name',
-                        '')
-            if not selected_local_audio_recognition_module:
-                selected_local_audio_recognition_module = 'tiny'
-                st.session_state['recognition_model_name'] = selected_local_audio_recognition_module
-                set_recognition_value('model_name', 'recognition_model_name')
-            selected_local_audio_recognition_module_index = 0
-            for i, module_name in enumerate(local_audio_recognition_fasterwhisper_module_names):
-                if module_name == selected_local_audio_recognition_module:
-                    selected_local_audio_recognition_module_index = i
-                    break
-            st.selectbox(tr("model name"),
-                         options=local_audio_recognition_fasterwhisper_module_names,
-                         index=selected_local_audio_recognition_module_index,
-                         key='recognition_model_name',
-                         on_change=set_recognition_value, args=('model_name', 'recognition_model_name',))
-        with recognition_columns[1]:
-            selected_local_audio_recognition_device = my_config['audio'].get('local_recognition', {}).get(
-                st.session_state['local_audio_recognition_provider'],
-                '').get('device_type', '')
-            if not selected_local_audio_recognition_device:
-                selected_local_audio_recognition_device = 'cpu'
-                st.session_state['recognition_device_type'] = selected_local_audio_recognition_device
-                set_recognition_value('device_type', 'recognition_device_type')
-            selected_local_audio_recognition_device_index = 0
-            for i, module_name in enumerate(local_audio_recognition_fasterwhisper_device_types):
-                if module_name == selected_local_audio_recognition_device:
-                    selected_local_audio_recognition_device_index = i
-                    break
-            st.selectbox(tr("device type"),
-                         options=local_audio_recognition_fasterwhisper_device_types,
-                         index=selected_local_audio_recognition_device_index,
-                         key='recognition_device_type',
-                         on_change=set_recognition_value, args=('device_type', 'recognition_device_type',))
-        with recognition_columns[2]:
-            selected_local_audio_recognition_compute = my_config['audio'].get('local_recognition', {}).get(
-                st.session_state['local_audio_recognition_provider'],
-                '').get('compute_type', '')
-            if not selected_local_audio_recognition_compute:
-                selected_local_audio_recognition_compute = 'int8'
-                st.session_state['recognition_compute_type'] = selected_local_audio_recognition_compute
-                set_recognition_value('compute_type', 'recognition_compute_type')
-            selected_local_audio_recognition_compute_index = 0
-            for i, module_name in enumerate(local_audio_recognition_fasterwhisper_compute_types):
-                if module_name == selected_local_audio_recognition_compute:
-                    selected_local_audio_recognition_compute_index = i
-                    break
-            st.selectbox(tr("compute type"),
-                         options=local_audio_recognition_fasterwhisper_compute_types,
-                         index=selected_local_audio_recognition_compute_index,
-                         key='recognition_compute_type',
-                         on_change=set_recognition_value, args=('compute_type', 'recognition_compute_type',))
+        if selected_local_audio_recognition_provider == 'fasterwhisper':                                    
+            recognition_columns = st.columns(3)
+            with recognition_columns[0]:
+                selected_local_audio_recognition_module = my_config['audio'].get('local_recognition', {}).get(
+                    st.session_state['local_audio_recognition_provider'],
+                    {}).get('model_name',
+                            '')
+                if not selected_local_audio_recognition_module:
+                    selected_local_audio_recognition_module = 'tiny'
+                    st.session_state['recognition_model_name'] = selected_local_audio_recognition_module
+                    set_recognition_value('model_name', 'recognition_model_name')
+                selected_local_audio_recognition_module_index = 0
+                for i, module_name in enumerate(local_audio_recognition_fasterwhisper_module_names):
+                    if module_name == selected_local_audio_recognition_module:
+                        selected_local_audio_recognition_module_index = i
+                        break
+                st.selectbox(tr("model name"),
+                            options=local_audio_recognition_fasterwhisper_module_names,
+                            index=selected_local_audio_recognition_module_index,
+                            key='recognition_model_name',
+                            on_change=set_recognition_value, args=('model_name', 'recognition_model_name',))
+            with recognition_columns[1]:
+                selected_local_audio_recognition_device = my_config['audio'].get('local_recognition', {}).get(
+                    st.session_state['local_audio_recognition_provider'],
+                    '').get('device_type', '')
+                if not selected_local_audio_recognition_device:
+                    selected_local_audio_recognition_device = 'cpu'
+                    st.session_state['recognition_device_type'] = selected_local_audio_recognition_device
+                    set_recognition_value('device_type', 'recognition_device_type')
+                selected_local_audio_recognition_device_index = 0
+                for i, module_name in enumerate(local_audio_recognition_fasterwhisper_device_types):
+                    if module_name == selected_local_audio_recognition_device:
+                        selected_local_audio_recognition_device_index = i
+                        break
+                st.selectbox(tr("device type"),
+                            options=local_audio_recognition_fasterwhisper_device_types,
+                            index=selected_local_audio_recognition_device_index,
+                            key='recognition_device_type',
+                            on_change=set_recognition_value, args=('device_type', 'recognition_device_type',))
+            with recognition_columns[2]:
+                selected_local_audio_recognition_compute = my_config['audio'].get('local_recognition', {}).get(
+                    st.session_state['local_audio_recognition_provider'],
+                    '').get('compute_type', '')
+                if not selected_local_audio_recognition_compute:
+                    selected_local_audio_recognition_compute = 'int8'
+                    st.session_state['recognition_compute_type'] = selected_local_audio_recognition_compute
+                    set_recognition_value('compute_type', 'recognition_compute_type')
+                selected_local_audio_recognition_compute_index = 0
+                for i, module_name in enumerate(local_audio_recognition_fasterwhisper_compute_types):
+                    if module_name == selected_local_audio_recognition_compute:
+                        selected_local_audio_recognition_compute_index = i
+                        break
+                st.selectbox(tr("compute type"),
+                            options=local_audio_recognition_fasterwhisper_compute_types,
+                            index=selected_local_audio_recognition_compute_index,
+                            key='recognition_compute_type',
+                            on_change=set_recognition_value, args=('compute_type', 'recognition_compute_type',))
 
     # remote Audio config
     audio_providers = ['Azure', 'Ali', 'Tencent']

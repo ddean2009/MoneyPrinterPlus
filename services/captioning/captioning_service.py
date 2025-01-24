@@ -29,6 +29,7 @@ from typing import Optional
 from config.config import my_config
 from services.alinls.speech_process import AliRecognitionService
 from services.audio.faster_whisper_recognition_service import FasterWhisperRecognitionService
+from services.audio.sensevoice_whisper_recognition_service import SenseVoiceRecognitionService
 from services.audio.tencent_recognition_service import TencentRecognitionService
 from services.captioning.common_captioning_service import Captioning
 import subprocess
@@ -84,10 +85,20 @@ def generate_caption():
                 return
             captioning._offline_results = result_list
     if recognition_type == "local":
-        selected_audio_provider = my_config['audio'].get('local_recognition',{}).get('provider','fasterwhisper')
+        selected_audio_provider = my_config['audio'].get('local_recognition',{}).get('provider')
         if selected_audio_provider =='fasterwhisper':
             print("selected_audio_provider: fasterwhisper")
             fasterwhisper_service = FasterWhisperRecognitionService()
+            result_list = fasterwhisper_service.process(get_session_option("audio_output_file"),
+                                                  get_session_option("audio_language"))
+            print(result_list)
+            if result_list is None:
+                return
+            captioning._offline_results = result_list
+
+        if selected_audio_provider =='senenvoice':
+            print("selected_audio_provider: senenvoice")
+            fasterwhisper_service = SenseVoiceRecognitionService()
             result_list = fasterwhisper_service.process(get_session_option("audio_output_file"),
                                                   get_session_option("audio_language"))
             print(result_list)
