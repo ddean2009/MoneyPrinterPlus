@@ -96,8 +96,8 @@ def generate_caption():
                 return
             captioning._offline_results = result_list
 
-        if selected_audio_provider =='senenvoice':
-            print("selected_audio_provider: senenvoice")
+        if selected_audio_provider =='sensevoice':
+            print("selected_audio_provider: sensevoice")
             fasterwhisper_service = SenseVoiceRecognitionService()
             result_list = fasterwhisper_service.process(get_session_option("audio_output_file"),
                                                   get_session_option("audio_language"))
