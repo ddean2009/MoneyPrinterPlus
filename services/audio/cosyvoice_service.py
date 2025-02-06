@@ -50,7 +50,7 @@ class CosyVoiceAudioService:
         super().__init__()
         self.service_location = my_config['audio']['local_tts']['CosyVoice']['server_location']
         must_have_value(self.service_location, "请设置CosyVoice server location")
-        self.service_location = self.service_location.rstrip('/') + '?'
+        self.service_location = self.service_location.rstrip('/') + '/text-tts' + '?'
 
         self.audio_seed = int(st.session_state.get('audio_seed',0))
 

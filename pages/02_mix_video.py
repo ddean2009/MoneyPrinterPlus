@@ -26,7 +26,7 @@ import os
 import streamlit as st
 
 from config.config import transition_types, fade_list, audio_languages, audio_types, load_session_state_from_yaml, \
-    save_session_state_to_yaml, app_title, GPT_soVITS_languages, CosyVoice_languages, my_config
+    save_session_state_to_yaml, app_title, GPT_soVITS_languages, CosyVoice_voice, my_config
 from main import main_generate_ai_video_for_mix, main_try_test_audio, get_audio_voices, main_try_test_local_audio
 from pages.common import common_ui
 from tools.tr_utils import tr
@@ -251,8 +251,8 @@ with captioning_container:
                                  key="reference_audio_text")
             else:
                 llm_columns = st.columns(1)
-                st.selectbox(label=tr("Reference Audio language"), options=CosyVoice_languages,
-                            format_func=lambda x: CosyVoice_languages.get(x),
+                st.selectbox(label=tr("Reference Audio language"), options=CosyVoice_voice,
+                            format_func=lambda x: CosyVoice_voice.get(x),
                             key="reference_audio_language")
             llm_columns = st.columns(3)
             with llm_columns[0]:

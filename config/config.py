@@ -23,6 +23,7 @@
 
 import os
 import shutil
+import requests
 import streamlit as st
 import yaml
 
@@ -51,18 +52,9 @@ GPT_soVITS_languages = {
     "auto_yue": "多语种混合(粤语)",
 }
 
-CosyVoice_languages = {
+CosyVoice_voice = {
     "中文女":"中文女",
     "中文男":"中文男",
-    "日语男":"日语男",
-    "粤语女":"粤语女",
-    "英文女":"英文女",
-    "英文男":"英文男",
-    "韩语女":"韩语女",
-    "客服":"客服",
-    "网红1":"网红1",
-    "都亮":"都亮",
-    "网红2":"网红2",
 }
 
 audio_types = {'remote': "云服务", 'local': "本地模型"}
@@ -361,5 +353,23 @@ def save_config():
     if os.path.exists(config_file):
         save_yaml(config_file, my_config)
 
+def fetch_CosyVoice_voice():
+    url = my_config['audio']['local_tts']['CosyVoice']['server_location'] + "/sft_spk"  # 替换为真实的API地址
+    
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # 检查请求是否成功
+
+        data = response.json()  
+        CosyVoice_voice_dict = {lang: lang for lang in data if lang}  # 过滤掉空字符串
+        return CosyVoice_voice_dict  # 返回获取的语言数据
+
+    except requests.exceptions.RequestException as e:
+        print(f"请求失败: {e}")
+        return {}
+    
 
 my_config = load_config()
+
+# 调用外部接口并更新 CosyVoice_voice
+CosyVoice_voice = fetch_CosyVoice_voice() or CosyVoice_voice  # 如果外部接口失败，则保留原有数据
