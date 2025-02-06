@@ -433,7 +433,4 @@ with video_generator:
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video, args=(video_generator,))
 result_video_file = st.session_state.get("result_video_file")
 if result_video_file:
-    st.markdown(
-        f'<video width="320" controls><source src="{result_video_file}" type="video/mp4"></video>',
-        unsafe_allow_html=True
-    )
+    st.video(result_video_file)

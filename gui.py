@@ -289,12 +289,12 @@ with audio_container:
             st.text_input(label=tr("CosyVoice http server location"),
                           placeholder=tr("Input CosyVoice http server address"),
                           value=get_CosyVoice_server_location(),
-                          key="CosyVoice_server_location", on_change=set_CosyVoice_server_location)
-
+                          key="CosyVoice_server_location", on_change=set_CosyVoice_server_location,
+                          help=tr("Download the cosyvoice-api from https://github.com/diudiu62/CosyVoice-api.git"))
     # local recognition config
     local_recognition_container = st.container(border=True)
     with local_recognition_container:
-        selected_local_audio_recognition_provider = my_config['audio'].get('local_recognition', {}).get('provider', 'sensevoice')
+        selected_local_audio_recognition_provider = my_config['audio'].get('local_recognition', {}).get('provider', '')
         if not selected_local_audio_recognition_provider:
             selected_local_audio_recognition_provider = 'fasterwhisper'
             st.session_state['local_audio_recognition_provider'] = selected_local_audio_recognition_provider
@@ -310,6 +310,9 @@ with audio_container:
                                                         index=selected_local_audio_recognition_provider_index,
                                                         key='local_audio_recognition_provider',
                                                         on_change=set_local_audio_recognition_provider)
+        if selected_local_audio_recognition_provider == 'sensevoice':
+            st.info(tr("⚠️参考项目sensevoice文件夹中的README.md，下载sherpa-onnx-sense-voice相关模型"))  # 添加帮助信息
+
         if selected_local_audio_recognition_provider == 'fasterwhisper':                                    
             recognition_columns = st.columns(3)
             with recognition_columns[0]:
@@ -366,7 +369,7 @@ with audio_container:
                             options=local_audio_recognition_fasterwhisper_compute_types,
                             index=selected_local_audio_recognition_compute_index,
                             key='recognition_compute_type',
-                            on_change=set_recognition_value, args=('compute_type', 'recognition_compute_type',))
+                            on_change=set_recognition_value, args=('compute_type', 'recognition_compute_type',))            
 
     # remote Audio config
     audio_providers = ['Azure', 'Ali', 'Tencent']

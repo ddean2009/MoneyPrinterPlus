@@ -16,10 +16,9 @@ resource/*
 venv
 =2.13.3
 last_published_cn.txt
-fasterwhisper
+fasterwhisper/*
+sensevoice/*
 .DS_Store
 chromedriver/*
 chromedriver-mac-arm64/
-sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/model.onnx
-sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/silero_vad.onnx
-sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/tokens.txt
+!README.md
