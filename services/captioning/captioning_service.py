@@ -114,8 +114,17 @@ def add_subtitles(video_file, subtitle_file, font_name='Songti TC Bold', font_si
                   outline_colour='#FFFFFF', margin_v=16, margin_l=4, margin_r=4, border_style=1, outline=0, alignment=2,
                   shadow=0, spacing=2):
     output_file = generate_temp_filename(video_file)
-    primary_colour = f"&H{primary_colour[1:]}&"
-    outline_colour = f"&H{outline_colour[1:]}&"
+    # 添加透明度通道（AA），默认00表示不透明，并确保颜色值为6位
+    # 将HEX颜色转换为BGRA格式（AARRGGBB -> BBGGRRAA）
+    def hex_to_bgra(hex_color):
+        hex_color = hex_color.lstrip('#')
+        alpha = hex_color[6:8] if len(hex_color) >= 8 else '00'
+        rgb = hex_color[:6].ljust(6, '0')
+        bgr = rgb[4:6] + rgb[2:4] + rgb[0:2]  # RRGGBB -> BBGGRR
+        return f"&H{alpha}{bgr}&"
+    
+    primary_colour = hex_to_bgra(primary_colour)
+    outline_colour = hex_to_bgra(outline_colour)
     # windows路径需要特殊处理
     if platform.system() == "Windows":
         subtitle_file = subtitle_file.replace("\\", "\\\\\\\\")
