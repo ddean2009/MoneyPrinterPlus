@@ -292,7 +292,7 @@ session_file_name = "session.yml"
 config_example_file = os.path.join(script_dir, config_example_file_name)
 config_file = os.path.join(script_dir, config_file_name)
 session_file = os.path.join(script_dir, session_file_name)
-exclude_keys = ['01_first_visit', '02_first_visit', '03_first_visit', '04_first_visit','reference_audio','audio_temperature','audio_voice','result_video_file']
+exclude_keys = ['01_first_visit', '02_first_visit', '03_first_visit', '04_first_visit','reference_audio','audio_temperature','audio_voice']
 
 
 def save_session_state_to_yaml():

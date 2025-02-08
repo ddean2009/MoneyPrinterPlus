@@ -240,8 +240,16 @@ with video_generator:
               key="videos_count")
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video_for_merge,
               args=(video_generator,))
+
+# 显示预览前检查文件有效性
 result_video_file = st.session_state.get("result_video_file")
-# 检查文件是否存在，不存在则清除session状态
+
+# 生成视频后保存路径到session_state
+if result_video_file:
+    st.session_state["result_video_file"] = result_video_file
+    from config.config import save_session_state_to_yaml
+    save_session_state_to_yaml()
+
 if result_video_file and not os.path.exists(result_video_file):
     del st.session_state["result_video_file"]
     result_video_file = None
