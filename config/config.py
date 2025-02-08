@@ -23,6 +23,7 @@
 
 import os
 import shutil
+import requests
 import streamlit as st
 import yaml
 
@@ -30,8 +31,8 @@ from tools.file_utils import read_yaml, save_yaml
 
 app_title = "AI搞钱工具"
 
-local_audio_tts_providers = ['chatTTS', 'GPTSoVITS']
-local_audio_recognition_providers = ['fasterwhisper', ]
+local_audio_tts_providers = ['chatTTS', 'GPTSoVITS', 'CosyVoice']
+local_audio_recognition_providers = ['fasterwhisper', 'sensevoice']
 local_audio_recognition_fasterwhisper_module_names = ['large-v3', 'large-v2', 'large-v1', 'distil-large-v3',
                                                       'distil-large-v2', 'medium', 'base', 'small', 'tiny']
 local_audio_recognition_fasterwhisper_device_types = ['cuda', 'cpu', 'auto']
@@ -49,6 +50,11 @@ GPT_soVITS_languages = {
     "ja": "日英混合",
     "ko": "韩英混合",
     "auto_yue": "多语种混合(粤语)",
+}
+
+CosyVoice_voice = {
+    "中文女":"中文女",
+    "中文男":"中文男",
 }
 
 audio_types = {'remote': "云服务", 'local': "本地模型"}
@@ -347,5 +353,23 @@ def save_config():
     if os.path.exists(config_file):
         save_yaml(config_file, my_config)
 
+def fetch_CosyVoice_voice():
+    url = my_config['audio']['local_tts']['CosyVoice']['server_location'] + "/sft_spk"  # 替换为真实的API地址
+    
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # 检查请求是否成功
+
+        data = response.json()  
+        CosyVoice_voice_dict = {lang: lang for lang in data if lang}  # 过滤掉空字符串
+        return CosyVoice_voice_dict  # 返回获取的语言数据
+
+    except requests.exceptions.RequestException as e:
+        print(f"请求失败: {e}")
+        return {}
+    
 
 my_config = load_config()
+
+# 调用外部接口并更新 CosyVoice_voice
+CosyVoice_voice = fetch_CosyVoice_voice() or CosyVoice_voice  # 如果外部接口失败，则保留原有数据

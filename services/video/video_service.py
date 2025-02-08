@@ -96,7 +96,9 @@ def get_video_fps(video_path):
 
     try:
         # 运行 ffprobe 命令并捕获输出
-        result = subprocess.run(ffprobe_cmd, capture_output=True, text=True)
+        result = subprocess.run(ffprobe_cmd, capture_output=True)
+        stdout = result.stdout.decode('gbk', errors='ignore')
+        stderr = result.stderr.decode('gbk', errors='ignore')
 
         # 检查命令是否成功执行
         if result.returncode != 0:
@@ -187,7 +189,9 @@ def add_music(video_file, audio_file):
         output_file  # 输出文件路径
     ]
     print(" ".join(ffmpeg_cmd))
-    subprocess.run(ffmpeg_cmd, capture_output=True, text=True)
+    result = subprocess.run(ffmpeg_cmd, capture_output=True)
+    stdout = result.stdout.decode('gbk', errors='ignore')
+    stderr = result.stderr.decode('gbk', errors='ignore')
     # 重命名最终的文件
     if os.path.exists(output_file):
         os.remove(video_file)
@@ -212,7 +216,10 @@ def add_background_music(video_file, audio_file, bgm_volume=0.5):
     ]
     # 调用FFmpeg命令
     print(command)
-    subprocess.run(command, capture_output=True, text=True)
+    result = subprocess.run(command, capture_output=True)
+    # 处理输出解码
+    stdout = result.stdout.decode('gbk', errors='ignore')
+    stderr = result.stderr.decode('gbk', errors='ignore')
     # 重命名最终的文件
     if os.path.exists(output_file):
         os.remove(video_file)

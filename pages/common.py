@@ -1,3 +1,11 @@
+'''
+Author: chenpeng 115522593@qq.com
+Date: 2025-01-22 10:04:50
+LastEditors: chenpeng 115522593@qq.com
+LastEditTime: 2025-01-24 14:00:57
+FilePath: /MoneyPrinterPlus/pages/common.py
+Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+'''
 #  Copyright © [2024] 程序那些事
 #
 #  All rights reserved. This software and associated documentation files (the "Software") are provided for personal and educational use only. Commercial use of the Software is strictly prohibited unless explicit permission is obtained from the author.
@@ -42,9 +50,9 @@ def common_ui():
     st.sidebar.page_link("pages/02_mix_video.py", label=tr("Mix Video"))
     st.sidebar.page_link("pages/02_merge_video.py", label=tr("Merge Video"))
     st.sidebar.page_link("pages/03_auto_publish.py", label=tr("Video Auto Publish"))
-    st.sidebar.markdown(
-        '<a style="text-align: center;padding-top: 0rem;" href="http://www.flydean.com">Developed by 程序那些事</a>',
-        unsafe_allow_html=True)
+    # st.sidebar.markdown(
+    #     '<a style="text-align: center;padding-top: 0rem;" href="http://www.flydean.com">Developed by 程序那些事</a>',
+    #     unsafe_allow_html=True)
 
     with st.sidebar:
         st.markdown('---')

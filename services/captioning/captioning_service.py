@@ -29,6 +29,7 @@ from typing import Optional
 from config.config import my_config
 from services.alinls.speech_process import AliRecognitionService
 from services.audio.faster_whisper_recognition_service import FasterWhisperRecognitionService
+from services.audio.sensevoice_whisper_recognition_service import SenseVoiceRecognitionService
 from services.audio.tencent_recognition_service import TencentRecognitionService
 from services.captioning.common_captioning_service import Captioning
 import subprocess
@@ -84,10 +85,20 @@ def generate_caption():
                 return
             captioning._offline_results = result_list
     if recognition_type == "local":
-        selected_audio_provider = my_config['audio'].get('local_recognition',{}).get('provider','fasterwhisper')
+        selected_audio_provider = my_config['audio'].get('local_recognition',{}).get('provider')
         if selected_audio_provider =='fasterwhisper':
             print("selected_audio_provider: fasterwhisper")
             fasterwhisper_service = FasterWhisperRecognitionService()
+            result_list = fasterwhisper_service.process(get_session_option("audio_output_file"),
+                                                  get_session_option("audio_language"))
+            print(result_list)
+            if result_list is None:
+                return
+            captioning._offline_results = result_list
+
+        if selected_audio_provider =='sensevoice':
+            print("selected_audio_provider: sensevoice")
+            fasterwhisper_service = SenseVoiceRecognitionService()
             result_list = fasterwhisper_service.process(get_session_option("audio_output_file"),
                                                   get_session_option("audio_language"))
             print(result_list)
@@ -103,8 +114,17 @@ def add_subtitles(video_file, subtitle_file, font_name='Songti TC Bold', font_si
                   outline_colour='#FFFFFF', margin_v=16, margin_l=4, margin_r=4, border_style=1, outline=0, alignment=2,
                   shadow=0, spacing=2):
     output_file = generate_temp_filename(video_file)
-    primary_colour = f"&H{primary_colour[1:]}&"
-    outline_colour = f"&H{outline_colour[1:]}&"
+    # 添加透明度通道（AA），默认00表示不透明，并确保颜色值为6位
+    # 将HEX颜色转换为BGRA格式（AARRGGBB -> BBGGRRAA）
+    def hex_to_bgra(hex_color):
+        hex_color = hex_color.lstrip('#')
+        alpha = hex_color[6:8] if len(hex_color) >= 8 else '00'
+        rgb = hex_color[:6].ljust(6, '0')
+        bgr = rgb[4:6] + rgb[2:4] + rgb[0:2]  # RRGGBB -> BBGGRR
+        return f"&H{alpha}{bgr}&"
+    
+    primary_colour = hex_to_bgra(primary_colour)
+    outline_colour = hex_to_bgra(outline_colour)
     # windows路径需要特殊处理
     if platform.system() == "Windows":
         subtitle_file = subtitle_file.replace("\\", "\\\\\\\\")

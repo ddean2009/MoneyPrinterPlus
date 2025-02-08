@@ -16,4 +16,9 @@ resource/*
 venv
 =2.13.3
 last_published_cn.txt
-fasterwhisper
+fasterwhisper/*
+sensevoice/*
+.DS_Store
+chromedriver/*
+chromedriver-mac-arm64/
+!README.md
