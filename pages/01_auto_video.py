@@ -433,4 +433,6 @@ with video_generator:
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video, args=(video_generator,))
 result_video_file = st.session_state.get("result_video_file")
 if result_video_file:
-    st.video(result_video_file)
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        st.video(result_video_file)
