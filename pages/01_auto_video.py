@@ -432,6 +432,10 @@ video_generator = st.container(border=True)
 with video_generator:
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video, args=(video_generator,))
 result_video_file = st.session_state.get("result_video_file")
+# 检查文件是否存在，不存在则清除session状态
+if result_video_file and not os.path.exists(result_video_file):
+    del st.session_state["result_video_file"]
+    result_video_file = None
 if result_video_file:
     col1, col2 = st.columns([1, 5])
     with col1:
