@@ -162,6 +162,7 @@
 # 更新预告
 
 * 准备接入stable diffusion和comfyUI， OOOOO，太牛了！
+* 新增对接cosyvoice语言生成和sensevoice字幕生成。 
 * 已经支持GPTsoVITS本地语音模型啦,教程[再升级!MoneyPrinterPlus集成GPT_SoVITS](https://mp.weixin.qq.com/s/7jdNLemItcJJUhz4OsjlzQ)
 * 已经支持本地语音识别模型fasterwhisper, 教程[fasterWhisper和MoneyPrinterPlus无缝集成](https://mp.weixin.qq.com/s/dSZjpfqUKBz3PyAOYvJKGw)。 可关注我公众号获得最新进度。
 * 已经支持本地语音模型ChatTTS了，教程 [在MoneyPrinterPlus中使用本地chatTTS语音模型](https://mp.weixin.qq.com/s/bToXG_3XSYHKVI6Nf5W3Dw)
@@ -169,7 +170,7 @@
 * 视频自动发布功能已经上线了！！！！ 使用教程[MoneyPrinterPlus一键发布短视频到视频号,抖音,快手,小红书上线了](https://mp.weixin.qq.com/s/QOpSbb_q01E0CWAI3KQ89w)
 
 # 更新列表
-
+* 20250208 新增对接cosyvoice语言生成和sensevoice字幕生成。
 * 20241116 添加合并视频功能。不需要配置语音了，只是单纯的进行视频合并。
 
 - 20240927 添加docker file,感谢**子涵**同学提供的dockerfile文件。 
