@@ -271,6 +271,4 @@ with video_generator:
                 st.button(label=tr("Delete Video Button"), type="secondary", on_click=lambda: delete_video(result_video_file))
     
         if result_video_file:
-            col1, col2 = st.columns([1, 5])
-            with col1:
-                st.video(result_video_file)
+            st.video(result_video_file)
