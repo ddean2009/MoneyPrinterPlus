@@ -143,9 +143,14 @@ class PixabayService(ResourceService):
         if matching_videos:
             for video_url in matching_videos:
                 video_name = video_url.split('/')[-1]
-                save_name = os.path.join(workdir, f"pixabay-{video_name}")
-                # if not os.path.exists(save_name):
-                print("download video")
+                save_name = os.path.abspath(os.path.join(workdir, f"pixabay-{video_name}"))
+                
+                if os.path.exists(save_name):
+                    print(f"视频文件已存在，跳过下载: {save_name}")
+                    return_videos.append(save_name)
+                    continue
+                
+                print(f"开始下载视频: {save_name}")
                 download_video(video_url, save_name)
                 return_videos.append(save_name)
         else:
