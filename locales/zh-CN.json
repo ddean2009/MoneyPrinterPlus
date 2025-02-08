@@ -92,7 +92,8 @@
   "Enable local video dir": "是否使用本地视频目录(测试)",
   "local video dir": "本地视频目录(测试)",
 
-  "Generate Video Button": "生成视频",
+  "Generate Video Button": "✨ 生成视频",
+  "Delete Video Button": "🗑️ 删除视频",
   "Generate Video in process...": "生成视频中...",
   "Generate Video Dubbing...": "生成视频配音...",
   "Get Video Resource...": "获取视频资源...",
@@ -103,7 +104,6 @@
   "Generate Video completed!": "生成视频完成!",
 
 
-  "Mix Video": "视频混剪区",
   "Mix Video Scene": "视频片段",
   "Video Scene Resource": "视频片段资源目录",
   "Please input video scene resource folder path": "请输入视频片段资源目录路径如:D:\\downloads\\work\\scen1",

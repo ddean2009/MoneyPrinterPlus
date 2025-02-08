@@ -94,6 +94,15 @@ def generate_video_for_merge(video_generator):
             main_generate_ai_video_for_merge(video_generator)
 
 
+def delete_video(video_file):
+    if video_file and os.path.exists(video_file):
+        os.remove(video_file)
+        st.success("视频已成功删除。")
+    else:
+        st.error("未找到视频文件或文件不存在。")
+    if "result_video_file" in st.session_state:
+        del st.session_state["result_video_file"]
+
 common_ui()
 
 st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
@@ -236,24 +245,32 @@ with subtitle_container:
 # 生成视频
 video_generator = st.container(border=True)
 with video_generator:
-    st.slider(label=tr("how many videos do you want"), min_value=1.0, value=1.0, max_value=100.0, step=1.0,
-              key="videos_count")
-    st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video_for_merge,
-              args=(video_generator,))
+    # 显示预览前检查文件有效性
+    result_video_file = st.session_state.get("result_video_file")
 
-# 显示预览前检查文件有效性
-result_video_file = st.session_state.get("result_video_file")
-
-# 生成视频后保存路径到session_state
-if result_video_file:
-    st.session_state["result_video_file"] = result_video_file
-    from config.config import save_session_state_to_yaml
-    save_session_state_to_yaml()
-
-if result_video_file and not os.path.exists(result_video_file):
-    del st.session_state["result_video_file"]
-    result_video_file = None
-if result_video_file:
-    col1, col2 = st.columns([1, 5])
+    # 生成视频后保存路径到session_state
+    if result_video_file:
+        st.session_state["result_video_file"] = result_video_file
+        from config.config import save_session_state_to_yaml
+        save_session_state_to_yaml()
+        
+    # 检查文件是否存在，不存在则清除session状态
+    if result_video_file and not os.path.exists(result_video_file):
+        del st.session_state["result_video_file"]
+        result_video_file = None
+    col1, col2 = st.columns([2, 6])
     with col1:
-        st.video(result_video_file)
+        llm_columns = st.columns(2)
+        with llm_columns[0]:
+            st.slider(label=tr("how many videos do you want"), min_value=1.0, value=1.0, max_value=100.0, step=1.0,
+                    key="videos_count")
+            st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video_for_merge,
+                    args=(video_generator,))
+        with llm_columns[1]:
+            if result_video_file:
+                st.button(label=tr("Delete Video Button"), type="secondary", on_click=lambda: delete_video(result_video_file))
+    
+        if result_video_file:
+            col1, col2 = st.columns([1, 5])
+            with col1:
+                st.video(result_video_file)
