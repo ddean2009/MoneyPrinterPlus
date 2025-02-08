@@ -146,7 +146,7 @@ class PixabayService(ResourceService):
                 save_name = os.path.abspath(os.path.join(workdir, f"pixabay-{video_name}"))
                 
                 if os.path.exists(save_name):
-                    print(f"视频文件已存在，跳过下载: {save_name}")
+                    print(f"素材文件已存在，跳过下载: {save_name}")
                     return_videos.append(save_name)
                     continue
                 
