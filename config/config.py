@@ -354,19 +354,20 @@ def save_config():
         save_yaml(config_file, my_config)
 
 def fetch_CosyVoice_voice():
-    url = my_config['audio']['local_tts']['CosyVoice']['server_location'] + "/sft_spk"  # 替换为真实的API地址
-    
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # 检查请求是否成功
+    if 'CosyVoice' in my_config['audio']['local_tts'] and 'server_location' in my_config['audio']['local_tts']['CosyVoice']:
+        url = my_config['audio']['local_tts']['CosyVoice']['server_location'] + "/sft_spk"  # 替换为真实的API地址
 
-        data = response.json()  
-        CosyVoice_voice_dict = {lang: lang for lang in data if lang}  # 过滤掉空字符串
-        return CosyVoice_voice_dict  # 返回获取的语言数据
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # 检查请求是否成功
 
-    except requests.exceptions.RequestException as e:
-        print(f"请求失败: {e}")
-        return {}
+            data = response.json()
+            CosyVoice_voice_dict = {lang: lang for lang in data if lang}  # 过滤掉空字符串
+            return CosyVoice_voice_dict  # 返回获取的语言数据
+
+        except requests.exceptions.RequestException as e:
+            print(f"请求失败: {e}")
+            return {}
     
 
 my_config = load_config()
