@@ -263,7 +263,7 @@ with video_container:
         st.text_input(label=tr("Driver Debugger Address"), value="127.0.0.1:2828", key="video_publish_debugger_address")
     st.text_input(label=tr("Video Content Dir"), key="video_publish_content_dir",
                   value=get_content_location(), on_change=set_content_location, args=('video_publish_content_dir',))
-    video_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".mp4")
+    video_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".mp4,.mov")
     st.selectbox(label=tr("Video File"), key="video_publish_content_file",
                  options=video_list, format_func=lambda x: video_list[x])
     file_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".txt")

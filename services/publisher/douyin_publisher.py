@@ -33,7 +33,7 @@ import streamlit as st
 import time
 
 from config.config import douyin_site
-from tools.file_utils import read_head, read_file_with_extra_enter
+from tools.file_utils import read_head, read_file_with_extra_enter, read_file_start_with_secondline
 
 
 def douyin_publisher(driver, video_file, text_file):
@@ -80,7 +80,7 @@ def douyin_publisher(driver, video_file, text_file):
     time.sleep(2)
     cmd_ctrl = Keys.COMMAND if sys.platform == 'darwin' else Keys.CONTROL
     # 将要粘贴的文本内容复制到剪贴板
-    content_text = read_file_with_extra_enter(text_file)
+    content_text = read_file_start_with_secondline(text_file)
     pyperclip.copy(content_text)
     action_chains = webdriver.ActionChains(driver)
     # 模拟实际的粘贴操作
@@ -127,7 +127,11 @@ def douyin_publisher(driver, video_file, text_file):
         collection_to_select.click()
         time.sleep(1)
 
-    # 发布
+    # 设置是否允许他人保存视频
+    not_allow_save_label = driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div[1]/div[11]/div/label[2]') 
+    not_allow_save_label.click()   
+    time.sleep(2)
+    # 发布 
     publish_button = driver.find_element(By.XPATH, '//button[text()="发布"]')
     auto_publish = st.session_state.get('video_publish_auto_publish')
     if auto_publish:
