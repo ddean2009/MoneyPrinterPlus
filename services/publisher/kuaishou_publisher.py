@@ -114,7 +114,7 @@ def kuaishou_publisher(driver, video_file, text_file):
         collection_to_select.click()
         time.sleep(1)
 
-    # 设置领域
+    # 设置分区
     domain =  st.session_state.get('video_publish_enable_kuaishou_domain')
     if domain:
         print("设置领域")
