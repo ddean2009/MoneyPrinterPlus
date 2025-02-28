@@ -32,6 +32,8 @@ from pages.common import common_ui
 from services.sd.sd_service import SDService
 from tools.tr_utils import tr
 
+from services.audio.cosyvoice_service import CosyVoiceAudioService
+
 import os
 
 from tools.utils import get_file_map_from_dir
@@ -279,16 +281,30 @@ with captioning_container:
                 st.button(label=tr("Testing Audio"), type="primary", on_click=try_test_local_audio)
 
         if selected_local_audio_tts_provider == 'CosyVoice':
+            cosy_voice_service = CosyVoiceAudioService()  
             use_reference_audio = st.checkbox(label=tr("Use reference audio"), key="use_reference_audio")
             if use_reference_audio:
                 llm_columns = st.columns(2)
                 with llm_columns[0]:
                     # st.file_uploader(label=tr("Reference Audio"), type=["wav", "mp3"], accept_multiple_files=False,
                     #                  key="reference_audio")
-                    st.text_input(label=tr("Reference Audio"), placeholder=tr("Input Reference Audio File Path"),
-                      key="reference_audio_file_path")
+                    # st.text_input(label=tr("Reference Audio"), placeholder=tr("Input Reference Audio File Path"),
+                    #   key="reference_audio_file_path")
+                    
+                    # 选择参考音频
+                    reference_audio_options = cosy_voice_service.get_remote_audio_templates()
+                    if not reference_audio_options:
+                        reference_audio_options = ["检查cosyvoice接口，或audio_templates文件夹下是否有音频文件。"]
+                        
+                    reference_audio = st.selectbox(
+                        label=tr("Reference Audio"), 
+                        options=reference_audio_options, 
+                        key="reference_audio_file_path",
+                        help="音频模版请放到项目根目录的audio_templates文件夹下"
+                    )
+
                 with llm_columns[1]:
-                    st.text_area(label=tr("Reference Audio Text"), placeholder=tr("Input Reference Audio Text"),
+                    st.text_input(label=tr("Reference Audio Text"), placeholder=tr("Input Reference Audio Text"),
                                  key="reference_audio_text")
             else:
                 llm_columns = st.columns(1)

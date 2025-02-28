@@ -28,14 +28,12 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 from config.config import my_config
-from tools.file_utils import save_uploaded_file
 from tools.utils import must_have_value, random_with_system_time
 import streamlit as st
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)
 
-# print("当前脚本的绝对路径是:", script_path)
 
 # 脚本所在的目录
 script_dir = os.path.dirname(script_path)
@@ -46,85 +44,70 @@ audio_output_dir = os.path.abspath(audio_output_dir)
 
 
 class CosyVoiceAudioService:
+
+    SPEED_MAP = {
+        "normal": 1.0,
+        "fast": 1.1,
+        "slow": 0.9,
+        "faster": 1.2,
+        "slower": 0.8,
+        "fastest": 1.3,
+        "slowest": 0.7
+    }
+        
     def __init__(self):
         super().__init__()
         self.service_location = my_config['audio']['local_tts']['CosyVoice']['server_location']
         must_have_value(self.service_location, "请设置CosyVoice server location")
-        self.service_location = self.service_location.rstrip('/') + '/text-tts' + '?'
+        self.service_location = self.service_location.rstrip('/')
 
-        self.audio_seed = int(st.session_state.get('audio_seed',0))
-
-        audio_speed = st.session_state.get("audio_speed")
-        if audio_speed == "normal":
-            self.audio_speed = 1.0
-        if audio_speed == "fast":
-            self.audio_speed = 1.1
-        if audio_speed == "slow":
-            self.audio_speed = 0.9
-        if audio_speed == "faster":
-            self.audio_speed = 1.2
-        if audio_speed == "slower":
-            self.audio_speed = 0.8
-        if audio_speed == "fastest":
-            self.audio_speed = 1.3
-        if audio_speed == "slowest":
-            self.audio_speed = 0.7
-
-        if st.session_state.get("use_reference_audio"):
-            reference_audio_file_path = st.session_state.get("reference_audio_file_path")
-            if reference_audio_file_path is not None:
-                self.refer_wav_path=reference_audio_file_path
-                self.prompt_text = st.session_state.get("reference_audio_text")
-
+        self.audio_seed = int(st.session_state.get('audio_seed', 0))
+        self.audio_speed = self.get_audio_speed(st.session_state.get("audio_speed"))
+        self.refer_wav_path = st.session_state.get("reference_audio_file_path")
         self.reference_audio_language = st.session_state.get("reference_audio_language")
 
+
+    def get_audio_speed(self, speed_key):
+        return self.SPEED_MAP.get(speed_key, 1.0)
+    
+    def get_remote_audio_templates(self):
+        '''获取远程cosyvoice音频文件列表'''
+        try:
+            response = requests.get(f'{self.service_location}/audio_templates')
+            response.raise_for_status()
+            response_data = response.json()
+            if response_data.get('status') == "success":
+                return response_data.get('data', {}).get('audio_files', [])
+            else:
+                print("Error in response status:", response_data.get('message', 'Unknown error'))
+        except requests.RequestException as e:
+            print(f"Error fetching audio templates: {e}")
+        return []
+
     def read_with_content(self, content):
-        wav_file = os.path.join(audio_output_dir, str(random_with_system_time()) + ".wav")
+        wav_file = os.path.join(audio_output_dir, f"{random_with_system_time()}.wav")
         temp_file = self.chat_with_content(content, wav_file)
-        # 读取音频文件
         audio = AudioSegment.from_file(temp_file)
         play(audio)
 
     def chat_with_content(self, content, audio_output_file):
-        # main infer params
-        if hasattr(self, 'refer_wav_path') and self.refer_wav_path:
-            body = {
-                "mode": "zero_shot",
-                "tts_text": content,
-                "prompt_text": self.prompt_text,
-                "seed": self.audio_seed,
-                "speed": self.audio_speed,
-                "prompt_voice": self.refer_wav_path,
-                "stream":False,
-                "instruct_text": None,
-                "sft_dropdown": None,
-            }
-            
-        else:
-            body = {
-                "mode": "sft",
-                "tts_text": content,
-                "sft_dropdown": self.reference_audio_language,
-                "seed": self.audio_seed,
-                "speed": self.audio_speed,
-                "stream":False,
-                "prompt_text": None,
-                "instruct_text": None,
-                "prompt_voice": None,
-            }
-
-        print(body)
+        body = {
+            "mode": "zero_shot" if self.refer_wav_path else "sft",
+            "tts_text": content,
+            "seed": self.audio_seed,
+            "speed": self.audio_speed,
+            "prompt_voice": 'audio_templates/' + self.refer_wav_path,
+            "sft_dropdown": self.reference_audio_language if not self.refer_wav_path else None,
+            "prompt_text": st.session_state.get("reference_audio_text") if self.refer_wav_path else None
+        }
 
         try:
-            response = requests.post(self.service_location, json=body)
+            response = requests.post(f'{self.service_location}/text-tts', json=body)
             response.raise_for_status()
-            # 读取响应内容
-            content = response.content
-            # 打开一个文件用于写入二进制数据
             with open(audio_output_file, 'wb') as file:
-                file.write(content)  # 将响应内容写入文件
+                file.write(response.content)
             print(f"文件已保存到 {audio_output_file}")
             return audio_output_file
-
-        except requests.exceptions.RequestException as e:
+        except requests.RequestException as e:
             print(f"Request Error: {e}")
+        return None
