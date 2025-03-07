@@ -172,6 +172,18 @@ def read_file_with_extra_enter(file):
         cleaned_content = '\n'.join(lines)
         return cleaned_content
 
+def read_file_start_with_secondline(file):
+    # 使用with语句打开文件，确保文件在使用后会被正确关闭
+    with open(file, 'r', encoding='UTF-8') as f:
+        # 读取文件内容
+        content = f.read()
+        # 使用splitlines()将内容分割成行列表
+        lines = content.splitlines()
+        lines = lines[1:];
+        # 使用join()将行重新组合成字符串
+        cleaned_content = '\n'.join(lines)
+        return cleaned_content
+
 
 def read_file(file):
     # 打开文件

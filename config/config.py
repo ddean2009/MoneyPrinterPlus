@@ -276,6 +276,7 @@ douyin_site = "https://creator.douyin.com/creator-micro/content/upload"
 shipinhao_site = "https://channels.weixin.qq.com/platform/post/create"
 kuaishou_site = "https://cp.kuaishou.com/article/publish/video"
 xiaohongshu_site = "https://creator.xiaohongshu.com/publish/publish?source=official"
+bilibili_site = "https://member.bilibili.com/platform/upload/video/frame"
 
 # 获取当前脚本的绝对路径
 script_path = os.path.abspath(__file__)

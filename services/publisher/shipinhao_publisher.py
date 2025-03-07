@@ -34,7 +34,7 @@ import streamlit as st
 import time
 
 from config.config import shipinhao_site
-from tools.file_utils import read_head, read_file_with_extra_enter
+from tools.file_utils import read_head, read_file_with_extra_enter, read_file_start_with_secondline
 
 
 def shipinhao_publisher(driver, video_file, text_file):
@@ -83,7 +83,7 @@ def shipinhao_publisher(driver, video_file, text_file):
     time.sleep(2)
     cmd_ctrl = Keys.COMMAND if sys.platform == 'darwin' else Keys.CONTROL
     # 将要粘贴的文本内容复制到剪贴板
-    content_text = read_file_with_extra_enter(text_file)
+    content_text = read_file_start_with_secondline(text_file)
     pyperclip.copy(content_text)
     action_chains = webdriver.ActionChains(driver)
     # 模拟实际的粘贴操作

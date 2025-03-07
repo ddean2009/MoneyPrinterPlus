@@ -114,7 +114,7 @@ def kuaishou_publisher(driver, video_file, text_file):
         collection_to_select.click()
         time.sleep(1)
 
-    # 设置领域
+    # 设置分区
     domain =  st.session_state.get('video_publish_enable_kuaishou_domain')
     if domain:
         print("设置领域")
@@ -142,9 +142,14 @@ def kuaishou_publisher(driver, video_file, text_file):
         actions.move_to_element(domain_level_2).click().perform()
         # domain_level_2.click()
         time.sleep(1)
-
-    # 发布
-    publish_button = driver.find_element(By.XPATH, '//button[@type="button"]/span[text()="发布"]')
+    
+    # 设置是否允许他人保存视频
+    allow_save_label = driver.find_element(By.XPATH, '//*[@id="setting-tours"]/div[2]/div/label[2]') 
+    allow_save_label.click()   
+    time.sleep(2)
+    
+    # 发布 
+    publish_button = driver.find_element(By.CLASS_NAME, '_button-primary_si04s_60')
     auto_publish = st.session_state.get('video_publish_auto_publish')
     if auto_publish:
         print("auto publish")

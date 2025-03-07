@@ -161,6 +161,15 @@ def get_enable_kuaishou(my_type):
     else:
         return my_config['publisher']['kuaishou'][my_type]['enable']
 
+def get_enable_bilibili(my_type):
+    test_config(my_config, "publisher", "bilibili", my_type)
+    if 'enable' not in my_config['publisher']['bilibili'][my_type]:
+        # 默认True
+        my_config['publisher']['bilibili'][my_type]['enable'] = True
+        save_config()
+        return True
+    else:
+        return my_config['publisher']['bilibili'][my_type]['enable']
 
 def set_enable_kuaishou(my_type, state_key):
     use_common = st.session_state.get(state_key)
@@ -168,6 +177,11 @@ def set_enable_kuaishou(my_type, state_key):
     my_config['publisher']['kuaishou'][my_type]['enable'] = use_common
     save_config()
 
+def set_enable_bilibili(my_type, state_key):
+    use_common = st.session_state.get(state_key)
+    test_config(my_config, "publisher", "bilibili", my_type)
+    my_config['publisher']['bilibili'][my_type]['enable'] = use_common
+    save_config()
 
 def get_kuaishou_value(my_type, kuaishou_key):
     test_config(my_config, "publisher", "kuaishou", my_type)
@@ -179,6 +193,13 @@ def get_kuaishou_value(my_type, kuaishou_key):
     else:
         return my_config['publisher']['kuaishou'][my_type][kuaishou_key]
 
+def get_bilibili_value(my_type, bilibili_key):
+    test_config(my_config, "publisher", "bilibili", my_type)
+    if bilibili_key not in my_config['publisher']['bilibili'][my_type]:
+        # 默认True
+        my_config['publisher']['bilibili'][my_type][bilibili_key] = ""
+        save_config()
+        return ''
 
 def set_kuaishou_value(my_type, kuaishou_key, state_key):
     use_common = st.session_state.get(state_key)
@@ -186,6 +207,11 @@ def set_kuaishou_value(my_type, kuaishou_key, state_key):
     my_config['publisher']['kuaishou'][my_type][kuaishou_key] = use_common
     save_config()
 
+def set_bilibili_value(my_type, bilibili_key, state_key):
+    use_common = st.session_state.get(state_key)
+    test_config(my_config, "publisher", "bilibili", my_type)
+    my_config['publisher']['bilibili'][my_type][bilibili_key] = use_common
+    save_config()
 
 def get_title_prefix(my_type):
     test_config(my_config, "publisher", my_type)
@@ -263,7 +289,7 @@ with video_container:
         st.text_input(label=tr("Driver Debugger Address"), value="127.0.0.1:2828", key="video_publish_debugger_address")
     st.text_input(label=tr("Video Content Dir"), key="video_publish_content_dir",
                   value=get_content_location(), on_change=set_content_location, args=('video_publish_content_dir',))
-    video_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".mp4")
+    video_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".mp4,.mov")
     st.selectbox(label=tr("Video File"), key="video_publish_content_file",
                  options=video_list, format_func=lambda x: video_list[x])
     file_list = get_file_map_from_dir(st.session_state["video_publish_content_dir"], ".txt")
@@ -380,6 +406,37 @@ with video_config_container:
             st.text_input(label=tr("Tags"), key="video_publish_xiaohongshu_tags",
                           value=get_tags('xiaohongshu'), on_change=set_tags,
                           args=('xiaohongshu', 'video_publish_xiaohongshu_tags'))
+    
+    st.subheader(tr("Bilibili Config"))
+    st.checkbox(label=tr("Enable bilibili"), key="video_publish_enable_bilibili",
+                value=get_enable('bilibili'), on_change=set_enable,
+                args=('bilibili', 'video_publish_enable_bilibili'))
+    if not st.session_state.get("video_publish_use_common_config"):
+        st_columns = st.columns(3)
+        with st_columns[0]:
+            st.text_input(label=tr("Title Prefix"), key="video_publish_bilibili_title_prefix",
+                          value=get_title_prefix('bilibili'), on_change=set_title_prefix,
+                          args=('bilibili', 'video_publish_xiaohongshu_title_prefix'))
+        with st_columns[1]:
+            st.text_input(label=tr("Collection Name"), key="video_publish_bilibili_collection_name",
+                          value=get_collection_name('bilibili'), on_change=set_collection_name,
+                          args=('bilibili', 'video_publish_bilibili_collection_name'))
+        with st_columns[2]:
+            st.text_input(label=tr("Tags"), key="video_publish_bilibili_tags",
+                          value=get_tags('bilibili'), on_change=set_tags,
+                          args=('bilibili', 'video_publish_bilibili_tags'))
+    st.checkbox(label=tr("Enable bilibili section"), key="video_publish_enable_bilibili_section",
+                value=get_enable_bilibili('section'), on_change=set_enable_bilibili,
+                args=('section', 'video_publish_enable_bilibili_section'))
+    st_columns = st.columns(2)
+    with st_columns[0]:
+        st.text_input(label=tr("Section Level1"), key="video_publish_bilibili_section_level1",
+                      value=get_bilibili_value('section', 'level1'), on_change=set_bilibili_value,
+                      args=('section', 'level1', 'video_publish_bilibili_section_level1'))
+    with st_columns[1]:
+        st.text_input(label=tr("Section Level2"), key="video_publish_bilibili_section_level2",
+                      value=get_bilibili_value('section', 'level2'), on_change=set_bilibili_value,
+                      args=('section', 'level2', 'video_publish_bilibili_section_level2'))
 
 st.warning(tr("Click the test button, one new page will be opened, if not, that means your config has some error."))
 st.button(label=tr("Test Publish"), type="primary", on_click=test_publish_video)

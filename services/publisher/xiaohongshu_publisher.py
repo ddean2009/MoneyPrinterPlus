@@ -30,7 +30,7 @@ import streamlit as st
 import time
 
 from config.config import xiaohongshu_site
-from tools.file_utils import read_head, read_file_with_extra_enter
+from tools.file_utils import read_head, read_file_with_extra_enter, read_file_start_with_secondline
 
 
 def xiaohongshu_publisher(driver, video_file, text_file):
@@ -53,7 +53,7 @@ def xiaohongshu_publisher(driver, video_file, text_file):
     wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'c-input_inner')))
 
     # 设置标题
-    title = driver.find_element(By.CLASS_NAME, 'el-input__inner')
+    title = driver.find_element(By.CLASS_NAME, 'd-text')
     title_text = read_head(text_file)
     use_common = st.session_state.get('video_publish_use_common_config')
     if use_common:
@@ -68,8 +68,8 @@ def xiaohongshu_publisher(driver, video_file, text_file):
     time.sleep(2)
 
     # 设置内容
-    content = driver.find_element(By.ID, 'post-textarea')
-    content_text = read_file_with_extra_enter(text_file)
+    content = driver.find_element(By.XPATH, '//*[@id="quillEditor"]/div')
+    content_text = read_file_start_with_secondline(text_file)
     content.send_keys(content_text)
     time.sleep(2)
 
